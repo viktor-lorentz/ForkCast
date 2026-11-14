@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { DEMO_PROFILES } from "@/lib/demo-profiles";
 import { cleanProfile, EMPTY_PROFILE, type Profile } from "@/lib/profile";
+import { unpackProfile } from "@/lib/share";
 import { Onboarding } from "./Onboarding";
 import { Today } from "./Today";
 
@@ -27,6 +28,13 @@ function save(p: Profile) {
 }
 
 function initialProfile(): Profile | null {
+  // A "Take it with you" link (#p=...) carries a whole profile: save it here and tidy the address bar.
+  const shared = unpackProfile(window.location.hash);
+  if (shared) {
+    save(shared);
+    history.replaceState(null, "", window.location.pathname + window.location.search);
+    return shared;
+  }
   // ?demo=<id> loads a sample student (for judges); otherwise use the saved profile.
   const demoId = new URLSearchParams(window.location.search).get("demo");
   const demo = DEMO_PROFILES.find((d) => d.id === demoId);
