@@ -1,0 +1,31 @@
+{
+  "id": "no-restrictions",
+  "label": "No restrictions, lifts, wants protein",
+  "profile": {
+    "avoid": [],
+    "diet": [],
+    "likes": [
+      "chicken",
+      "beef"
+    ],
+    "dislikes": [
+      "salad"
+    ]
+  },
+  "cases": [
+    {
+      "date": "2026-11-14",
+      "meal": "Dinner"
+    },
+    {
+      "date": "2026-11-15",
+      "meal": "Brunch"
+    },
+    {
+      "date": "2026-11-16",
+      "meal": "Lunch"
+    }
+  ],
+  "expectHall": null,
+  "notes": "Andrew: check the picked hall and hidden dishes against the USC site and set expectHall if you agree."
+}
