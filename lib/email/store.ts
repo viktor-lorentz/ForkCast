@@ -14,10 +14,29 @@ export interface Subscriber {
 
 const MAX_SUBSCRIBERS = 300;
 
+/**
+ * Vercel's Upstash integration names its settings KV_REST_API_URL/TOKEN or UPSTASH_REDIS_REST_URL/TOKEN,
+ * sometimes with a custom prefix (e.g. STORAGE_KV_REST_API_URL), so accept any prefix.
+ */
+export function redisConfig(env: Record<string, string | undefined> = process.env): { url: string; token: string } | null {
+  for (const suffix of [["KV_REST_API_URL", "KV_REST_API_TOKEN"], ["REDIS_REST_URL", "REDIS_REST_TOKEN"]]) {
+    for (const key of Object.keys(env)) {
+      if (!key.endsWith(suffix[0])) continue;
+      const url = env[key];
+      const token = env[key.slice(0, -suffix[0].length) + suffix[1]];
+      if (url && token && url.startsWith("https://")) return { url, token };
+    }
+  }
+  return null;
+}
+
+let client: Redis | null | undefined;
 function redis(): Redis | null {
-  const url = process.env.KV_REST_API_URL ?? process.env.UPSTASH_REDIS_REST_URL;
-  const token = process.env.KV_REST_API_TOKEN ?? process.env.UPSTASH_REDIS_REST_TOKEN;
-  return url && token ? new Redis({ url, token }) : null;
+  if (client === undefined) {
+    const cfg = redisConfig();
+    client = cfg ? new Redis(cfg) : null;
+  }
+  return client;
 }
 
 export const storeEnabled = () => redis() !== null;
