@@ -6,6 +6,8 @@ import { addDays, isValidDate, todayLA } from "@/lib/usc";
 
 export const maxDuration = 60;
 
+const BOOT = Date.now();
+
 export async function POST(request: Request) {
   let body: { profile?: unknown; date?: string; meal?: string };
   try {
@@ -26,11 +28,15 @@ export async function POST(request: Request) {
   }
 
   try {
+    const t0 = Date.now();
     const day = await getEnrichedDay(date);
+    const t1 = Date.now();
     const meals = [...new Set(day.halls.flatMap((h) => h.meals))];
     const meal = body.meal && meals.includes(body.meal) ? body.meal : currentMeal(meals);
     if (!meal) return Response.json({ error: `No meals listed for ${date}` }, { status: 404 });
-    return Response.json(await getRecommendation(profile, date, meal));
+    const rec = await getRecommendation(profile, date, meal);
+    // Visible in browser dev tools (Network → Timing) for diagnosing slow responses.
+    return Response.json(rec, { headers: { "server-timing": `menu;dur=${t1 - t0}, pick;dur=${Date.now() - t1}, boot;dur=${t0 - BOOT}` } });
   } catch (err) {
     console.error("recommend failed:", err);
     return Response.json({ error: "Couldn't build a recommendation right now" }, { status: 502 });
