@@ -7,7 +7,7 @@ New goal: build the pitch deck that wins this hackathon. You already have the ba
 
 ## Updates to the background
 - The app is now called **ForkCast**. Our team name is **Overcooked**. Team: Viktor (tech lead), Andrew (me: product and pitch), Hailey (cinema: video, interviews, design help).
-- Live app: https://ps-5-winners.vercel.app (it may move to https://forkcast-usc.vercel.app; ask me which one before you put a URL or QR code on a slide). Code: https://github.com/viktor-lorentz/ForkCast
+- Live app: https://forkcast-usc.vercel.app (use this exact URL on slides and in the QR code). Code: https://github.com/viktor-lorentz/ForkCast
 - New live features since your background info:
   - 👍/👎 on any dish, remembered in the browser. A thumbs-down dish is never recommended again, and code enforces that.
   - Fitness goals (build muscle, lean out, bulk up) with a suggested plate and tags like "High protein" and "Lighter". There are deliberately no calorie numbers, because USC publishes no nutrition data.
@@ -61,6 +61,6 @@ Write speaker notes for every slide: what I say, in plain spoken sentences, time
 - The deck runs full screen with presenter notes, and every animation plays on click without stutter.
 - A PDF export where every slide still reads on its own without animations (Devpost and backup).
 - The QR code tested with a real phone camera, and the URL correct.
-- A short checklist for me: how to start presenter mode, the clicker or arrow keys, what to do if Wi-Fi dies (switch to the embedded video and the PDF), and a reminder for Viktor to open https://ps-5-winners.vercel.app/api/warm 10 minutes before judging.
+- A short checklist for me: how to start presenter mode, the clicker or arrow keys, what to do if Wi-Fi dies (switch to the embedded video and the PDF), and a reminder for Viktor to open https://forkcast-usc.vercel.app/api/warm 10 minutes before judging.
 - Our deadlines: feature freeze Saturday 9 PM, code freeze Sunday 9 AM, Devpost submission target Sunday 10:30 AM (hard deadline 11:00 AM PT). Have the deck PDF ready before 10:30 on Sunday.
 ```

@@ -12,7 +12,7 @@ export async function GET(request: Request) {
   if (!emailEnabled()) return Response.json({ sent: 0, note: "email not set up" });
   // Vercel provides the production domain; APP_URL overrides it.
   const prod = process.env.VERCEL_PROJECT_PRODUCTION_URL;
-  const origin = process.env.APP_URL ?? (prod ? `https://${prod}` : "https://ps-5-winners.vercel.app");
+  const origin = process.env.APP_URL ?? (prod ? `https://${prod}` : "https://forkcast-usc.vercel.app");
   const date = todayLA();
   const subs = await confirmedSubscribers();
   let sent = 0;
