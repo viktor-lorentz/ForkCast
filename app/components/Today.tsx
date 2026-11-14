@@ -11,7 +11,7 @@ import { currentMeal, scoreHalls, type HallScore } from "@/lib/score";
 import { HALLS, LABEL_NAMES, NOT_ANALYZED } from "@/lib/types";
 import { describeClaim } from "@/lib/verify";
 import { STYLES } from "@/lib/styles";
-import { rate, type Rated } from "@/lib/taste";
+import { rate, ratingOf, type Rated } from "@/lib/taste";
 import { findDorm } from "@/lib/walking";
 import { LabelTag } from "./Chip";
 import { TakeItWithYou } from "./TakeItWithYou";
@@ -170,29 +170,25 @@ export function Today({
 
   const meals = useMemo(() => (day ? [...new Set(day.halls.flatMap((h) => h.meals))] : []), [day]);
   const meal = chosenMeal && meals.includes(chosenMeal) ? chosenMeal : dayOffset === 0 ? currentMeal(meals) : (meals[0] ?? null);
-  const scores = useMemo(() => (day && meal ? scoreHalls(day, meal, profile) : []), [day, meal, profile]);
 
-  // Ratings re-rank the halls instantly in the browser; the AI is asked again only after the taps settle.
-  const [settled, setSettled] = useState(profile);
-  const recProfile = keyNoTaste(settled) === keyNoTaste(profile) ? settled : profile;
-  useEffect(() => {
-    if (profileKey(settled) === profileKey(profile)) return;
-    const t = setTimeout(() => setSettled(profile), 1200);
-    return () => clearTimeout(t);
-  }, [profile, settled]);
-  const [latest, setLatest] = useState<Record<string, { k: string; data: Recommendation }>>({});
+  // Ratings don't reshuffle the screen while you tap: the view keeps the taste it loaded with,
+  // a 👎 just slides that dish away, and "Refresh picks" (or the next visit) asks the AI again.
+  const [frozen, setFrozen] = useState({ k: keyNoTaste(profile), taste: profile.taste });
+  const viewProfile = useMemo(
+    () => ({ ...profile, taste: frozen.k === keyNoTaste(profile) ? frozen.taste : profile.taste }),
+    [profile, frozen],
+  );
+  const ratingsPending = profileKey(viewProfile) !== profileKey(profile);
+  const refreshPicks = () => setFrozen({ k: keyNoTaste(profile), taste: profile.taste });
+  const scores = useMemo(() => (day && meal ? scoreHalls(day, meal, viewProfile) : []), [day, meal, viewProfile]);
 
-  const recKey = `${date}|${meal}|${profileKey(recProfile)}`;
+  const recKey = `${date}|${meal}|${profileKey(viewProfile)}`;
   const recEntry = recs[recKey];
-  const fresh = recEntry?.ok ? recEntry.data : null;
-  // While new picks load after a rating, keep showing the previous ones for this meal instead of a spinner.
-  const stale = latest[`${date}|${meal}`];
-  const rec = fresh ?? (!recEntry && stale?.k === keyNoTaste(recProfile) ? stale.data : null);
-  const updating = !fresh && Boolean(rec);
+  const rec = recEntry?.ok ? recEntry.data : null;
   const recFailed = recEntry?.ok === false;
   const canRecommend = Boolean(day && meal);
 
-  const recProfileKey = profileKey(recProfile);
+  const recProfileKey = profileKey(viewProfile);
   useEffect(() => {
     if (!canRecommend || !meal) return;
     const pending = inFlight.current;
@@ -203,19 +199,16 @@ export function Today({
       getJson<Recommendation>("/api/recommend", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ profile: recProfile, date, meal: m }),
+        body: JSON.stringify({ profile: viewProfile, date, meal: m }),
       })
-        .then((data) => {
-          setRecs((r) => ({ ...r, [key]: { ok: true, data } }));
-          setLatest((r) => ({ ...r, [`${date}|${m}`]: { k: keyNoTaste(recProfile), data } }));
-        })
+        .then((data) => setRecs((r) => ({ ...r, [key]: { ok: true, data } })))
         .catch(() => setRecs((r) => ({ ...r, [key]: { ok: false } })))
         .finally(() => pending.delete(key));
     };
     load(meal);
     // Once the meal on screen is answered, get the day's other meals ready so switching tabs is instant.
     if (recs[`${date}|${meal}|${recProfileKey}`]) meals.filter((m) => m !== meal).forEach(load);
-  }, [canRecommend, recs, recProfileKey, recProfile, date, meal, meals]);
+  }, [canRecommend, recs, recProfileKey, viewProfile, date, meal, meals]);
 
   const retry = () => {
     const drop = <T,>(m: Record<string, T>, key: string) => Object.fromEntries(Object.entries(m).filter(([k]) => k !== key));
@@ -233,8 +226,30 @@ export function Today({
   const dorm = findDorm(profile.dorm);
   const goal = findGoal(profile.goal);
   const byId = new Map((day?.halls ?? []).flatMap((h) => h.dishes).map((d) => [d.id, d]));
-  const onRate = (dish: Rated, value: 1 | 0 | -1) => onChange({ ...profile, taste: rate(profile.taste, dish, value) });
+  const [leaving, setLeaving] = useState<string[]>([]);
+  const toastSeq = useRef(0);
+  const [toast, setToast] = useState<{ dish: Rated; prev: 1 | 0 | -1; at: number } | null>(null);
+  const commitRate = (dish: Rated, value: 1 | 0 | -1) => onChange({ ...profile, taste: rate(profile.taste, dish, value) });
+  const onRate = (dish: Rated, value: 1 | 0 | -1) => {
+    const prev = ratingOf(profile.taste, dish.name);
+    commitRate(dish, value);
+    if (value === -1) {
+      const at = ++toastSeq.current;
+      setToast({ dish, prev, at });
+      setTimeout(() => setToast((t) => (t?.at === at ? null : t)), 4500);
+    }
+  };
   const rateProps = { taste: profile.taste, onRate };
+  // A 👎 on one of your picks slides the card away first, then saves the rating.
+  const ratePick = (id: string) => (dish: Rated, value: 1 | 0 | -1) => {
+    if (value !== -1) return onRate(dish, value);
+    setLeaving((l) => [...l, id]);
+    setTimeout(() => {
+      onRate(dish, -1);
+      setLeaving((l) => l.filter((x) => x !== id));
+    }, 280);
+  };
+  const shownPicks = (rec?.picks ?? []).filter((p) => ratingOf(profile.taste, p.name) !== -1 || leaving.includes(p.id));
   const nowMin = (() => {
     const [h, m] = new Date().toLocaleTimeString("en-GB", { timeZone: "America/Los_Angeles", hour12: false }).split(":").map(Number);
     return h * 60 + m;
@@ -401,22 +416,30 @@ export function Today({
                 />
               ))}
             </ul>
-            <p className="mt-3 text-xs text-stone-400">Tap a hall to see everything you can eat there. 👍 or 👎 dishes to teach it your taste.</p>
+            <p className="mt-3 text-xs text-stone-400">Tap a hall to see everything you can eat there. Thumbs up or down any dish to teach ForkCast your taste.</p>
           </section>
 
           {!nothing && !recFailed && (
             <section className="flex flex-col gap-2">
               <h2 className="flex justify-between px-1 text-sm font-semibold text-stone-500">
                 <span>Your plate{pickHall ? ` at ${hallShort(pickHall)}` : ""}</span>
-                {updating && <span className="animate-pulse font-normal text-stone-400">Updating with your ratings...</span>}
+                {ratingsPending && rec && (
+                  <button type="button" onClick={refreshPicks} className="rise rounded-full bg-stone-900 px-3 py-1 text-xs font-semibold text-white transition active:scale-95">
+                    ↻ Refresh picks
+                  </button>
+                )}
               </h2>
               {!rec && [0, 1, 2].map((i) => <div key={i} className="h-[5.5rem] animate-pulse rounded-2xl bg-white ring-1 ring-stone-200" />)}
-              {rec?.picks.map((p, i) => {
+              {rec && shownPicks.length === 0 && (
+                <p className="rise rounded-2xl bg-white p-4 text-sm text-stone-500 ring-1 ring-stone-200">You passed on all of these. Tap Refresh picks for new ones.</p>
+              )}
+              {shownPicks.map((p, i) => {
                 const others = p.allergens.filter((a) => a !== NOT_ANALYZED && !(profile.avoid as string[]).includes(a));
+                const out = leaving.includes(p.id);
                 return (
+                  <div key={`${recKey}|${p.id}`} className={`grid transition-all duration-300 ease-out ${out ? "grid-rows-[0fr] -translate-x-6 opacity-0" : "grid-rows-[1fr]"}`}>
                   <article
-                    key={`${recKey}|${p.id}`}
-                    className="rise rounded-2xl bg-white p-4 shadow-sm ring-1 ring-stone-200"
+                    className="rise min-h-0 overflow-hidden rounded-2xl bg-white p-4 shadow-sm ring-1 ring-stone-200"
                     style={{ animationDelay: `${i * 60}ms` }}
                   >
                     <div className="flex items-start justify-between gap-2">
@@ -424,7 +447,7 @@ export function Today({
                         <h3 className="font-semibold leading-snug">{p.name}</h3>
                         <p className="truncate text-xs text-stone-400">{shortStation(p.station)}</p>
                       </div>
-                      {byId.get(p.id) && <Thumbs dish={byId.get(p.id)!} {...rateProps} />}
+                      {byId.get(p.id) && <Thumbs dish={byId.get(p.id)!} taste={profile.taste} onRate={ratePick(p.id)} />}
                     </div>
                     <p className="mt-1 text-sm text-stone-600">{p.why}</p>
                     <FoodTags dish={p} className="mt-1.5" />
@@ -435,6 +458,7 @@ export function Today({
                       {others.length > 0 && <LabelTag tone="stone" text={`Contains ${others.map((a) => LABEL_NAMES[a] ?? a).join(", ")}`} />}
                     </div>
                   </article>
+                  </div>
                 );
               })}
             </section>
@@ -551,6 +575,24 @@ export function Today({
         share equipment, so always confirm with dining staff if you have a serious allergy.
         {dorm && " Walking times are estimates from OpenStreetMap."}
       </p>
+
+      {toast && (
+        <div className="fixed inset-x-0 bottom-0 z-20 flex justify-center px-4 pb-[max(1rem,env(safe-area-inset-bottom))]" role="status">
+          <div key={toast.at} className="rise flex w-full max-w-md items-center justify-between gap-3 rounded-2xl bg-stone-900 px-4 py-3 text-sm text-white shadow-xl">
+            <span className="min-w-0 truncate">We&apos;ll skip {toast.dish.name} from now on</span>
+            <button
+              type="button"
+              onClick={() => {
+                commitRate(toast.dish, toast.prev);
+                setToast(null);
+              }}
+              className="shrink-0 font-semibold text-gold"
+            >
+              Undo
+            </button>
+          </div>
+        </div>
+      )}
 
       <label className="flex items-center gap-2 px-1 text-xs text-stone-500">
         <span className="shrink-0">Try a sample student:</span>

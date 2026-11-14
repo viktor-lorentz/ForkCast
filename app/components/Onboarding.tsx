@@ -4,10 +4,11 @@ import { useState } from "react";
 import { GOALS } from "@/lib/plate";
 import type { Profile } from "@/lib/profile";
 import { STYLES } from "@/lib/styles";
-import { tasteSummary } from "@/lib/taste";
+import { rate, tasteSummary } from "@/lib/taste";
 import { ALLERGENS, LABEL_NAMES, PREFERENCES, type Allergen, type Preference } from "@/lib/types";
 import { DORMS } from "@/lib/walking";
 import { Chip } from "./Chip";
+import { TasteQuiz } from "./TasteQuiz";
 
 const LIKE_IDEAS = ["spicy", "rice", "chicken", "pasta", "mexican", "asian", "burger", "salad", "breakfast", "soup"];
 const DIET_NAMES: Record<Preference, string> = { "halal-ingredients": "Halal", vegan: "Vegan", vegetarian: "Vegetarian" };
@@ -209,6 +210,8 @@ export function Onboarding({
           </div>
         )}
       </section>
+
+      <TasteQuiz profile={p} onRate={(dish, v) => setP((cur) => ({ ...cur, taste: rate(cur.taste, dish, v) }))} />
 
       {taste.count > 0 && (
         <section className="rounded-2xl bg-white p-4 shadow-sm ring-1 ring-stone-200">
