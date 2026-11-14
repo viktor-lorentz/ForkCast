@@ -12,12 +12,13 @@ import { FoodTags } from "./Taste";
 import { ScoreBadge, useScores } from "./Ratings";
 
 const COUNT = 10;
+const STEP_COUNT = 5;
 const NO_NAMES: string[] = [];
 const todayLA = () => new Date().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
 const hallShort = (id: string) => HALLS.find((h) => h.id === id)?.short ?? id;
 
 /** Up to COUNT varied mains the student can eat, one per cuisine/protein combo first. */
-function pickCards(day: EnrichedDay, profile: Profile): EnrichedDish[] {
+function pickCards(day: EnrichedDay, profile: Profile, count: number): EnrichedDish[] {
   const seen = new Set<string>();
   const pool = day.halls
     .flatMap((h) => h.dishes)
@@ -28,15 +29,27 @@ function pickCards(day: EnrichedDay, profile: Profile): EnrichedDish[] {
     const k = `${d.cuisine}|${d.protein}`;
     return !combos.has(k) && combos.add(k);
   });
-  return [...varied, ...pool.filter((d) => !varied.includes(d))].slice(0, COUNT);
+  return [...varied, ...pool.filter((d) => !varied.includes(d))].slice(0, count);
 }
 
 /**
  * Optional setup step: swipe through real dishes from today's menus (right = yes, left = no)
  * so ForkCast knows your taste before your first pick. Only shows dishes you can eat.
  */
-export function TasteQuiz({ profile, onRate }: { profile: Profile; onRate: (dish: Rated, value: 1 | -1) => void }) {
-  const [open, setOpen] = useState(false);
+export function TasteQuiz({
+  profile,
+  onRate,
+  onFinish,
+}: {
+  profile: Profile;
+  onRate: (dish: Rated, value: 1 | -1) => void;
+  /** Set when this is a setup step (not the optional card): starts open, 5 cards, and calls this when done. */
+  onFinish?: () => void;
+}) {
+  const step = Boolean(onFinish);
+  const total = step ? STEP_COUNT : COUNT;
+  const [open, setOpen] = useState(step);
+  const finishRef = useRef(onFinish);
   const [cards, setCards] = useState<EnrichedDish[] | null>(null);
   const [failed, setFailed] = useState(false);
   const [i, setI] = useState(0);
@@ -47,15 +60,24 @@ export function TasteQuiz({ profile, onRate }: { profile: Profile; onRate: (dish
   const profileRef = useRef(profile);
   useEffect(() => {
     profileRef.current = profile;
+    finishRef.current = onFinish;
   });
 
   useEffect(() => {
     if (!open || cards) return;
     fetch(`/api/menu?date=${todayLA()}`)
       .then((r) => (r.ok ? r.json() : Promise.reject()))
-      .then((day: EnrichedDay) => setCards(pickCards(day, profileRef.current)))
-      .catch(() => setFailed(true));
-  }, [open, cards]);
+      .then((day: EnrichedDay) => {
+        const picked = pickCards(day, profileRef.current, total);
+        setCards(picked);
+        // Nothing to swipe? Don't hold anyone up.
+        if (picked.length === 0) finishRef.current?.();
+      })
+      .catch(() => {
+        setFailed(true);
+        finishRef.current?.();
+      });
+  }, [open, cards, total]);
 
   const ratings = useScores(cards?.map((c) => c.name) ?? NO_NAMES);
   const card = cards?.[i];
@@ -66,6 +88,7 @@ export function TasteQuiz({ profile, onRate }: { profile: Profile; onRate: (dish
     setExit(value);
     setTimeout(() => {
       onRate(card, value);
+      if (cards && i + 1 >= cards.length) setTimeout(() => finishRef.current?.(), 900);
       setI((n) => n + 1);
       setExit(0);
       setDx(0);
@@ -73,6 +96,7 @@ export function TasteQuiz({ profile, onRate }: { profile: Profile; onRate: (dish
   }
   function skip() {
     if (!card || exit) return;
+    if (cards && i + 1 >= cards.length) setTimeout(() => finishRef.current?.(), 900);
     setI((n) => n + 1);
     setDx(0);
   }
@@ -86,7 +110,7 @@ export function TasteQuiz({ profile, onRate }: { profile: Profile; onRate: (dish
       >
         <span>
           <span className="block font-semibold">Quick taste check</span>
-          <span className="block text-sm text-stone-500">Swipe through {COUNT} dishes from today&apos;s menus. Optional, about 30 seconds.</span>
+          <span className="block text-sm text-stone-500">Swipe through {total} dishes from today&apos;s menus. Optional, about 30 seconds.</span>
         </span>
         <span className="text-2xl" aria-hidden>
           🍽️
@@ -99,15 +123,23 @@ export function TasteQuiz({ profile, onRate }: { profile: Profile; onRate: (dish
   const offset = exit ? exit * 480 : dx;
 
   return (
-    <section className="rise rounded-2xl bg-white p-4 shadow-sm ring-1 ring-stone-200">
-      <div className="flex items-baseline justify-between">
-        <h2 className="font-semibold">Quick taste check</h2>
-        {cards && !done && (
-          <span className="text-xs text-stone-400">
-            {Math.min(i + 1, cards.length)} / {cards.length}
-          </span>
-        )}
-      </div>
+    <section className={step ? "" : "rise rounded-2xl bg-white p-4 shadow-sm ring-1 ring-stone-200"}>
+      {step ? (
+        <div className="flex justify-center gap-1.5" aria-label={cards ? `${Math.min(i + 1, cards.length)} of ${cards.length}` : undefined}>
+          {Array.from({ length: cards?.length || total }, (_, n) => (
+            <span key={n} className={`h-1.5 w-8 rounded-full transition-colors duration-300 ${n < i ? "bg-cardinal" : n === i ? "bg-cardinal/40" : "bg-stone-200"}`} />
+          ))}
+        </div>
+      ) : (
+        <div className="flex items-baseline justify-between">
+          <h2 className="font-semibold">Quick taste check</h2>
+          {cards && !done && (
+            <span className="text-xs text-stone-400">
+              {Math.min(i + 1, cards.length)} / {cards.length}
+            </span>
+          )}
+        </div>
+      )}
 
       {failed && <p className="mt-2 text-sm text-stone-500">Couldn&apos;t load today&apos;s dishes. You can skip this.</p>}
       {!cards && !failed && <div className="mt-3 h-52 animate-pulse rounded-2xl bg-stone-100" />}
@@ -119,7 +151,7 @@ export function TasteQuiz({ profile, onRate }: { profile: Profile; onRate: (dish
             ✨
           </p>
           <p className="mt-1 font-semibold text-emerald-900">Got it. ForkCast knows your taste now.</p>
-          <p className="text-sm text-emerald-800">Keep tapping the thumbs on any dish to fine-tune it.</p>
+          <p className="text-sm text-emerald-800">{step ? "Finding your dining hall..." : "Keep tapping the thumbs on any dish to fine-tune it."}</p>
         </div>
       )}
 
