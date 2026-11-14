@@ -3,7 +3,7 @@
 As of 2026-11-13 · Viktor Lorentz
 Live, commentable version: https://claude.ai/artifact/7KrMXiUWrCNptRfiFVCLz1
 
-We're building a mobile web app that tells each USC student which dining hall has food they can actually eat today, and proves it with USC's own allergen labels. This is the shared plan for the AI@USC Hackathon (Nov 14–15, 2026). Comment or open a PR; Viktor makes the final call.
+We're building a mobile web app that tells each USC student which dining hall has food they can actually eat today, and proves it with USC's own allergen labels. This is the shared plan for the AI@USC Hackathon (Nov 14–15, 2026). Team: Viktor, Andrew and Hailey. Comment or open a PR; Viktor makes the final call.
 
 ## Contents
 
@@ -48,8 +48,8 @@ No code or design assets until Viktor types `GO — hackathon has started` on Sa
 | Existing option | What it does | How we're different |
 | --- | --- | --- |
 | [USC menu site](https://hospitality.usc.edu/residential-dining-menus/) | One hall at a time, with a "hide items containing" allergen filter | You still check 3 halls × 4 meals yourself. We compare every hall and pick for you. |
-| [Trojan Dining app](https://apps.apple.com/us/app/trojan-dining/id1446368951) ([GitHub](https://www.github.com/goldenagellc/Trojan-Dining)) | Student-built menu viewer with allergen filters | Its listing still mentions McCarthy (now closed), so it may be unmaintained. It shows menus; it doesn't recommend. Rishi checks whether it still works. |
-| [DineOn](https://apps.apple.com/us/app/id6749644621) | Unknown, appeared in a USC dining search | Rishi checks it Saturday morning. |
+| [Trojan Dining app](https://apps.apple.com/us/app/trojan-dining/id1446368951) ([GitHub](https://www.github.com/goldenagellc/Trojan-Dining)) | Student-built menu viewer with allergen filters | Its listing still mentions McCarthy (now closed), so it may be unmaintained. It shows menus; it doesn't recommend. Andrew checks whether it still works. |
+| [DineOn](https://apps.apple.com/us/app/id6749644621) | Unknown, appeared in a USC dining search | Andrew checks it tonight or Saturday morning. |
 
 The judge question to prepare for: "USC's site already has an allergen filter." Our answer is that the filter works per hall and per meal. We make the decision across all halls, personalize it, explain it, and never show an item marked "not analyzed for allergens" to someone with an allergy. The cluttered USC site is our "before" shot in the video.
 
@@ -69,7 +69,7 @@ The AI ranks and explains, but plain code enforces allergens. So even if the AI 
 2. **Normalize (Claude Haiku 4.5, once a day for everyone).** Turn the raw data into clean dishes: hall, meal, station, name, USC labels, plus inferred tags like cuisine and protein. Inferred tags never override USC labels.
 3. **Filter (plain code).** Remove every dish with a flagged allergen. For allergy profiles, also remove dishes marked "Food Not Analyzed For Allergens."
 4. **Rank and explain (Claude Sonnet 5.5).** Given only the dishes that passed the filter plus the student's tastes, pick a hall and write the reason. Dishes are cited by ID, so it can't invent one.
-5. **Verify (plain code).** Every cited dish must exist today. Every claim like "vegan" or "halal" must match a USC label. A flagged allergen must never get through. Results that fail are regenerated or dropped. Rishi's test profiles run against this check automatically.
+5. **Verify (plain code).** Every cited dish must exist today. Every claim like "vegan" or "halal" must match a USC label. A flagged allergen must never get through. Results that fail are regenerated or dropped. The team's test profiles run against this check automatically.
 
 The USC page also offers Brunch, so weekend meal names differ. Meal periods are read from the data, not hardcoded. The page shows no calories or macros, so macros stay out unless we find real data.
 
@@ -92,28 +92,29 @@ The USC page also offers Brunch, so weekend meal names differ. Meal periods are 
 | Person | Owns | Edits in the repo |
 | --- | --- | --- |
 | Viktor (ECE) | Runs Claude Code, architecture, merges every PR, Replit deploys | Everything |
-| Andrew (Business) | Scope calls, Devpost page, deck, video script and narration, overflow Claude | `docs/` |
-| Rishi (Real Estate) | Interviews, test profiles, accuracy checks against the real menu, live user testing, judge Q&A | `data/test-profiles/`, `docs/` |
-| Hailey (Cinema) | Demo video (storyboard, filming, editing), b-roll at the halls, "before vs after" visuals, deck design help | `docs/` (video notes) |
+| Andrew (Business) | Scope calls, Devpost page, deck content, video script and narration, test profiles with expected picks, competitor check, judge Q&A, overflow Claude | `docs/`, `data/test-profiles/` |
+| Hailey (Cinema) | Student interviews and live user testing (filmed, so they double as video footage), demo video (storyboard, filming, editing), deck design, "before vs after" visuals | `docs/` (video and interview notes) |
 
-Andrew, Rishi and Hailey open PRs from the GitHub website and only touch their folders. Everything else is a GitHub Issue for Viktor.
+Viktor also takes over the accuracy checks: the automated verifier plus a spot check of the demo profiles against the real menu. Claude drafts the test profiles from Hailey's interview notes, and Andrew checks the expected picks.
+
+Andrew and Hailey open PRs from the GitHub website and only touch their folders. Everything else is a GitHub Issue for Viktor.
 
 ## Schedule
 
 The goal: a live phone link by 17:00 Saturday, feature freeze at 21:00, submission by 10:30 Sunday (30 minutes before the deadline).
 
-| Time | Viktor + Claude | Andrew | Rishi | Hailey |
-| --- | --- | --- | --- | --- |
-| Sat 9:00–10:30 | Check-in, opening; ask sponsors about credits | Same | Same | Same |
-| 10:30–11:00 (GO) | CLAUDE.md, PRD, Issues, branch protection, empty app live on Replit | Devpost skeleton, deck outline | Check the menu site and save copies; check Trojan Dining and DineOn | Storyboard v1 |
-| 11:00–13:00 | Menu scraper, Haiku normalizer, database, saved snapshot | Problem story, stats, competitor answer | Interview 5–10 students with dietary needs | Film interviews with Rishi (with consent); b-roll at the halls |
-| 13:00–15:00 | Filter, Sonnet ranking, verifier, tests on Rishi's profiles | Deck draft | Write 6–8 test profiles with expected picks; check labels against the real site | Record the "before" footage of the cluttered USC site |
-| 15:00–17:00 | Phone UI: onboarding, today's card, Why? panel. **Live by 17:00** | Video script v1 with Hailey | First phone tests with 2–3 students | Visual style for the deck |
-| 17:00–19:00 | Demo mode; email if ahead | Screenshots, deck v2 | Structured user testing; log Issues | Screen-record the app flow |
-| 19:00–21:00 | Fix what testing found, polish, Fable final review | Judge Q&A doc with Rishi | Judge Q&A doc with Andrew | Rough cut |
-| 21:00–22:00 | **Feature freeze.** Tag `main` as demo-ready | Narration recording | Final accuracy check | Edit with narration |
-| Sun 8:00–9:00 | Critical fixes only. **Code freeze 9:00** | Devpost text final | Re-test the live link | Final cut, under 3:00 |
-| Sun 9:00–10:30 | Check the deploy, help where needed | **Submit on Devpost by 10:30** | Practice the 3-min pitch | Upload video |
+| Time | Viktor + Claude | Andrew | Hailey |
+| --- | --- | --- | --- |
+| Sat 9:00–10:30 | Check-in, opening; ask sponsors about credits | Same | Same |
+| 10:30–11:00 (GO) | CLAUDE.md, PRD, Issues, branch protection, empty app live on Replit; save copies of the menu data | Devpost skeleton, deck outline; check Trojan Dining and DineOn | Storyboard v1, interview guide |
+| 11:00–13:00 | Menu scraper, Haiku normalizer, database, saved snapshot | Problem story, stats, competitor answer | Interview and film 5–10 students with dietary needs (with consent); b-roll at the halls |
+| 13:00–15:00 | Filter, Sonnet ranking, verifier; Claude drafts 6–8 test profiles from interview notes | Check the test profiles' expected picks against the real menu; deck draft | Interview notes into `docs/`; record the "before" footage of the cluttered USC site |
+| 15:00–17:00 | Phone UI: onboarding, today's card, Why? panel. **Live by 17:00** | Video script v1 with Hailey | Deck design; first filmed phone tests with 2–3 students at 17:00 |
+| 17:00–19:00 | Demo mode; email if ahead | Screenshots, deck v2; log Issues from user testing | Filmed user testing with students; screen-record the app flow |
+| 19:00–21:00 | Fix what testing found, polish, Fable final review | Judge Q&A doc | Rough cut |
+| 21:00–22:00 | **Feature freeze.** Tag `main` as demo-ready; final accuracy check on the demo profiles | Narration recording | Edit with narration |
+| Sun 8:00–9:00 | Critical fixes only; re-test the live link. **Code freeze 9:00** | Devpost text final | Final cut, under 3:00 |
+| Sun 9:00–10:30 | Check the deploy, practice the 3-min pitch | **Submit on Devpost by 10:30**; practice the pitch | Upload video |
 
 ## Claude prompts for Andrew
 
@@ -123,7 +124,7 @@ Run these in claude.ai **after GO**. Paste the relevant sections of this doc int
 2. **Deck outline.** "Draft a 7-slide pitch deck for a 3-minute pitch to judges and later USC Student Government: problem, who it hurts (with a stat), demo, how the AI works and checks itself, why it's safe and feasible, the path to campus adoption, team. For each slide give a title, at most 3 short bullets, and a speaker note of 2 sentences."
 3. **Video script.** "Write a 2:45 demo video script with columns for time, what's on screen, and narration. Open with the cluttered USC menu site as the 'before', show the 90-second demo flow, end with the pitch line. Narration should sound like a student, not an ad."
 4. **Judge Q&A.** "List the 12 hardest questions judges might ask this team (liability for allergens, accuracy, existing apps like Trojan Dining, cost per student, what happens if USC changes its site, privacy, how USG would adopt it) and draft a 2-sentence answer to each."
-5. **Interview guide (for Rishi and Hailey).** "Write a 5-minute interview guide for USC students with dietary restrictions: 6 open questions about how they decide where to eat, time spent checking menus, bad experiences, and what would make them trust an app. Include a one-line consent script for filming."
+5. **Interview guide (for Hailey).** "Write a 5-minute interview guide for USC students with dietary restrictions: 6 open questions about how they decide where to eat, time spent checking menus, bad experiences, and what would make them trust an app. Include a one-line consent script for filming."
 
 **Coding overflow (only if Viktor runs out of Claude Code usage):** Andrew installs Claude Code with his Pro account, clones the repo, and works on one Issue on its own branch, for example `feat/email-template`. Start prompt: "Read CLAUDE.md and docs/PRD.md. Work only on Issue #N on this branch, touch only the files it names, and open a PR when tests pass." Viktor still reviews and merges.
 
@@ -145,12 +146,12 @@ Run these in claude.ai **after GO**. Paste the relevant sections of this doc int
 ## Before Saturday
 
 - [ ] Viktor: load $20 on the Anthropic Console; never commit the key to the repo
-- [ ] Viktor: add Andrew, Rishi and Hailey as GitHub collaborators
+- [ ] Viktor: make sure Andrew and Hailey have accepted their GitHub invites
 - [ ] Viktor: make sure the Replit account and hackathon credits are active
-- [ ] Rishi: open the USC menu page in Chrome, then DevTools → Network → reload, and screenshot the request that returns the dishes
-- [ ] Rishi + Hailey: line up 5–10 students with dietary needs for Saturday interviews
-- [ ] Rishi: find a stat on how many students have food allergies or dietary restrictions
-- [ ] Andrew: read this doc and comment on the pitch line and the demo flow
+- [ ] Viktor: open the USC menu page in Chrome, then DevTools → Network → reload, and screenshot the request that returns the dishes
+- [ ] Hailey: line up 5–10 students with dietary needs for Saturday interviews
+- [ ] Andrew: find a stat on how many students have food allergies or dietary restrictions
+- [ ] Andrew: read this doc, comment on the pitch line and the demo flow, and check Trojan Dining and DineOn
 - [ ] Hailey: think about the video's story arc (no filming or editing until GO)
 
 ## Sources
