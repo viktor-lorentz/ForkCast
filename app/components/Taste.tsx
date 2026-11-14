@@ -4,7 +4,14 @@ import type { EnrichedDish } from "@/lib/enrich";
 import { foodTags, type Goal, type Macros } from "@/lib/plate";
 import { ratingOf, type Rated, type Taste } from "@/lib/taste";
 
-/** 👍 / 👎 for one dish. Tapping the active one clears it. */
+const THUMB = (
+  <>
+    <path d="M7 10v12" />
+    <path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z" />
+  </>
+);
+
+/** Thumbs up / down for one dish: quiet outline icons that fill and pop when chosen. Tapping the active one clears it. */
 export function Thumbs({
   dish,
   taste,
@@ -17,27 +24,42 @@ export function Thumbs({
   small?: boolean;
 }) {
   const r = ratingOf(taste, dish.name);
-  const base = `inline-flex items-center justify-center rounded-full transition active:scale-90 ${small ? "h-7 w-7 text-sm" : "h-8 w-8 text-base"}`;
+  const size = small ? "h-8 w-8" : "h-9 w-9";
+  const icon = small ? 15 : 17;
+  const btn = (value: 1 | -1, label: string, on: string) => {
+    const active = r === value;
+    return (
+      <button
+        type="button"
+        aria-label={`${label} ${dish.name}`}
+        aria-pressed={active}
+        onClick={() => onRate(dish, active ? 0 : value)}
+        className={`inline-flex ${size} items-center justify-center rounded-full transition-colors duration-150 active:scale-90 ${
+          active ? on : "text-stone-400 hover:bg-stone-100 hover:text-stone-600"
+        }`}
+      >
+        <svg
+          key={String(active)}
+          width={icon}
+          height={icon}
+          viewBox="0 0 24 24"
+          fill={active ? "currentColor" : "none"}
+          stroke="currentColor"
+          strokeWidth={2}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className={`${value === -1 ? "rotate-180" : ""} ${active ? "pop" : ""}`}
+          aria-hidden
+        >
+          {THUMB}
+        </svg>
+      </button>
+    );
+  };
   return (
-    <span className="inline-flex shrink-0 gap-1">
-      <button
-        type="button"
-        aria-label={`More like ${dish.name}`}
-        aria-pressed={r === 1}
-        onClick={() => onRate(dish, r === 1 ? 0 : 1)}
-        className={`${base} ${r === 1 ? "bg-emerald-600 text-white" : "bg-stone-100 grayscale"}`}
-      >
-        👍
-      </button>
-      <button
-        type="button"
-        aria-label={`Less like ${dish.name}`}
-        aria-pressed={r === -1}
-        onClick={() => onRate(dish, r === -1 ? 0 : -1)}
-        className={`${base} ${r === -1 ? "bg-stone-800 text-white" : "bg-stone-100 grayscale"}`}
-      >
-        👎
-      </button>
+    <span className="inline-flex shrink-0 items-center">
+      {btn(1, "More like", "bg-emerald-50 text-emerald-600")}
+      {btn(-1, "Less like", "bg-stone-100 text-stone-700")}
     </span>
   );
 }
