@@ -1,0 +1,32 @@
+{
+  "id": "vegan-gluten-free",
+  "label": "Vegan and celiac (no gluten)",
+  "profile": {
+    "avoid": [
+      "gluten"
+    ],
+    "diet": [
+      "vegan"
+    ],
+    "likes": [
+      "bowl"
+    ],
+    "dislikes": []
+  },
+  "cases": [
+    {
+      "date": "2026-11-14",
+      "meal": "Dinner"
+    },
+    {
+      "date": "2026-11-15",
+      "meal": "Brunch"
+    },
+    {
+      "date": "2026-11-16",
+      "meal": "Lunch"
+    }
+  ],
+  "expectHall": null,
+  "notes": "Andrew: check the picked hall and hidden dishes against the USC site and set expectHall if you agree."
+}

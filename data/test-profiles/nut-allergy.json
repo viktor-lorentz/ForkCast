@@ -1,0 +1,33 @@
+{
+  "id": "nut-allergy",
+  "label": "Peanut and tree nut allergy, likes chicken",
+  "profile": {
+    "avoid": [
+      "peanuts",
+      "tree-nuts"
+    ],
+    "diet": [],
+    "likes": [
+      "chicken"
+    ],
+    "dislikes": [
+      "mushroom"
+    ]
+  },
+  "cases": [
+    {
+      "date": "2026-11-14",
+      "meal": "Dinner"
+    },
+    {
+      "date": "2026-11-15",
+      "meal": "Brunch"
+    },
+    {
+      "date": "2026-11-16",
+      "meal": "Lunch"
+    }
+  ],
+  "expectHall": null,
+  "notes": "Andrew: check the picked hall and hidden dishes against the USC site and set expectHall if you agree."
+}
