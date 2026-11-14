@@ -84,7 +84,7 @@ export function Onboarding({
             ‹ Back
           </button>
         )}
-        <h1 className="text-3xl font-bold tracking-tight text-cardinal">{onCancel ? "Your profile" : "ForkCast"}</h1>
+        <h1 className="select-none text-3xl font-bold tracking-tight text-cardinal">{onCancel ? "Your profile" : "ForkCast"}</h1>
         <p className="mt-1 text-stone-600">{onCancel ? "Tell us what you can't eat and what you love." : "Your forecast for USC dining: tell us what you can't eat and what you love, and we check all three halls for you."}</p>
       </header>
 

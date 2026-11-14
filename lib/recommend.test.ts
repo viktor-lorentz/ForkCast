@@ -132,3 +132,21 @@ describe("walking distance", () => {
     expect(gap(near)).toBeGreaterThan(gap(none));
   });
 });
+
+describe("student ratings in picks", () => {
+  it("shows students' scores to the AI and puts top-rated dishes first without it", async () => {
+    const [date, day] = [...days.entries()][0];
+    const profile = cleanProfile({ avoid: [], diet: [], likes: [], dislikes: [] });
+    const meal = day.halls[0].meals[0];
+    const top = scoreHalls(day, meal, profile)[0];
+    const last = top.mains[top.mains.length - 1];
+    const { dishKey } = await import("./ratings");
+    const { buildPrompt } = await import("./recommend");
+    const ratings = { [dishKey(last.name)]: { avg: 9.5, n: 4 } };
+    expect(buildPrompt(profile, meal, scoreHalls(day, meal, profile), ratings)).toContain(`${last.name} |`);
+    expect(buildPrompt(profile, meal, scoreHalls(day, meal, profile), ratings)).toContain("students: 9.5/10 (4)");
+    const rec = await recommend(day, meal, profile, ratings);
+    expect(rec.date).toBe(date);
+    if (rec.hall === top.hall) expect(rec.picks[0].name).toBe(last.name);
+  });
+});

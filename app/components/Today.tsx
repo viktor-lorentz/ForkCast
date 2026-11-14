@@ -290,13 +290,31 @@ export function Today({
     [day, visit, askVisit],
   );
   const ratings = useScores(dishNames);
+  // The logo takes you home: today, the meal that's on now, everything closed, back at the top.
+  const goHome = () => {
+    setDayOffset(initialDayOffset());
+    setChosenMeal(null);
+    setOpenHall(null);
+    setWhyOpenFor(null);
+    setShowWeek(false);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
   const plateHall = scores.find((s) => s.hall === (pickHall ?? scores[0]?.hall));
 
   return (
     <div className="flex flex-col gap-4 pb-10">
       <header className="flex items-start justify-between gap-3 pt-1">
         <div className="min-w-0">
-          <h1 className="text-xl font-bold tracking-tight text-cardinal">ForkCast</h1>
+          <h1>
+            <button
+              type="button"
+              onClick={goHome}
+              aria-label="ForkCast: back to today's pick"
+              className="select-none text-xl font-bold tracking-tight text-cardinal transition active:scale-95 active:opacity-70"
+            >
+              ForkCast
+            </button>
+          </h1>
           <ProfileLine profile={profile} />
         </div>
         <button
