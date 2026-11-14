@@ -43,3 +43,7 @@ next-env.d.ts
 # local caches
 /.cache/
 !.env.example
+
+# Copies made by iCloud Desktop sync (e.g. "page 2.tsx")
+* 2
+* 2.*
