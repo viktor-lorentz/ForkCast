@@ -37,7 +37,7 @@ const cachedDay = unstable_cache(
     if (!day.aiTagged) throw new Error("AI tagging incomplete");
     return day;
   },
-  ["enriched-day-v1"],
+  ["enriched-day-v2"],
   { revalidate: 3600 },
 );
 

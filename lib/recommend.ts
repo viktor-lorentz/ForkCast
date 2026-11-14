@@ -65,7 +65,8 @@ const RecSchema = z.object({
 const SYSTEM = `You help a USC student decide which residential dining hall to eat at for one meal.
 You get the student's profile and, per hall, ONLY the dishes that already passed their allergen and diet filters.
 Choose the hall that gives them the best meal: enough real mains, foods they like, nothing they dislike.
-Pick 3-5 dishes from that hall by their id, exactly as given. Never mention a dish that isn't listed.
+Pick 3-5 dishes from that hall by their id, exactly as given, at least 2 of them mains when available. Never mention a dish that isn't listed.
+Describe a dish only with what its name and line say; don't invent flavors (call it spicy only if its line says spicy).
 In "claims", list only label facts shown on that dish's line ("no:<allergen>" only for allergens the student avoids).
 Never call food "safe" or "allergen-free". Speak about USC's labels, e.g. "no sesame per USC labels".
 Write like a helpful friend, briefly.`;
@@ -122,6 +123,8 @@ function rulesRecommendation(scores: HallScore[], profile: Profile): AiRecommend
     summary: `${name} has the most options for you: ${top.mains.length} mains and ${top.sides.length} sides that fit your profile.`,
   };
 }
+
+const kindRank = (k?: string) => (k === "main" ? 0 : k === "side" ? 1 : 2);
 
 async function askModel(prompt: string, retryNote?: string): Promise<AiRecommendation> {
   const client = getClient();
@@ -191,7 +194,7 @@ export async function recommend(day: EnrichedDay, meal: string, profile: Profile
     meal,
     hall: chosen.hall,
     summary: anyEligible ? rec.summary : `No ${meal.toLowerCase()} dishes at any hall match your profile on USC's labels today.`,
-    picks: rec.picks.map((p) => {
+    picks: [...rec.picks].sort((a, b) => kindRank(byId.get(a.dishId)?.kind) - kindRank(byId.get(b.dishId)?.kind)).map((p) => {
       const d = byId.get(p.dishId)!;
       return { id: d.id, name: d.name, station: d.station, kind: d.kind, allergens: d.allergens, prefs: d.prefs, why: p.why, claims: p.claims };
     }),
@@ -200,10 +203,10 @@ export async function recommend(day: EnrichedDay, meal: string, profile: Profile
       open: s.open,
       mains: s.mains.length,
       sides: s.sides.length,
-      hiddenForAllergens: s.hidden.filter((h) => h.reason.type !== "diet").length,
+      hiddenForAllergens: s.hidden.filter((h) => h.reason.type === "allergen" || h.reason.type === "not-analyzed").length,
     })),
     hidden: chosen.hidden
-      .filter((h) => h.reason.type !== "diet" && h.dish.kind !== "condiment")
+      .filter((h) => (h.reason.type === "allergen" || h.reason.type === "not-analyzed") && h.dish.kind !== "condiment")
       .slice(0, 12)
       .map((h) => ({ id: h.dish.id, name: h.dish.name, station: h.dish.station, reason: describeReason(h.reason) })),
     verification: verification!,

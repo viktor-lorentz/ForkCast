@@ -65,6 +65,21 @@ describe.each(testProfiles)("profile $id", (tp) => {
   });
 });
 
+describe("Allergen Awareness Zone", () => {
+  it("is off-limits unless the student is registered", async () => {
+    const day = days.get("2026-11-14")!;
+    const parkside = day.halls.find((h) => h.hall === "parkside")!;
+    const meal = parkside.dishes.find((d) => /allergen awareness zone/i.test(d.station))!.meal;
+    const base = { avoid: ["peanuts"], diet: [], likes: [], dislikes: [] };
+    const station = (p: object) =>
+      scoreHalls(day, meal, cleanProfile(p))
+        .find((s) => s.hall === "parkside")!
+        .mains.some((d) => /allergen awareness zone/i.test(d.station));
+    expect(station(base)).toBe(false);
+    expect(station({ ...base, aaz: true })).toBe(true);
+  });
+});
+
 describe("verify catches a bad AI answer", () => {
   const profile = cleanProfile({ avoid: ["sesame"], diet: ["vegan"], likes: [], dislikes: [] });
   const dishes = [
