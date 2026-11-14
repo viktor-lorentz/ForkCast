@@ -14,6 +14,7 @@ import { STYLES } from "@/lib/styles";
 import { rate, type Rated } from "@/lib/taste";
 import { findDorm } from "@/lib/walking";
 import { LabelTag } from "./Chip";
+import { TakeItWithYou } from "./TakeItWithYou";
 import { FoodTags, PlateCard, Thumbs } from "./Taste";
 
 const keyNoTaste = (p: Profile) => profileKey({ ...p, taste: undefined });
@@ -503,6 +504,8 @@ export function Today({
           )}
         </>
       )}
+
+      <TakeItWithYou profile={profile} />
 
       {hours && (
         <section className="rounded-2xl bg-white shadow-sm ring-1 ring-stone-200">

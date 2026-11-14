@@ -8,8 +8,9 @@ Phone-first web app for the AI@USC Hackathon (Nov 14–15, 2026). It tells a USC
 - Next.js 16 (App Router, no Cache Components) + TypeScript + Tailwind 4
 - `@anthropic-ai/sdk`: `claude-haiku-5-5` classifies dishes and parses profiles; `claude-sonnet-5-5` picks dishes and explains
 - `zod` validates every model output; `vitest` for tests
-- No database. Profiles live in the browser; enriched menus and AI picks are cached in Next's data cache (`unstable_cache`)
-- Hosted on Vercel: every push to `main` deploys to https://ps-5-winners.vercel.app; a daily cron hits `/api/warm`
+- No accounts. Profiles live in the browser and move between devices with a `#p=` share link/QR (`lib/share.ts`); enriched menus and AI picks are cached in Next's data cache (`unstable_cache`)
+- Optional email (`lib/email/`): Gmail SMTP sends picks to @usc.edu addresses only; daily subscribers live in Upstash Redis with double opt-in; a cron at 15:00 UTC sends them
+- Hosted on Vercel: every push to `main` deploys to https://ps-5-winners.vercel.app; daily crons hit `/api/warm` and `/api/email/daily`
 
 ## Data source
 `GET https://hospitality.usc.edu/wp-json/hsp-api/v1/get-res-dining-menus/{evk|parkside|university-village}?y=YYYY&m=MM&d=DD`

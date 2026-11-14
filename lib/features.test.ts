@@ -133,3 +133,24 @@ describe("thumbs down", () => {
     expect(verify(rec, [d], "Dinner", p).passed).toBe(false);
   });
 });
+
+describe("share link", () => {
+  it("round-trips a full profile and rejects junk", async () => {
+    const { packProfile, unpackProfile, shareUrl } = await import("./share");
+    const p = cleanProfile({
+      avoid: ["sesame"],
+      diet: ["halal-ingredients"],
+      likes: ["spicy", "crème brûlée"],
+      dislikes: ["mushrooms"],
+      aaz: true,
+      dorm: "birnkrant",
+      goal: "cut",
+      styles: ["keto"],
+      taste: { up: [{ name: "Pho", cuisine: "asian", protein: "beef" }], down: [{ name: "Watermelon Glazed Grilled Chicken", cuisine: "american", protein: "chicken" }] },
+    });
+    expect(unpackProfile(`#p=${packProfile(p)}`)).toEqual(p);
+    expect(shareUrl("https://x.app", p)).toMatch(/^https:\/\/x\.app\/#p=[\w-]+$/);
+    expect(unpackProfile("#p=notbase64!!")).toBeNull();
+    expect(unpackProfile("")).toBeNull();
+  });
+});
