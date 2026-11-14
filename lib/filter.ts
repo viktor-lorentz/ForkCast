@@ -1,12 +1,14 @@
 import type { EnrichedDish } from "./enrich";
 import type { Profile } from "./profile";
+import { STYLE_REASONS, styleConflict, type StyleId } from "./styles";
 import { LABEL_NAMES, NOT_ANALYZED } from "./types";
 
 export type HideReason =
   | { type: "allergen"; label: string }
   | { type: "not-analyzed" }
   | { type: "diet"; label: string }
-  | { type: "restricted" };
+  | { type: "restricted" }
+  | { type: "style"; style: StyleId };
 
 /** Parkside's Allergen Awareness Zone requires registering with USC Hospitality. */
 export const isRestrictedStation = (station: string) => /allergen awareness zone/i.test(station);
@@ -30,12 +32,15 @@ export function hideReason(dish: EnrichedDish, profile: Profile): HideReason | n
   if (!profile.aaz && isRestrictedStation(dish.station)) return { type: "restricted" };
   const missing = profile.diet.find((p) => !hasPref(dish, p));
   if (missing) return { type: "diet", label: missing };
+  const style = styleConflict(dish, profile.styles);
+  if (style) return { type: "style", style };
   return null;
 }
 
 export function describeReason(r: HideReason): string {
   if (r.type === "allergen") return `Contains ${LABEL_NAMES[r.label] ?? r.label} (USC label)`;
   if (r.type === "not-analyzed") return "Not analyzed for allergens by USC";
+  if (r.type === "style") return STYLE_REASONS[r.style];
   if (r.type === "restricted") return "Allergen Awareness Zone: registered students only";
   return `Not labeled ${LABEL_NAMES[r.label] ?? r.label} by USC`;
 }

@@ -103,5 +103,8 @@ export function verify(
     add(ok, ok ? "Walking times match the map data" : "A walking time in the answer doesn't match the map data");
   }
 
+  // Macro numbers are estimates added up by code and shown by the app; the AI isn't allowed to state its own.
+  if (/\b\d+\s*(g|grams?|k?cal|calories?)\b/i.test(text)) add(false, "The answer states a calorie or gram number; only the app's own totals are shown");
+
   return { passed: checks.every((c) => c.ok), checks };
 }

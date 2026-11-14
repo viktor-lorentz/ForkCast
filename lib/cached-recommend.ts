@@ -16,7 +16,7 @@ export async function getRecommendation(day: EnrichedDay, profile: Profile, meal
       if (rec.source !== "ai") throw Object.assign(new Error("rules fallback"), { rec });
       return rec;
     },
-    ["recommend-v5", day.date, meal, profileKey(profile)],
+    ["recommend-v6", day.date, meal, profileKey(profile)],
     { revalidate: 3 * 3600 },
   );
   try {
