@@ -31,7 +31,7 @@ export function redisConfig(env: Record<string, string | undefined> = process.en
 }
 
 let client: Redis | null | undefined;
-function redis(): Redis | null {
+export function redis(): Redis | null {
   if (client === undefined) {
     const cfg = redisConfig();
     client = cfg ? new Redis(cfg) : null;

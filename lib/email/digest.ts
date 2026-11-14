@@ -105,7 +105,7 @@ ${group("🍛 Mains", mains)}${group("🥗 Sides & more", others)}
 <div style="margin:0 0 18px">${profileChips}</div>
 ${confirmBlock}
 ${mealHtml.join("") || `<p>USC hasn't posted menus for today yet.</p>`}
-<div style="text-align:center;margin:22px 0"><a href="${esc(appLink)}" style="background:#990000;color:#fff;text-decoration:none;padding:14px 22px;border-radius:14px;font-weight:700;display:inline-block;font-size:16px">Open ForkCast</a></div>
+<div style="text-align:center;margin:22px 0"><a href="${esc(appLink)}" style="background:#990000;color:#fff;text-decoration:none;padding:14px 22px;border-radius:14px;font-weight:700;display:inline-block;font-size:16px">Open ForkCast</a><div style="margin-top:12px;font-size:14px"><a href="${esc(links.origin)}/rate" style="color:#990000;font-weight:600;text-decoration:none">⭐ Ate something yesterday? Rate it 1–10</a></div></div>
 <p style="color:#a8a29e;font-size:12px;line-height:1.5;text-align:center">Based on USC Hospitality's allergen and diet labels. Labels can change and kitchens share equipment, so always confirm with dining staff if you have a serious allergy.${
     links.unsubscribe ? `<br><a href="${esc(links.unsubscribe)}" style="color:#a8a29e">Unsubscribe</a>` : ""
   }</p>
@@ -116,6 +116,7 @@ ${mealHtml.join("") || `<p>USC hasn't posted menus for today yet.</p>`}
     links.confirm ? `\nWant this every morning? ${links.confirm}\n` : "",
     ...recs.map((r) => `${r.meal}: ${r.picks.length ? hallName(r.hall) : "no match"}\n${r.summary}\n${r.picks.map((p) => `- ${p.name}`).join("\n")}\n`),
     `Open the app: ${appLink}`,
+    `Rate what you ate: ${links.origin}/rate`,
     "Based on USC's labels. Always confirm with dining staff if you have a serious allergy.",
     links.unsubscribe ? `Unsubscribe: ${links.unsubscribe}` : "",
   ].join("\n");
