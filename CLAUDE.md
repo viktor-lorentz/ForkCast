@@ -17,7 +17,7 @@ returns `{date, location, meals:[{name, stations:[{station, subtitle, menu:[{ite
 Saved copies live in `data/snapshots/<date>/<hall>.json`; `DEMO_MODE=1` reads only those.
 
 ## Layout
-- `lib/`: data (`usc.ts`), AI (`enrich.ts`, `recommend.ts`, `profile.ts`), rules (`filter.ts`, `score.ts`, `verify.ts`)
+- `lib/`: data (`usc.ts`, `hours.ts`), AI (`enrich.ts`, `recommend.ts`, `profile.ts`), rules (`filter.ts`, `score.ts`, `verify.ts`), taste and fitness (`taste.ts` thumbs ratings, `plate.ts` estimates and goal plates, `styles.ts` pescatarian/keto/Word of Wisdom)
 - `app/`: pages and `app/api/*` route handlers
 - `data/test-profiles/`: sample students plus expected results (Andrew edits these)
 - `data/snapshots/`: saved USC menus for tests and demo mode
@@ -29,6 +29,7 @@ Open on phone → pick restrictions and likes (no login) → today's card names 
 
 ## Rules
 - **Allergens are enforced by code, never by the model.** USC labels are the only source of truth. Model output must cite dish IDs and pass `lib/verify.ts`.
+- Macro estimates are AI guesses from dish names: use them for ranking and show only labels (High protein, Lighter, Hearty, Low carb), never calorie or gram numbers.
 - Never write "safe" in the UI. Say "no flagged allergens per USC labels" and tell people to confirm with dining staff.
 - Never break `main`: `npm test` and `npm run build` must pass before merging.
 - Work on a `feat/*` branch, open a PR, and merge it yourself once checks pass. Docs-only edits can go straight to `main`.

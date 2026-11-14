@@ -37,7 +37,7 @@ const cachedDay = unstable_cache(
     if (!day.aiTagged) throw Object.assign(new Error("AI tagging incomplete"), { day });
     return day;
   },
-  ["enriched-day-v3"],
+  ["enriched-day-v4"],
   // Menus rarely change during the day, and re-tagging can shift a dish between main and side.
   { revalidate: 6 * 3600 },
 );

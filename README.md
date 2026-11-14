@@ -13,5 +13,5 @@ AI@USC Hackathon project (Nov 14–15, 2026): a phone-first app that tells each 
 npm install
 cp .env.example .env.local   # add your ANTHROPIC_API_KEY
 npm run dev                  # http://localhost:3000
-npm test                     # 41 tests, no network or API key needed
+npm test                     # 53 tests, no network or API key needed
 ```

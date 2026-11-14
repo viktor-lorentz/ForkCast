@@ -1,6 +1,7 @@
 import type { EnrichedDish } from "./enrich";
 import { hasPref, hideReason } from "./filter";
 import type { Profile } from "./profile";
+import { ratingOf } from "./taste";
 import { ALLERGENS, HALLS, LABEL_NAMES, PREFERENCES } from "./types";
 
 /** A claim the AI makes about a dish, checked against USC labels. "no:<allergen>" or a diet code. */
@@ -76,6 +77,10 @@ export function verify(
       add(false, `Dish ${p.dishId} is not on today's ${meal} menu at this hall`);
       continue;
     }
+    if (ratingOf(profile.taste, d.name) === -1) {
+      allEligible = false;
+      add(false, `${d.name} got a thumbs down from you`);
+    }
     if (hideReason(d, profile)) {
       allEligible = false;
       add(false, `${d.name} conflicts with your profile`);
@@ -102,6 +107,9 @@ export function verify(
     const ok = stated.every((n) => walkMinutes.includes(n));
     add(ok, ok ? "Walking times match the map data" : "A walking time in the answer doesn't match the map data");
   }
+
+  // Macro numbers are estimates added up by code and shown by the app; the AI isn't allowed to state its own.
+  if (/\b\d+\s*(g|grams?|k?cal|calories?)\b/i.test(text)) add(false, "The answer states a calorie or gram number; only the app's own totals are shown");
 
   return { passed: checks.every((c) => c.ok), checks };
 }

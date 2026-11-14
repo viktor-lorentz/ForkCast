@@ -1,6 +1,7 @@
 import { zodOutputFormat } from "@anthropic-ai/sdk/helpers/zod";
 import { z } from "zod";
 import { getClient, MODELS } from "./ai";
+import type { Macros } from "./plate";
 import type { Dish } from "./types";
 
 export const KINDS = ["main", "side", "condiment", "dessert", "drink", "notice"] as const;
@@ -13,6 +14,8 @@ export interface DishInfo {
   protein: string;
   spicy: boolean;
   tags: string[];
+  /** Estimated from the dish name for one typical serving. Null when the AI didn't tag the dish or it isn't food. */
+  macros?: Macros | null;
 }
 
 export type EnrichedDish = Dish & DishInfo & { aiTagged: boolean };
@@ -26,6 +29,10 @@ const BatchSchema = z.object({
       protein: z.string().describe("main protein, e.g. chicken, beef, pork, fish, tofu, eggs, beans, cheese, none"),
       spicy: z.boolean(),
       tags: z.array(z.string()).describe("2-4 lowercase food-type words, e.g. rice, bowl, pasta, burger, salad, soup, sandwich, pizza, breakfast, fried, grilled"),
+      cal: z.number().int().describe("estimated calories in one typical dining-hall serving; 0 for a notice"),
+      protein_g: z.number().int().describe("estimated grams of protein in that serving"),
+      carbs_g: z.number().int().describe("estimated grams of carbohydrate in that serving"),
+      fat_g: z.number().int().describe("estimated grams of fat in that serving"),
     }),
   ),
 });
@@ -39,7 +46,8 @@ Kinds:
 - drink: beverages
 - notice: not food; an announcement or label such as "GRILL ITEMS AVAILABLE AT 11AM" or "SALAD BAR"
 Ingredients offered at a build-your-own station (omelette fillings like "Egg Whites" or "Chopped Bacon", crepe or salad bar toppings) are condiments, not mains.
-Each line is "index. name [station]". Classify from the name and station only. Do not guess allergens or dietary labels.`;
+Each line is "index. name [station]". Classify from the name and station only. Do not guess allergens or dietary labels.
+Also estimate nutrition for one typical self-serve dining-hall serving of the item as named (an entree portion for mains, one scoop or piece for sides, one spoonful for condiments). Use realistic values a dietitian would accept as a rough estimate, and keep calories consistent with the grams (4 per gram of protein or carbs, 9 per gram of fat).`;
 
 const cache = new Map<string, DishInfo>();
 
@@ -54,8 +62,10 @@ export function heuristicInfo(name: string): DishInfo {
   else if (/cookie|cake|brownie|pie\b|muffin|pastr|crepe|donut|pudding|ice cream|sweet/.test(n)) kind = "dessert";
   else if (/juice|coffee|tea\b|milk$|lemonade|soda/.test(n)) kind = "drink";
   else if (/burger|chicken|beef|pork|fish|salmon|tofu|pasta|pizza|taco|burrito|curry|stir fry|omelet|sandwich|wrap|bowl|ribs|roast|lentil|enchilada/.test(n)) kind = "main";
-  return { kind, cuisine: "none", protein: "none", spicy: /spicy|jalape|chipotle|sriracha|buffalo|hot /.test(n), tags: [] };
+  return { kind, cuisine: "none", protein: "none", spicy: /spicy|jalape|chipotle|sriracha|buffalo|hot /.test(n), tags: [], macros: null };
 }
+
+const clamp = (n: number, max: number) => Math.max(0, Math.min(max, Math.round(n)));
 
 async function classifyBatch(names: string[], stations: Map<string, string>): Promise<Map<string, DishInfo>> {
   const client = getClient();
@@ -70,13 +80,18 @@ async function classifyBatch(names: string[], stations: Map<string, string>): Pr
   const out = new Map<string, DishInfo>();
   for (const d of response.parsed_output?.dishes ?? []) {
     const name = names[d.i];
-    if (name) out.set(name, { kind: d.kind, cuisine: d.cuisine, protein: d.protein, spicy: d.spicy, tags: d.tags.slice(0, 4) });
+    if (name)
+      out.set(name, {
+        kind: d.kind, cuisine: d.cuisine, protein: d.protein, spicy: d.spicy,
+        tags: d.tags.slice(0, 4),
+        macros: d.kind === "notice" ? null : { cal: clamp(d.cal, 2000), protein: clamp(d.protein_g, 150), carbs: clamp(d.carbs_g, 300), fat: clamp(d.fat_g, 150) },
+      });
   }
   return out;
 }
 
 /**
- * Adds kind/cuisine/protein/tags to each dish. Unique names are classified once (batched, in parallel)
+ * Adds kind/cuisine/protein/tags and estimated macros to each dish. Unique names are classified once (batched, in parallel)
  * and cached for the life of the server. Any name the model misses gets the heuristic instead.
  */
 export async function enrichDishes(dishes: Dish[], batchSize = 20): Promise<EnrichedDish[]> {
