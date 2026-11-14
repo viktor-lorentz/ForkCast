@@ -1,4 +1,4 @@
-# PS5 Winners Hackathon Plan
+# ForkCast Hackathon Plan (team Overcooked)
 
 As of 2026-11-13 · Viktor Lorentz
 Live, commentable version: https://claude.ai/artifact/7KrMXiUWrCNptRfiFVCLz1
@@ -80,7 +80,7 @@ The USC page also offers Brunch, so weekend meal names differ. Meal periods are 
 | App | Next.js + TypeScript + Tailwind, phone-first | Add | Judges open it on phones. No login: profile saved in a link or cookie. |
 | Database | None for now | Change | Profiles live in the browser; menus and AI results are cached on the server. |
 | Writing code | Claude Code on Viktor's laptop | Keep | One AI, one codebase. Andrew's Claude Code is overflow only, on separate branches. |
-| Source of truth | GitHub `viktor-lorentz/PS5-winners` | Keep + add | Turn on branch protection so `main` needs a PR. |
+| Source of truth | GitHub `viktor-lorentz/ForkCast` | Keep + add | Turn on branch protection so `main` needs a PR. |
 | Hosting + daily job | Vercel (free plan), connected to GitHub | Change | Replaced Replit on Nov 14. Every push to `main` deploys to [ps-5-winners.vercel.app](https://ps-5-winners.vercel.app); a daily Vercel cron warms the menus. |
 | AI in the app | Haiku 5.5 classifies dishes and reads profiles, Sonnet 5.5 picks and explains | Keep | Paid from the $20 Anthropic API credits. |
 | Email | Stretch goal: team Gmail with an app password | Change | Resend needs a domain to email anyone but us. |

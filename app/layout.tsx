@@ -13,9 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Where Should I Eat? USC",
-  description: "Which USC dining hall has food you can eat today",
-  appleWebApp: { capable: true, title: "Where to Eat", statusBarStyle: "default" },
+  title: "ForkCast · USC dining",
+  description: "ForkCast tells you which USC dining hall has food you can eat, every meal.",
+  appleWebApp: { capable: true, title: "ForkCast", statusBarStyle: "default" },
 };
 
 export const viewport: Viewport = { themeColor: "#990000", width: "device-width", initialScale: 1, viewportFit: "cover" };

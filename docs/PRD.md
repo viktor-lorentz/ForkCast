@@ -1,4 +1,4 @@
-# PRD: dining hall picker
+# PRD: ForkCast (USC dining hall picker)
 
 Full team plan, schedule and roles: [HACKATHON_PLAN.md](HACKATHON_PLAN.md).
 

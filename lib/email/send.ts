@@ -11,7 +11,7 @@ export async function sendEmail(to: string, subject: string, html: string, text:
     service: "gmail",
     auth: { user: process.env.GMAIL_USER, pass: process.env.GMAIL_APP_PASSWORD },
   });
-  await transport.sendMail({ from: `"Where Should I Eat?" <${process.env.GMAIL_USER}>`, to, subject, html, text });
+  await transport.sendMail({ from: `"ForkCast" <${process.env.GMAIL_USER}>`, to, subject, html, text });
 }
 
 /** Only USC addresses: blocks using the form to spam strangers, and fits who the app is for. */

@@ -252,7 +252,7 @@ export function Today({
     <div className="flex flex-col gap-4 pb-10">
       <header className="flex items-start justify-between gap-3 pt-1">
         <div className="min-w-0">
-          <h1 className="text-xl font-bold text-cardinal">Where should I eat?</h1>
+          <h1 className="text-xl font-bold tracking-tight text-cardinal">ForkCast</h1>
           <ProfileLine profile={profile} />
         </div>
         <button

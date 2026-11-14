@@ -65,7 +65,7 @@ ${picks ? `<ul style="padding-left:18px;margin:0">${picks}</ul>` : ""}
 
   const html = `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head><body style="margin:0;background:#faf7f2;font-family:-apple-system,Segoe UI,Helvetica,Arial,sans-serif;color:#1c1917">
 <div style="max-width:520px;margin:0 auto;padding:20px 16px">
-<div style="font-size:20px;font-weight:700;color:#990000">Where should I eat?</div>
+<div style="font-size:22px;font-weight:800;color:#990000;letter-spacing:-.02em">ForkCast</div>
 <div style="color:#78716c;margin:0 0 16px">${esc(pretty)}</div>
 ${confirmBlock}
 ${mealHtml.join("") || `<p>USC hasn't posted menus for today yet.</p>`}
@@ -76,7 +76,7 @@ ${mealHtml.join("") || `<p>USC hasn't posted menus for today yet.</p>`}
 </div></body></html>`;
 
   const text = [
-    `Where should I eat? ${pretty}`,
+    `ForkCast · ${pretty}`,
     links.confirm ? `\nWant this every morning? ${links.confirm}\n` : "",
     ...recs.map((r) => `${r.meal}: ${r.picks.length ? hallName(r.hall) : "no match"}\n${r.summary}\n${r.picks.map((p) => `- ${p.name}`).join("\n")}\n`),
     `Open the app: ${appLink}`,

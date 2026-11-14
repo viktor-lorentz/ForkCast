@@ -1,6 +1,6 @@
 @AGENTS.md
 
-# PS5 Winners: dining hall picker
+# ForkCast: USC dining hall picker (team Overcooked)
 
 Phone-first web app for the AI@USC Hackathon (Nov 14–15, 2026). It tells a USC student which residential dining hall (EVK, Parkside, USC Village) has food they can eat this meal, with USC's own allergen labels as evidence. Team plan: `docs/HACKATHON_PLAN.md`. Product spec: `docs/PRD.md`.
 
