@@ -9,8 +9,10 @@ import { ratingOf, type Rated } from "@/lib/taste";
 import { dishEmoji } from "@/lib/emoji";
 import { HALLS } from "@/lib/types";
 import { FoodTags } from "./Taste";
+import { ScoreBadge, useScores } from "./Ratings";
 
 const COUNT = 10;
+const NO_NAMES: string[] = [];
 const todayLA = () => new Date().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
 const hallShort = (id: string) => HALLS.find((h) => h.id === id)?.short ?? id;
 
@@ -55,6 +57,7 @@ export function TasteQuiz({ profile, onRate }: { profile: Profile; onRate: (dish
       .catch(() => setFailed(true));
   }, [open, cards]);
 
+  const ratings = useScores(cards?.map((c) => c.name) ?? NO_NAMES);
   const card = cards?.[i];
   const next = cards?.[i + 1];
 
@@ -167,7 +170,10 @@ export function TasteQuiz({ profile, onRate }: { profile: Profile; onRate: (dish
                 <p className="mt-0.5 text-sm text-stone-500">
                   {hallShort(card.hall)} · {card.station.replace(/\s*\(.*\)\s*$/, "")}
                 </p>
-                <FoodTags dish={card} className="mt-2" />
+                <div className="mt-2 flex flex-wrap items-center gap-1.5">
+                  <ScoreBadge score={ratings.scoreOf(card.name)} long />
+                  <FoodTags dish={card} />
+                </div>
               </div>
             </div>
           </div>

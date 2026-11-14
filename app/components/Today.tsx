@@ -16,6 +16,7 @@ import { findDorm } from "@/lib/walking";
 import { LabelTag } from "./Chip";
 import { TakeItWithYou } from "./TakeItWithYou";
 import { FoodTags, PlateCard, Thumbs } from "./Taste";
+import { logMealVisit, pendingVisit, RateMealPrompt, ScoreBadge, useScores, type Ratings } from "./Ratings";
 
 const keyNoTaste = (p: Profile) => profileKey({ ...p, taste: undefined });
 const hallName = (id: string) => HALLS.find((h) => h.id === id)?.name ?? id;
@@ -28,6 +29,11 @@ function laDate(offset: number): string {
 }
 
 /** After 10 PM the halls are closed, so open on tomorrow's menus. */
+function laHour(): number {
+  const [h, m] = new Date().toLocaleTimeString("en-GB", { timeZone: "America/Los_Angeles", hour12: false }).split(":").map(Number);
+  return h + m / 60;
+}
+
 function initialDayOffset(): number {
   const hour = Number(new Date().toLocaleTimeString("en-GB", { timeZone: "America/Los_Angeles", hour: "2-digit", hour12: false }));
   return hour >= 22 ? 1 : 0;
@@ -62,7 +68,9 @@ function HallRow({
   onToggle,
   rateProps,
   hoursText,
+  ratings,
 }: {
+  ratings: Ratings;
   rateProps: Omit<Parameters<typeof Thumbs>[0], "dish" | "small">;
   hoursText: { text: string; open: boolean | null } | null;
   s: HallScore;
@@ -109,7 +117,10 @@ function HallRow({
                     {s[group].map((d) => (
                       <li key={d.id} className="flex items-center justify-between gap-2">
                         <span className="min-w-0">
-                          <span className="block text-stone-800">{d.name}</span>
+                          <span className="block text-stone-800">
+                            {d.name}
+                            <ScoreBadge score={ratings.scoreOf(d.name)} className="ml-1.5 align-[1px]" />
+                          </span>
                           <span className="block truncate text-xs text-stone-400">{shortStation(d.station)}</span>
                         </span>
                         <Thumbs small dish={d} {...rateProps} />
@@ -153,6 +164,8 @@ export function Today({
       .catch(() => {});
   }, []);
   const [openHall, setOpenHall] = useState<string | null>(null);
+  // After a meal, ask how the picks you looked at were.
+  const [visit, setVisit] = useState(() => pendingVisit(laDate(0), Date.now(), laHour()));
 
   const menuEntry = menus[date];
   const day = menuEntry?.ok ? menuEntry.data : null;
@@ -249,6 +262,10 @@ export function Today({
       setLeaving((l) => l.filter((x) => x !== id));
     }, 280);
   };
+  useEffect(() => {
+    if (dayOffset !== 0 || !rec || !meal || rec.picks.length === 0) return;
+    logMealVisit({ date, meal, hall: rec.hall, dishes: rec.picks.filter((p) => ratingOf(profile.taste, p.name) !== -1).map((p) => p.name) });
+  }, [dayOffset, rec, meal, date, profile.taste]);
   const shownPicks = (rec?.picks ?? []).filter((p) => ratingOf(profile.taste, p.name) !== -1 || leaving.includes(p.id));
   const nowMin = (() => {
     const [h, m] = new Date().toLocaleTimeString("en-GB", { timeZone: "America/Los_Angeles", hour12: false }).split(":").map(Number);
@@ -261,6 +278,11 @@ export function Today({
     const status = dayOffset === 0 ? openStatus(range, nowMin) : null;
     return { text: `${status ? status.text : range}${label ? ` · ${label}` : ""}`, open: status ? status.open : null };
   };
+  const dishNames = useMemo(
+    () => [...(day?.halls ?? []).flatMap((h) => h.dishes).filter((d) => d.kind === "main" || d.kind === "side" || d.kind === "dessert").map((d) => d.name), ...(visit?.dishes ?? [])],
+    [day, visit],
+  );
+  const ratings = useScores(dishNames);
   const plateHall = scores.find((s) => s.hall === (pickHall ?? scores[0]?.hall));
 
   return (
@@ -298,6 +320,8 @@ export function Today({
           </button>
         ))}
       </div>
+
+      {visit && <RateMealPrompt key={`${visit.date}|${visit.meal}`} visit={visit} ratings={ratings} onClose={() => setVisit(null)} />}
 
       {meals.length > 1 && (
         <div className="flex gap-1 rounded-xl bg-stone-200/70 p-1" role="tablist" aria-label="Meal">
@@ -410,13 +434,19 @@ export function Today({
                   isPick={s.hall === pickHall && !nothing}
                   max={maxCount}
                   rateProps={rateProps}
+                  ratings={ratings}
                   hoursText={hoursFor(s.hall)}
                   open={openHall === s.hall}
                   onToggle={() => setOpenHall(openHall === s.hall ? null : s.hall)}
                 />
               ))}
             </ul>
-            <p className="mt-3 text-xs text-stone-400">Tap a hall to see everything you can eat there. Thumbs up or down any dish to teach ForkCast your taste.</p>
+            <p className="mt-3 text-xs text-stone-400">
+              Tap a hall to see everything you can eat there. Thumbs up or down any dish to teach ForkCast your taste.{" "}
+              <a href={`/rate?date=${date}&meal=${encodeURIComponent(meal)}${pickHall ? `&hall=${pickHall}` : ""}`} className="font-medium text-cardinal">
+                Rate what you ate →
+              </a>
+            </p>
           </section>
 
           {!nothing && !recFailed && (
@@ -445,7 +475,10 @@ export function Today({
                     <div className="flex items-start justify-between gap-2">
                       <div className="min-w-0">
                         <h3 className="font-semibold leading-snug">{p.name}</h3>
-                        <p className="truncate text-xs text-stone-400">{shortStation(p.station)}</p>
+                        <p className="flex min-w-0 items-center gap-1.5 text-xs text-stone-400">
+                          <span className="truncate">{shortStation(p.station)}</span>
+                          <ScoreBadge score={ratings.scoreOf(p.name)} />
+                        </p>
                       </div>
                       {byId.get(p.id) && <Thumbs dish={byId.get(p.id)!} taste={profile.taste} onRate={ratePick(p.id)} />}
                     </div>
