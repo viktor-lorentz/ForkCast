@@ -101,6 +101,26 @@ Andrew and Hailey open PRs from the GitHub website and only touch their folders.
 
 ## Schedule
 
+Revised Sat 1:40 PM. Event times from the AI@USC kickoff info: Ginsburg Hall closes **10 PM Sat** and reopens **8 AM Sun**; Devpost deadline **11:00 AM Sun** (our target 10:30); judging round 1 **11 AM–2 PM**; finalists pitch **3:00–4:30 PM**.
+Assumption: Hailey is back at **10:30 PM tonight**, after the building closes, so the video is edited remotely or in a dorm. Footage that needs the dining halls has to be shot before they close, so Andrew and Viktor shoot it at dinner.
+
+| Time | Viktor (+ Claude) | Andrew | Hailey |
+| --- | --- | --- | --- |
+| Sat 1:45–5:00 | Turn on Vercel Analytics; pick ideas from the `idea` issues and build them one at a time | Deck with his Claude (docs/ANDREW_DECK_PROMPT.md); write the testimonial questions; Devpost draft | Busy |
+| 5:00–7:30 (dinner rush) | With Andrew at EVK/Village: real-phone user testing (3–5 students), screen recordings of the app | Testimonials (5–8 students, with consent), b-roll of the halls for Hailey | Busy |
+| 7:30–9:00 | Fix what testing found; last small feature | Put real quotes and numbers into the deck; judge Q&A; video script final | Busy |
+| **9:00 PM** | **Feature freeze**: tag `demo-ready`, final check on phones | Deck v2 done; script ready for Hailey | |
+| 9:00–10:00 | Only fixes; send Hailey the screen recordings | Narration draft; pack up before the building closes at 10 | |
+| 10:30 PM–late | Help with app shots for the video | Record narration with Hailey | **Video**: rough cut from script, b-roll, recordings, testimonials |
+| Sun 8:00–9:00 | Critical fixes only. **Code freeze 9:00** | Devpost text final; deck PDF exported | Final cut under 3:00 |
+| 9:00–10:30 | Open /api/warm; practice the pitch | **Submit on Devpost by 10:30**; practice the pitch x3 | Upload the video by 9:30 |
+| 11:00–2:00 | Round 1 judging: warm the site at 10:50; demo on a phone | Pitch + Q&A | Run the video and slides |
+| 3:00–4:30 | Finalist pitch: warm the site at 2:50 | Pitch | Video |
+
+Tasks for each row are GitHub Issues (pinned: #33). App ideas for Viktor are the issues labeled `idea`, each with a prompt to send Claude.
+
+<details><summary>Original Saturday plan (before GO)</summary>
+
 The goal: a live phone link by 17:00 Saturday, feature freeze at 21:00, submission by 10:30 Sunday (30 minutes before the deadline).
 
 | Time | Viktor + Claude | Andrew | Hailey |
@@ -115,6 +135,8 @@ The goal: a live phone link by 17:00 Saturday, feature freeze at 21:00, submissi
 | 21:00–22:00 | **Feature freeze.** Tag `main` as demo-ready; final accuracy check on the demo profiles | Narration recording | Edit with narration |
 | Sun 8:00–9:00 | Critical fixes only; re-test the live link. **Code freeze 9:00** | Devpost text final | Final cut, under 3:00 |
 | Sun 9:00–10:30 | Check the deploy, practice the 3-min pitch | **Submit on Devpost by 10:30**; practice the pitch | Upload video |
+
+</details>
 
 ## Claude prompts for Andrew
 
