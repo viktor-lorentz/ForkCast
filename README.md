@@ -7,7 +7,7 @@ AI@USC Hackathon project (Nov 14–15, 2026). ForkCast is a phone-first app that
 - **Team plan:** [docs/HACKATHON_PLAN.md](docs/HACKATHON_PLAN.md) (start here)
 - **Kickoff prompt:** [docs/KICKOFF_PROMPT.md](docs/KICKOFF_PROMPT.md)
 
-**Live app:** https://ps-5-winners.vercel.app (try a sample student: [/?demo=halal-sesame](https://ps-5-winners.vercel.app/?demo=halal-sesame))
+**Live app:** https://forkcast-usc.vercel.app (try a sample student: [/?demo=halal-sesame](https://forkcast-usc.vercel.app/?demo=halal-sesame))
 
 ## Run it locally
 

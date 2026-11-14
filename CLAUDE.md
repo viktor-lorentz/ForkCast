@@ -10,7 +10,7 @@ Phone-first web app for the AI@USC Hackathon (Nov 14–15, 2026). It tells a USC
 - `zod` validates every model output; `vitest` for tests
 - No accounts. Profiles live in the browser and move between devices with a `#p=` share link/QR (`lib/share.ts`); enriched menus and AI picks are cached in Next's data cache (`unstable_cache`)
 - Optional email (`lib/email/`): Gmail SMTP sends picks to @usc.edu addresses only; daily subscribers live in Upstash Redis with double opt-in; a cron at 15:00 UTC sends them
-- Hosted on Vercel: every push to `main` deploys to https://ps-5-winners.vercel.app; daily crons hit `/api/warm` and `/api/email/daily`
+- Hosted on Vercel: every push to `main` deploys to https://forkcast-usc.vercel.app; daily crons hit `/api/warm` and `/api/email/daily`
 
 ## Data source
 `GET https://hospitality.usc.edu/wp-json/hsp-api/v1/get-res-dining-menus/{evk|parkside|university-village}?y=YYYY&m=MM&d=DD`
