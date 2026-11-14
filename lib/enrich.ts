@@ -38,7 +38,8 @@ Kinds:
 - dessert: sweets, pastries, cookies, cake, ice cream
 - drink: beverages
 - notice: not food; an announcement or label such as "GRILL ITEMS AVAILABLE AT 11AM" or "SALAD BAR"
-Classify from the name only. Do not guess allergens or dietary labels.`;
+Ingredients offered at a build-your-own station (omelette fillings like "Egg Whites" or "Chopped Bacon", crepe or salad bar toppings) are condiments, not mains.
+Each line is "index. name [station]". Classify from the name and station only. Do not guess allergens or dietary labels.`;
 
 const cache = new Map<string, DishInfo>();
 
@@ -56,7 +57,7 @@ export function heuristicInfo(name: string): DishInfo {
   return { kind, cuisine: "none", protein: "none", spicy: /spicy|jalape|chipotle|sriracha|buffalo|hot /.test(n), tags: [] };
 }
 
-async function classifyBatch(names: string[]): Promise<Map<string, DishInfo>> {
+async function classifyBatch(names: string[], stations: Map<string, string>): Promise<Map<string, DishInfo>> {
   const client = getClient();
   if (!client) throw new Error("ANTHROPIC_API_KEY not set");
   const response = await client.messages.parse({
@@ -64,7 +65,7 @@ async function classifyBatch(names: string[]): Promise<Map<string, DishInfo>> {
     max_tokens: 16000,
     output_config: { effort: "low", format: zodOutputFormat(BatchSchema) },
     system: SYSTEM,
-    messages: [{ role: "user", content: names.map((name, i) => `${i}. ${name}`).join("\n") }],
+    messages: [{ role: "user", content: names.map((name, i) => `${i}. ${name} [${stations.get(name) ?? ""}]`).join("\n") }],
   });
   const out = new Map<string, DishInfo>();
   for (const d of response.parsed_output?.dishes ?? []) {
@@ -83,7 +84,8 @@ export async function enrichDishes(dishes: Dish[], batchSize = 20): Promise<Enri
   if (missing.length > 0 && getClient()) {
     const batches: string[][] = [];
     for (let i = 0; i < missing.length; i += batchSize) batches.push(missing.slice(i, i + batchSize));
-    const results = await Promise.allSettled(batches.map(classifyBatch));
+    const stations = new Map(dishes.map((d) => [d.name, d.station]));
+    const results = await Promise.allSettled(batches.map((b) => classifyBatch(b, stations)));
     for (const r of results) {
       if (r.status === "fulfilled") r.value.forEach((info, name) => cache.set(name, info));
       else console.warn("Dish classification batch failed:", r.reason);

@@ -1,4 +1,4 @@
-import { parseProfileText } from "@/lib/profile";
+import { parseProfileText } from "@/lib/parse-profile";
 
 export async function POST(request: Request) {
   const { text } = (await request.json().catch(() => ({}))) as { text?: string };

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -16,6 +16,8 @@ export const metadata: Metadata = {
   title: "Where Should I Eat? USC",
   description: "Which USC dining hall has food you can eat today",
 };
+
+export const viewport: Viewport = { themeColor: "#990000", width: "device-width", initialScale: 1 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (

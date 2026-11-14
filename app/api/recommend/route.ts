@@ -14,7 +14,7 @@ const cachedRecommend = unstable_cache(
     if (rec.source !== "ai") throw Object.assign(new Error("rules fallback"), { rec });
     return rec;
   },
-  ["recommend-v1"],
+  ["recommend-v3"],
   { revalidate: 3600 },
 );
 
