@@ -112,7 +112,7 @@ Assumption: Hailey is back at **10:30 PM tonight**, after the building closes, s
 | **9:00 PM** | **Feature freeze**: tag `demo-ready`, final check on phones | Deck v2 done; script ready for Hailey | |
 | 9:00–10:00 | Only fixes; send Hailey the screen recordings | Narration draft; pack up before the building closes at 10 | |
 | 10:30 PM–late | Help with app shots for the video | Record narration with Hailey | **Video**: rough cut from script, b-roll, recordings, testimonials |
-| Sun 8:00–9:00 | Critical fixes only. **Code freeze 9:00** | Devpost text final; deck PDF exported | Final cut under 3:00 |
+| Sun 8:00–9:00 | Critical fixes only. **Code freeze 9:00** | Devpost text final; deck link published and tested | Final cut under 3:00 |
 | 9:00–10:30 | Open /api/warm; practice the pitch | **Submit on Devpost by 10:30**; practice the pitch x3 | Upload the video by 9:30 |
 | 11:00–2:00 | Round 1 judging: warm the site at 10:50; demo on a phone | Pitch + Q&A | Run the video and slides |
 | 3:00–4:30 | Finalist pitch: warm the site at 2:50 | Pitch | Video |

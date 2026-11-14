@@ -22,7 +22,7 @@ New goal: build the pitch deck that wins this hackathon. You already have the ba
 Judges see a dozen decks in a row. Ours should feel like an Apple keynote crossed with a weather report: confident, calm, very few words, every animation telling part of the story. Rubric: Impact 30%, Technical & AI 25%, Feasibility 25%, UX 20%. Every slide should earn points on at least one of those. The pitch is about 3 minutes, so plan 8–10 slides at roughly 15–25 seconds each.
 
 ## Tools: your call, but here's my starting point
-You're the expert, so pick whatever produces the best result. I'm not a coder. I have Node.js and limited Claude usage, so the tool also needs to be reliable for me to run. My suggestion is **Slidev** (sli.dev): Markdown and Vue slides, smooth transitions, click-by-click builds, `v-motion` animations, Magic Move morphs between slides, a presenter view with notes, and PDF/PPTX export. If you think something else would look clearly better, tell me why in two sentences before setting it up. Examples: a custom Vite + React + Motion deck for fully custom animation, or reveal.js. Either way:
+You're the expert, so pick whatever produces the best result. I'm not a coder. I have Node.js and limited Claude usage, so the tool also needs to be reliable for me to run. My suggestion is **Slidev** (sli.dev): Markdown and Vue slides, smooth transitions, click-by-click builds, `v-motion` animations, Magic Move morphs between slides, a presenter view with notes, and one command to build a static site you can publish as a link. If you think something else would look clearly better, tell me why in two sentences before setting it up. Examples: a custom Vite + React + Motion deck for fully custom animation, or reveal.js. Either way:
 - Explain each command in one line before I run it, and fix errors yourself before asking me to do anything.
 - If the tooling fights us for more than about 20 minutes, simplify. A polished simple deck beats a broken fancy one.
 - Work in small steps and batch your edits. Don't regenerate the whole deck for small changes.
@@ -36,7 +36,7 @@ You're the expert, so pick whatever produces the best result. I'm not a coder. I
   - **The pipeline:** USC menu → AI sorts dishes → code filters allergens → AI picks and explains → code verifies. Build it step by step, with the "code" steps visibly locking the AI steps in place.
   - **Profile switch:** the same day, two students, the hall pick morphs from EVK to Village (Magic Move or a shared-element transition).
   - **Trust:** the verification checklist ticks in one ✓ at a time.
-  - Keep it smooth and quick (200–600 ms, ease-out), with no bounces, spins or flying text. It has to look good on a projector and still read as a flat PDF.
+  - Keep it smooth and quick (200–600 ms, ease-out), with no bounces, spins or flying text. It has to look good on a projector and on a judge's laptop screen.
 
 ## Story (improve it if you see a stronger arc)
 1. **Hook:** a forecast-style card. "Every student asks this three times a day: where should I eat?"
@@ -59,8 +59,9 @@ Write speaker notes for every slide: what I say, in plain spoken sentences, time
 
 ## Done means
 - The deck runs full screen with presenter notes, and every animation plays on click without stutter.
-- A PDF export where every slide still reads on its own without animations (Devpost and backup).
+- The deck published as a web link that anyone can open in a browser, with animations intact (this is what goes on Devpost; the organizers confirmed a PDF isn't required). Pick the simplest reliable host for a non-coder, e.g. Netlify Drop (drag the built folder onto app.netlify.com/drop) or Vercel. Never put it inside the app repo.
+- An offline copy that runs on my laptop without Wi-Fi, as a backup.
 - The QR code tested with a real phone camera, and the URL correct.
-- A short checklist for me: how to start presenter mode, the clicker or arrow keys, what to do if Wi-Fi dies (switch to the embedded video and the PDF), and a reminder for Viktor to open https://forkcast-usc.vercel.app/api/warm 10 minutes before judging.
-- Our deadlines: feature freeze Saturday 9 PM, code freeze Sunday 9 AM, Devpost submission target Sunday 10:30 AM (hard deadline 11:00 AM PT). Have the deck PDF ready before 10:30 on Sunday.
+- A short checklist for me: how to start presenter mode, the clicker or arrow keys, what to do if Wi-Fi dies (switch to the embedded video and the offline copy on my laptop), and a reminder for Viktor to open https://forkcast-usc.vercel.app/api/warm 10 minutes before judging.
+- Our deadlines: feature freeze Saturday 9 PM, code freeze Sunday 9 AM, Devpost submission target Sunday 10:30 AM (hard deadline 11:00 AM PT). Have the deck link live and tested in a private window before 10:30 on Sunday.
 ```
