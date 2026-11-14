@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { GOALS } from "@/lib/plate";
 import type { Profile } from "@/lib/profile";
 import { STYLES } from "@/lib/styles";
@@ -34,6 +34,13 @@ export function Onboarding({
   const [dislike, setDislike] = useState("");
   const [like, setLike] = useState("");
   const taste = tasteSummary(p.taste);
+  // First-time setup gets a short swipe step after the profile; editing keeps it as an optional card.
+  const [step, setStep] = useState<"profile" | "taste">("profile");
+  const latest = useRef(p);
+  useEffect(() => {
+    latest.current = p;
+  });
+  const finish = () => onDone(latest.current);
 
   async function readText() {
     if (!text.trim()) return;
@@ -74,6 +81,31 @@ export function Onboarding({
     const w = dislike.trim().toLowerCase();
     if (w) setP({ ...p, dislikes: [...new Set([...p.dislikes, w])] });
     setDislike("");
+  }
+
+  if (step === "taste") {
+    return (
+      <div className="rise flex flex-col gap-5 pb-32">
+        <header className="pt-2">
+          <button type="button" onClick={() => setStep("profile")} className="mb-2 -ml-1 rounded-full px-1 text-sm font-medium text-stone-500">
+            ‹ Back
+          </button>
+          <p className="text-sm font-semibold uppercase tracking-wide text-cardinal">Last step · 15 seconds</p>
+          <h1 className="mt-1 text-3xl font-bold tracking-tight">What looks good?</h1>
+          <p className="mt-1 text-stone-600">Five dishes from today&apos;s menus. Swipe right if you&apos;d eat it, left if not, and we&apos;ll pick better for you.</p>
+        </header>
+        <TasteQuiz profile={p} onRate={(dish, v) => setP((cur) => ({ ...cur, taste: rate(cur.taste, dish, v) }))} onFinish={finish} />
+        <div className="fixed inset-x-0 bottom-0 px-4 pt-3 pb-[max(1rem,env(safe-area-inset-bottom))]">
+          <button
+            type="button"
+            onClick={finish}
+            className="mx-auto block w-full max-w-md rounded-2xl py-3 text-base font-semibold text-stone-500 transition active:scale-[0.98]"
+          >
+            Skip, show my dining hall →
+          </button>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -211,7 +243,7 @@ export function Onboarding({
         )}
       </section>
 
-      <TasteQuiz profile={p} onRate={(dish, v) => setP((cur) => ({ ...cur, taste: rate(cur.taste, dish, v) }))} />
+      {onCancel && <TasteQuiz profile={p} onRate={(dish, v) => setP((cur) => ({ ...cur, taste: rate(cur.taste, dish, v) }))} />}
 
       {taste.count > 0 && (
         <section className="rounded-2xl bg-white p-4 shadow-sm ring-1 ring-stone-200">
@@ -248,10 +280,14 @@ export function Onboarding({
       <div className="fixed inset-x-0 bottom-0 border-t border-stone-200 bg-background/95 px-4 pt-4 pb-[max(1rem,env(safe-area-inset-bottom))] backdrop-blur">
         <button
           type="button"
-          onClick={() => onDone(p)}
+          onClick={() => {
+            if (onCancel) return onDone(p);
+            setStep("taste");
+            window.scrollTo(0, 0);
+          }}
           className="mx-auto block w-full max-w-md rounded-2xl bg-cardinal py-4 text-lg font-semibold text-white shadow-lg active:bg-cardinal-dark"
         >
-          Find my dining hall
+          {onCancel ? "Find my dining hall" : "Continue"}
         </button>
       </div>
     </div>
