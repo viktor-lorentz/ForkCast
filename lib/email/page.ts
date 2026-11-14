@@ -1,6 +1,6 @@
 /** Small branded HTML page for the confirm and unsubscribe links. */
 export function notice(title: string, body: string): Response {
-  const html = `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${title}</title></head>
+  const html = `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${title} · ForkCast</title></head>
 <body style="margin:0;background:#faf7f2;font-family:-apple-system,Segoe UI,Helvetica,Arial,sans-serif;color:#1c1917">
 <div style="max-width:420px;margin:0 auto;padding:48px 20px;text-align:center">
 <div style="font-size:24px;font-weight:700;color:#990000">${title}</div>

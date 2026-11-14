@@ -2,9 +2,9 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Where Should I Eat? USC",
-    short_name: "Where to Eat",
-    description: "Which USC dining hall has food you can eat today",
+    name: "ForkCast",
+    short_name: "ForkCast",
+    description: "Which USC dining hall has food you can eat, every meal.",
     start_url: "/",
     display: "standalone",
     background_color: "#faf7f2",

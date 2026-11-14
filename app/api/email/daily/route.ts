@@ -10,7 +10,9 @@ export async function GET(request: Request) {
   const secret = process.env.CRON_SECRET;
   if (secret && request.headers.get("authorization") !== `Bearer ${secret}`) return new Response("Unauthorized", { status: 401 });
   if (!emailEnabled()) return Response.json({ sent: 0, note: "email not set up" });
-  const origin = process.env.APP_URL ?? "https://ps-5-winners.vercel.app";
+  // Vercel provides the production domain; APP_URL overrides it.
+  const prod = process.env.VERCEL_PROJECT_PRODUCTION_URL;
+  const origin = process.env.APP_URL ?? (prod ? `https://${prod}` : "https://ps-5-winners.vercel.app");
   const date = todayLA();
   const subs = await confirmedSubscribers();
   let sent = 0;

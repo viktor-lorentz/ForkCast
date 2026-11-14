@@ -40,7 +40,7 @@ for (const [id, name, lat, lon, approx] of DORMS) {
   const minutes = {};
   for (const [hall, [hlat, hlon]] of Object.entries(HALLS)) {
     const url = `https://routing.openstreetmap.de/routed-foot/route/v1/foot/${lon},${lat};${hlon},${hlat}?overview=false`;
-    const res = await fetch(url, { headers: { "User-Agent": "ps5-winners-hackathon/1.0" } });
+    const res = await fetch(url, { headers: { "User-Agent": "forkcast-hackathon/1.0" } });
     const json = await res.json();
     if (json.code !== "Ok") throw new Error(`${id} → ${hall}: ${json.code}`);
     minutes[hall] = Math.max(1, Math.round(json.routes[0].duration / 60));

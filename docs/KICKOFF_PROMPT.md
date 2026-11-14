@@ -1,6 +1,6 @@
-# Kickoff prompt for Claude Code — Team "PS5 Winners" (AI@USC Hackathon)
+# Kickoff prompt for Claude Code — Team "Overcooked" (formerly "PS5 Winners") (AI@USC Hackathon)
 
-Paste everything below the line into Claude Code, run from the root of the `PS5-winners` repo.
+Paste everything below the line into Claude Code, run from the root of the `ForkCast` repo.
 
 ---
 
@@ -54,7 +54,7 @@ We want to develop the idea further. Before GO, help us make it win:
 | Part | Tool | Why |
 | --- | --- | --- |
 | Writing all code | Claude Code (you), on Viktor's machine, Claude Max | One AI editing one codebase avoids conflicts. Opus 5.5 for features, Sonnet/Haiku for small tasks, Fable 5.2 only for planning, hard bugs and the final review |
-| Source of truth | GitHub repo `viktor-lorentz/PS5-winners` | Everyone works through branches and pull requests here |
+| Source of truth | GitHub repo `viktor-lorentz/ForkCast` | Everyone works through branches and pull requests here |
 | Hosting + daily job | Replit, deployed from the GitHub repo, using the free hackathon credits | Free credits, Replit is a sponsor and judge, imports straight from GitHub, and Scheduled Deployments handle the daily menu pull and email job |
 | Not using | Fly.io | It would work, but it costs money and adds Docker/config time we don't have. Revisit only if Replit blocks us |
 | Not using for the main code | Replit Agent | Two AI agents editing the same code causes conflicts. OK only for throwaway experiments outside this repo |
