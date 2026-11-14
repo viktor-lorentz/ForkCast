@@ -166,6 +166,8 @@ export function Today({
   const [openHall, setOpenHall] = useState<string | null>(null);
   // After a meal, ask how the picks you looked at were.
   const [visit, setVisit] = useState(() => pendingVisit(laDate(0), Date.now(), laHour()));
+  // ?ask=rate shows the rating card right away for the current picks (for demos and screenshots).
+  const [askNow, setAskNow] = useState(() => new URLSearchParams(window.location.search).get("ask") === "rate");
 
   const menuEntry = menus[date];
   const day = menuEntry?.ok ? menuEntry.data : null;
@@ -278,9 +280,14 @@ export function Today({
     const status = dayOffset === 0 ? openStatus(range, nowMin) : null;
     return { text: `${status ? status.text : range}${label ? ` · ${label}` : ""}`, open: status ? status.open : null };
   };
+  const askVisit = useMemo(
+    () => (askNow && rec && meal && rec.picks.length > 0 ? { date, meal, hall: rec.hall, dishes: rec.picks.map((p) => p.name), at: 0 } : null),
+    [askNow, rec, meal, date],
+  );
+  const shownVisit = visit ?? askVisit;
   const dishNames = useMemo(
-    () => [...(day?.halls ?? []).flatMap((h) => h.dishes).filter((d) => d.kind === "main" || d.kind === "side" || d.kind === "dessert").map((d) => d.name), ...(visit?.dishes ?? [])],
-    [day, visit],
+    () => [...(day?.halls ?? []).flatMap((h) => h.dishes).filter((d) => d.kind === "main" || d.kind === "side" || d.kind === "dessert").map((d) => d.name), ...(visit?.dishes ?? []), ...(askVisit?.dishes ?? [])],
+    [day, visit, askVisit],
   );
   const ratings = useScores(dishNames);
   const plateHall = scores.find((s) => s.hall === (pickHall ?? scores[0]?.hall));
@@ -321,7 +328,14 @@ export function Today({
         ))}
       </div>
 
-      {visit && <RateMealPrompt key={`${visit.date}|${visit.meal}`} visit={visit} ratings={ratings} onClose={() => setVisit(null)} />}
+      {shownVisit && (
+        <RateMealPrompt
+          key={`${shownVisit.date}|${shownVisit.meal}`}
+          visit={shownVisit}
+          ratings={ratings}
+          onClose={() => (visit ? setVisit(null) : setAskNow(false))}
+        />
+      )}
 
       {meals.length > 1 && (
         <div className="flex gap-1 rounded-xl bg-stone-200/70 p-1" role="tablist" aria-label="Meal">
