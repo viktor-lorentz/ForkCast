@@ -15,9 +15,10 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Where Should I Eat? USC",
   description: "Which USC dining hall has food you can eat today",
+  appleWebApp: { capable: true, title: "Where to Eat", statusBarStyle: "default" },
 };
 
-export const viewport: Viewport = { themeColor: "#990000", width: "device-width", initialScale: 1 };
+export const viewport: Viewport = { themeColor: "#990000", width: "device-width", initialScale: 1, viewportFit: "cover" };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (

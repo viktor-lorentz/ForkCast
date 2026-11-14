@@ -98,4 +98,37 @@ describe("verify catches a bad AI answer", () => {
     expect(run({ picks: [{ dishId: "ok1", why: "x", claims: ["halal-ingredients"] }] }).passed).toBe(false));
   it('rejects the word "safe"', () => expect(run({ summary: "EVK is safe for you." }).passed).toBe(false));
   it("rejects an unknown hall", () => expect(run({ hall: "mccarthy" }).passed).toBe(false));
+  it("rejects the same dish twice", () =>
+    expect(run({ picks: [base.picks[0], base.picks[0]] }).passed).toBe(false));
+  it("rejects a made-up walking time", () => {
+    const all = dishes.map((d) => ({ ...d, allergens: [...d.allergens], prefs: [...d.prefs], tags: [] }));
+    const withWalk = (summary: string) => verify({ ...base, summary }, all, "Dinner", profile, [3, 12, 14]).passed;
+    expect(withWalk("EVK is a 3 min walk and has good options.")).toBe(true);
+    expect(withWalk("EVK is only a 2-minute walk.")).toBe(false);
+  });
+});
+
+describe("walking distance", () => {
+  const meal = "Dinner";
+  const walkOf = (dorm: string | undefined) =>
+    scoreHalls(days.get("2026-11-14")!, meal, cleanProfile({ avoid: [], diet: [], likes: [], dislikes: [], dorm }));
+
+  it("adds walk minutes for a known residence and none otherwise", () => {
+    expect(walkOf("birnkrant").find((s) => s.hall === "evk")!.walk).toBe(1);
+    expect(walkOf(undefined).every((s) => s.walk === null)).toBe(true);
+    expect(walkOf("not-a-dorm").every((s) => s.walk === null)).toBe(true);
+  });
+
+  it("lowers the score of far halls without changing what's eligible", () => {
+    const near = walkOf("parkside-irc");
+    const none = walkOf(undefined);
+    for (const hall of ["evk", "parkside", "university-village"]) {
+      const a = near.find((s) => s.hall === hall)!;
+      const b = none.find((s) => s.hall === hall)!;
+      expect(a.mains.length).toBe(b.mains.length);
+      expect(a.score).toBeLessThan(b.score);
+    }
+    const gap = (xs: typeof near) => xs.find((s) => s.hall === "parkside")!.score - xs.find((s) => s.hall === "evk")!.score;
+    expect(gap(near)).toBeGreaterThan(gap(none));
+  });
 });

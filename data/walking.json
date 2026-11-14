@@ -1,0 +1,216 @@
+{
+  "source": "OpenStreetMap foot routing (routing.openstreetmap.de)",
+  "dorms": [
+    {
+      "id": "birnkrant",
+      "name": "Birnkrant",
+      "approx": true,
+      "minutes": {
+        "evk": 1,
+        "parkside": 14,
+        "university-village": 10
+      }
+    },
+    {
+      "id": "new-north",
+      "name": "New North",
+      "approx": true,
+      "minutes": {
+        "evk": 1,
+        "parkside": 15,
+        "university-village": 9
+      }
+    },
+    {
+      "id": "marks-tower",
+      "name": "Marks Tower",
+      "minutes": {
+        "evk": 3,
+        "parkside": 14,
+        "university-village": 12
+      }
+    },
+    {
+      "id": "marks-hall",
+      "name": "Marks Hall",
+      "approx": true,
+      "minutes": {
+        "evk": 4,
+        "parkside": 14,
+        "university-village": 13
+      }
+    },
+    {
+      "id": "pardee-tower",
+      "name": "Pardee Tower",
+      "minutes": {
+        "evk": 3,
+        "parkside": 14,
+        "university-village": 11
+      }
+    },
+    {
+      "id": "trojan-hall",
+      "name": "Trojan Hall",
+      "approx": true,
+      "minutes": {
+        "evk": 3,
+        "parkside": 16,
+        "university-village": 12
+      }
+    },
+    {
+      "id": "parkside-irc",
+      "name": "Parkside International (IRC)",
+      "minutes": {
+        "evk": 14,
+        "parkside": 1,
+        "university-village": 12
+      }
+    },
+    {
+      "id": "parkside-ahf",
+      "name": "Parkside Arts & Humanities",
+      "minutes": {
+        "evk": 13,
+        "parkside": 2,
+        "university-village": 13
+      }
+    },
+    {
+      "id": "parkside-apts",
+      "name": "Parkside Apartments",
+      "minutes": {
+        "evk": 13,
+        "parkside": 2,
+        "university-village": 11
+      }
+    },
+    {
+      "id": "mccarthy",
+      "name": "McCarthy Honors (Village)",
+      "minutes": {
+        "evk": 9,
+        "parkside": 13,
+        "university-village": 1
+      }
+    },
+    {
+      "id": "cale-irani",
+      "name": "Cale & Irani (Village)",
+      "minutes": {
+        "evk": 8,
+        "parkside": 13,
+        "university-village": 2
+      }
+    },
+    {
+      "id": "cowlings-ilium",
+      "name": "Cowlings & Ilium (Village)",
+      "minutes": {
+        "evk": 8,
+        "parkside": 15,
+        "university-village": 4
+      }
+    },
+    {
+      "id": "nemirovsky-bohnett",
+      "name": "Nemirovsky & Bohnett (Village)",
+      "minutes": {
+        "evk": 6,
+        "parkside": 14,
+        "university-village": 4
+      }
+    },
+    {
+      "id": "mcmorrow",
+      "name": "McMorrow (Village)",
+      "minutes": {
+        "evk": 6,
+        "parkside": 14,
+        "university-village": 4
+      }
+    },
+    {
+      "id": "webb-tower",
+      "name": "Webb Tower",
+      "minutes": {
+        "evk": 9,
+        "parkside": 9,
+        "university-village": 3
+      }
+    },
+    {
+      "id": "fluor-tower",
+      "name": "Fluor Tower",
+      "minutes": {
+        "evk": 9,
+        "parkside": 10,
+        "university-village": 4
+      }
+    },
+    {
+      "id": "cardinal-gardens",
+      "name": "Cardinal Gardens",
+      "minutes": {
+        "evk": 10,
+        "parkside": 12,
+        "university-village": 3
+      }
+    },
+    {
+      "id": "century",
+      "name": "Century Apartments",
+      "minutes": {
+        "evk": 16,
+        "parkside": 16,
+        "university-village": 8
+      }
+    },
+    {
+      "id": "la-sorbonne",
+      "name": "La Sorbonne",
+      "minutes": {
+        "evk": 12,
+        "parkside": 13,
+        "university-village": 4
+      }
+    },
+    {
+      "id": "troy-hall",
+      "name": "Troy Hall",
+      "minutes": {
+        "evk": 10,
+        "parkside": 19,
+        "university-village": 8
+      }
+    },
+    {
+      "id": "cardinal-n-gold",
+      "name": "Cardinal 'n Gold",
+      "minutes": {
+        "evk": 11,
+        "parkside": 21,
+        "university-village": 9
+      }
+    },
+    {
+      "id": "annenberg-house",
+      "name": "Annenberg House",
+      "minutes": {
+        "evk": 15,
+        "parkside": 24,
+        "university-village": 12
+      }
+    },
+    {
+      "id": "gateway",
+      "name": "University Gateway",
+      "minutes": {
+        "evk": 5,
+        "parkside": 19,
+        "university-village": 10
+      }
+    }
+  ]
+}

@@ -34,18 +34,19 @@ const cachedDay = unstable_cache(
   async (date: string) => {
     const day = await buildDay(date);
     // Don't cache a day where the AI mostly failed; the next request retries.
-    if (!day.aiTagged) throw new Error("AI tagging incomplete");
+    if (!day.aiTagged) throw Object.assign(new Error("AI tagging incomplete"), { day });
     return day;
   },
-  ["enriched-day-v2"],
-  { revalidate: 3600 },
+  ["enriched-day-v3"],
+  // Menus rarely change during the day, and re-tagging can shift a dish between main and side.
+  { revalidate: 6 * 3600 },
 );
 
 export async function getEnrichedDay(date: string): Promise<EnrichedDay> {
   try {
     return await cachedDay(date);
   } catch (err) {
-    console.warn(`Cached day ${date} unavailable, building without cache:`, (err as Error).message);
-    return buildDay(date);
+    console.warn(`Day ${date} not cached:`, (err as Error).message);
+    return (err as { day?: EnrichedDay }).day ?? buildDay(date);
   }
 }

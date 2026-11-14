@@ -21,6 +21,7 @@ Saved copies live in `data/snapshots/<date>/<hall>.json`; `DEMO_MODE=1` reads on
 - `app/`: pages and `app/api/*` route handlers
 - `data/test-profiles/`: sample students plus expected results (Andrew edits these)
 - `data/snapshots/`: saved USC menus for tests and demo mode
+- `data/walking.json`: walking minutes from each residence to each hall, precomputed by `scripts/walking.mjs` from OpenStreetMap foot routes
 - `docs/`: plan, PRD, pitch, Devpost copy, video notes (Andrew and Hailey edit these)
 
 ## The one demo flow

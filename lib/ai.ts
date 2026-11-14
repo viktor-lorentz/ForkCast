@@ -12,6 +12,6 @@ let client: Anthropic | null = null;
 /** Null when no API key is configured, so callers can fall back to code-only behavior. */
 export function getClient(): Anthropic | null {
   if (!process.env.ANTHROPIC_API_KEY) return null;
-  client ??= new Anthropic({ timeout: 30_000, maxRetries: 1 });
+  client ??= new Anthropic({ timeout: 20_000, maxRetries: 1 });
   return client;
 }
