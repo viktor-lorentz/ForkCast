@@ -1,6 +1,7 @@
 import type { EnrichedDish } from "./enrich";
 import { hasPref, hideReason } from "./filter";
 import type { Profile } from "./profile";
+import { ratingOf } from "./taste";
 import { ALLERGENS, HALLS, LABEL_NAMES, PREFERENCES } from "./types";
 
 /** A claim the AI makes about a dish, checked against USC labels. "no:<allergen>" or a diet code. */
@@ -75,6 +76,10 @@ export function verify(
       allExist = false;
       add(false, `Dish ${p.dishId} is not on today's ${meal} menu at this hall`);
       continue;
+    }
+    if (ratingOf(profile.taste, d.name) === -1) {
+      allEligible = false;
+      add(false, `${d.name} got a thumbs down from you`);
     }
     if (hideReason(d, profile)) {
       allEligible = false;

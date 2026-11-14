@@ -64,6 +64,10 @@ export default function App() {
             setProfile(p);
             window.scrollTo(0, 0);
           }}
+          onChange={(p) => {
+            save(p);
+            setProfile(p);
+          }}
         />
       )}
     </main>

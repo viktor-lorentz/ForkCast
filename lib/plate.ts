@@ -10,6 +10,25 @@ export interface Macros {
   fat: number;
 }
 
+export const FOOD_TAGS = ["High protein", "Lighter", "Hearty", "Low carb"] as const;
+export type FoodTag = (typeof FOOD_TAGS)[number];
+
+/**
+ * Plain-words tags from the estimate. The numbers themselves are too rough to show
+ * (no portion sizes or recipes), but they rank dishes reliably, so only these labels reach the screen.
+ */
+export function foodTags(d: { kind: string; macros?: Macros | null }): FoodTag[] {
+  const m = d.macros;
+  if (!m || m.cal <= 0 || (d.kind !== "main" && d.kind !== "side")) return [];
+  const tags: FoodTag[] = [];
+  const proteinShare = (m.protein * 4) / m.cal;
+  if (m.protein >= (d.kind === "main" ? 25 : 12) && proteinShare >= 0.25) tags.push("High protein");
+  if (d.kind === "main" ? m.cal <= 350 : m.cal <= 120) tags.push("Lighter");
+  else if (d.kind === "main" ? m.cal >= 600 : m.cal >= 350) tags.push("Hearty");
+  if (m.carbs <= 10 && d.kind === "main") tags.push("Low carb");
+  return tags;
+}
+
 export const GOAL_IDS = ["muscle", "cut", "bulk"] as const;
 export type GoalId = (typeof GOAL_IDS)[number];
 
@@ -17,15 +36,16 @@ export interface Goal {
   id: GoalId;
   name: string;
   blurb: string;
-  /** Targets for one meal. */
+  plateName: string;
+  /** Internal targets for one meal; used for ranking only, never shown. */
   cal: number;
   protein: number;
 }
 
 export const GOALS: Goal[] = [
-  { id: "muscle", name: "Build muscle", blurb: "High protein, moderate calories", cal: 750, protein: 45 },
-  { id: "cut", name: "Lean out", blurb: "High protein, fewer calories", cal: 550, protein: 40 },
-  { id: "bulk", name: "Bulk up", blurb: "More calories, lots of protein", cal: 1000, protein: 50 },
+  { id: "muscle", name: "Build muscle", blurb: "Puts high-protein dishes first", plateName: "Protein-forward plate", cal: 750, protein: 45 },
+  { id: "cut", name: "Lean out", blurb: "Prefers high-protein, lighter dishes", plateName: "Lean, protein-forward plate", cal: 550, protein: 40 },
+  { id: "bulk", name: "Bulk up", blurb: "Prefers hearty, high-protein dishes", plateName: "Hearty plate", cal: 1000, protein: 50 },
 ];
 
 export const findGoal = (id: string | undefined) => GOALS.find((g) => g.id === id);
@@ -64,8 +84,9 @@ export const plateFit = (total: Macros, goal: Goal) => Math.round(100 * Math.max
  * 1-2 mains plus up to 2 sides, tried exhaustively over each list's top entries (lists arrive best-liked first).
  */
 export function bestPlate<T extends HasMacros>(mains: T[], sides: T[], goal: Goal): T[] {
-  const m = mains.filter((d) => d.macros).slice(0, 10);
-  const s = sides.filter((d) => d.macros).slice(0, 10);
+  const m = mains.filter((d) => d.macros && d.macros.cal > 0).slice(0, 10);
+  // Garnishes like pickle chips aren't a side on a plate.
+  const s = sides.filter((d) => d.macros && d.macros.cal >= 60).slice(0, 10);
   const groups = (xs: T[], min: number): T[][] => {
     const out: T[][] = min === 0 ? [[]] : [];
     xs.forEach((a, i) => {

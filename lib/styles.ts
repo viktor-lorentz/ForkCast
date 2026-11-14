@@ -8,7 +8,7 @@ export type StyleId = (typeof STYLE_IDS)[number];
 
 export const STYLES: { id: StyleId; name: string; blurb: string }[] = [
   { id: "pescatarian", name: "Pescatarian", blurb: "Fish and seafood, no other meat" },
-  { id: "keto", name: "Keto / low carb", blurb: "Hides dishes estimated over 15g carbs" },
+  { id: "keto", name: "Keto / low carb", blurb: "Hides dishes that look carb-heavy" },
   { id: "word-of-wisdom", name: "Word of Wisdom", blurb: "No coffee, tea or alcohol in the dish" },
 ];
 
@@ -42,6 +42,6 @@ export function styleConflict(d: StyleDish, styles: StyleId[] | undefined): Styl
 
 export const STYLE_REASONS: Record<StyleId, string> = {
   pescatarian: "Looks like it has meat other than fish (from the dish name, not a USC label)",
-  keto: `Estimated over ${KETO_MAX_CARBS}g carbs (AI estimate, not a USC label)`,
+  keto: "Looks carb-heavy (AI estimate, not a USC label)",
   "word-of-wisdom": "Name mentions coffee, tea or alcohol",
 };

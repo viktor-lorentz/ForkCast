@@ -3,7 +3,7 @@ import { filterDishes, type Hidden } from "./filter";
 import type { EnrichedDay } from "./menus";
 import { bestPlate, findGoal, plateCost, sumMacros } from "./plate";
 import type { Profile } from "./profile";
-import { tasteScore } from "./taste";
+import { ratingOf, tasteScore } from "./taste";
 import type { HallId } from "./types";
 import { findDorm, WALK_PENALTY } from "./walking";
 
@@ -60,7 +60,8 @@ export function scoreHalls(day: EnrichedDay, meal: string, profile: Profile): Ha
         sides.slice(0, 8).reduce((n, d) => n + Math.max(0, dishScore(d, profile)), 0) * 0.5;
       // A hall with nothing to eat doesn't get better by being close.
       // With a fitness goal, a hall where you can build a plate close to it is worth up to 10 extra points.
-      const plate = goal ? bestPlate(mains, sides, goal) : [];
+      const notDown = (d: EnrichedDish) => ratingOf(profile.taste, d.name) !== -1;
+      const plate = goal ? bestPlate(mains.filter(notDown), sides.filter(notDown), goal) : [];
       const fit = goal && plate.length > 0 ? 10 * Math.max(0, 1 - plateCost(sumMacros(plate), goal)) : 0;
       const score = food > 0 ? food + fit - (walk ?? 0) * WALK_PENALTY : 0;
       return { hall: h.hall, open: h.meals.includes(meal), score, mains, sides, desserts, hidden, walk, plate };

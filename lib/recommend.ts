@@ -3,9 +3,12 @@ import { z } from "zod";
 import { getClient, MODELS } from "./ai";
 import type { EnrichedDish } from "./enrich";
 import { describeReason, hasPref } from "./filter";
+import { findGoal, type Macros } from "./plate";
 import type { EnrichedDay } from "./menus";
 import type { Profile } from "./profile";
 import { scoreHalls, type HallScore } from "./score";
+import { STYLES } from "./styles";
+import { ratingOf, tasteSummary } from "./taste";
 import { HALLS, LABEL_NAMES } from "./types";
 import { findDorm } from "./walking";
 import { verify, type AiRecommendation, type Pick, type Verification } from "./verify";
@@ -36,6 +39,8 @@ export interface PickedDish {
   prefs: string[];
   why: string;
   claims: string[];
+  /** AI estimate for one serving, when available. */
+  macros: Macros | null;
 }
 
 export interface Recommendation {
@@ -78,6 +83,8 @@ Pick 3-5 dishes from that hall by their id, exactly as given, at least 2 of them
 Describe a dish only with what its name and line say; don't invent flavors (call it spicy only if its line says spicy).
 In "claims", list only label facts shown on that dish's line ("no:<allergen>" only for allergens the student avoids).
 Never call food "safe" or "allergen-free". Speak about USC's labels, e.g. "no sesame per USC labels".
+If the student has a fitness goal, favor dishes that help build a plate close to it (a suggested plate is given per hall). Never write calorie or gram numbers: the app shows its own estimated totals.
+If the student rated dishes, lean toward what they liked and away from what they disliked.
 Write like a helpful friend, briefly.`;
 
 function labelsOf(d: EnrichedDish, profile: Profile): string {
@@ -86,11 +93,14 @@ function labelsOf(d: EnrichedDish, profile: Profile): string {
 }
 
 function dishLine(d: EnrichedDish, profile: Profile): string {
-  return `${d.id} | ${d.station} | ${d.name} | ${d.kind} | ${d.cuisine}/${d.protein}${d.spicy ? " spicy" : ""} | labels: ${labelsOf(d, profile)}`;
+  const m = profile.goal && d.macros ? ` | est ${d.macros.cal}kcal ${d.macros.protein}p ${d.macros.carbs}c ${d.macros.fat}f` : "";
+  return `${d.id} | ${d.station} | ${d.name} | ${d.kind} | ${d.cuisine}/${d.protein}${d.spicy ? " spicy" : ""} | labels: ${labelsOf(d, profile)}${m}`;
 }
 
 export function buildPrompt(profile: Profile, meal: string, scores: HallScore[]): string {
   const dorm = findDorm(profile.dorm);
+  const goal = findGoal(profile.goal);
+  const taste = tasteSummary(profile.taste);
   const p = [
     `Meal: ${meal}`,
     `Avoids (allergens): ${profile.avoid.join(", ") || "none"}`,
@@ -98,6 +108,10 @@ export function buildPrompt(profile: Profile, meal: string, scores: HallScore[])
     `Likes: ${profile.likes.join(", ") || "anything"}`,
     `Dislikes: ${profile.dislikes.join(", ") || "nothing listed"}`,
     ...(dorm ? [`Lives at: ${dorm.name}`] : []),
+    ...(profile.styles?.length ? [`Eating styles (already applied): ${profile.styles.map((s) => STYLES.find((x) => x.id === s)!.name).join(", ")}`] : []),
+    ...(goal ? [`Fitness goal: ${goal.name} (about ${goal.cal} kcal and ${goal.protein}g protein this meal)`] : []),
+    ...(taste.count ? [`Rated dishes: liked ${profile.taste!.up.map((r) => r.name).slice(-8).join("; ") || "none"}; disliked ${profile.taste!.down.map((r) => r.name).slice(-8).join("; ") || "none"}`] : []),
+    ...(taste.toward.length || taste.away.length ? [`Ratings lean toward: ${taste.toward.join(", ") || "-"}; away from: ${taste.away.join(", ") || "-"}`] : []),
     "",
   ];
   for (const s of scores) {
@@ -108,7 +122,10 @@ export function buildPrompt(profile: Profile, meal: string, scores: HallScore[])
     }
     const walk = s.walk === null ? "" : `, ${s.walk} min walk`;
     p.push(`## ${s.hall} (${name}): ${s.mains.length} mains, ${s.sides.length} sides for this student${walk}`);
-    for (const d of [...s.mains, ...s.sides.slice(0, 15), ...s.desserts.slice(0, 4)]) p.push(dishLine(d, profile));
+    // A dish the student gave a thumbs down is never offered to the model again.
+    const ok = (d: EnrichedDish) => ratingOf(profile.taste, d.name) !== -1;
+    for (const d of [...s.mains.filter(ok), ...s.sides.filter(ok).slice(0, 15), ...s.desserts.filter(ok).slice(0, 4)]) p.push(dishLine(d, profile));
+    if (s.plate.length) p.push(`Suggested plate for the goal: ${s.plate.map((d) => d.id).join(", ")}`);
     p.push("");
   }
   return p.join("\n");
@@ -116,7 +133,8 @@ export function buildPrompt(profile: Profile, meal: string, scores: HallScore[])
 
 function rulesRecommendation(scores: HallScore[], profile: Profile): AiRecommendation {
   const top = scores[0];
-  const dishes = [...top.mains.slice(0, 3), ...top.sides.slice(0, 2)].slice(0, 5);
+  const ok = (d: EnrichedDish) => ratingOf(profile.taste, d.name) !== -1;
+  const dishes = [...top.mains.filter(ok).slice(0, 3), ...top.sides.filter(ok).slice(0, 2)].slice(0, 5);
   const picks: Pick[] = dishes.map((d) => {
     const claims = [
       ...profile.diet.filter((p) => hasPref(d, p)),
@@ -237,6 +255,7 @@ export async function recommend(day: EnrichedDay, meal: string, profile: Profile
           prefs: d.prefs,
           why: p.why,
           claims: p.claims,
+          macros: d.macros ?? null,
         };
       }),
     halls: scores.map((s) => ({

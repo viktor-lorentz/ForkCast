@@ -32,7 +32,7 @@ export function rate(taste: Taste | undefined, dish: Rated, value: 1 | 0 | -1): 
 
 const real = (s: string) => Boolean(s) && s !== "none";
 
-/** Net thumbs per cuisine and protein, e.g. { mexican: 2, fish: -1 }. */
+/** Net thumbs per cuisine and protein, e.g. { mexican: 2, fish: -2 }. One rating alone isn't a pattern, so only |net| >= 2 is kept. */
 function leanings(taste: Taste): Map<string, number> {
   const net = new Map<string, number>();
   const bump = (r: Rated, by: number) => {
@@ -41,6 +41,7 @@ function leanings(taste: Taste): Map<string, number> {
   };
   taste.up.forEach((r) => bump(r, 1));
   taste.down.forEach((r) => bump(r, -1));
+  for (const [k, n] of net) if (Math.abs(n) < 2) net.delete(k);
   return net;
 }
 
@@ -56,7 +57,7 @@ export function tasteScore(d: Rated, taste: Taste | undefined): number {
   const net = leanings(taste);
   let s = 0;
   for (const k of new Set([d.cuisine, d.protein].map((x) => x.toLowerCase())))
-    if (real(k)) s += Math.max(-2, Math.min(2, net.get(k) ?? 0)) * 0.75;
+    if (real(k)) s += Math.max(-3, Math.min(3, net.get(k) ?? 0)) * 0.5;
   return s;
 }
 

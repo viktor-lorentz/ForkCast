@@ -1,7 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import { GOALS } from "@/lib/plate";
 import type { Profile } from "@/lib/profile";
+import { STYLES } from "@/lib/styles";
+import { tasteSummary } from "@/lib/taste";
 import { ALLERGENS, LABEL_NAMES, PREFERENCES, type Allergen, type Preference } from "@/lib/types";
 import { DORMS } from "@/lib/walking";
 import { Chip } from "./Chip";
@@ -29,6 +32,7 @@ export function Onboarding({
   const [parseNote, setParseNote] = useState<string | null>(null);
   const [dislike, setDislike] = useState("");
   const [like, setLike] = useState("");
+  const taste = tasteSummary(p.taste);
 
   async function readText() {
     if (!text.trim()) return;
@@ -48,6 +52,8 @@ export function Onboarding({
         diet: [...new Set([...cur.diet, ...parsed.diet])],
         likes: [...new Set([...cur.likes, ...parsed.likes])],
         dislikes: [...new Set([...cur.dislikes, ...parsed.dislikes])],
+        styles: [...new Set([...(cur.styles ?? []), ...(parsed.styles ?? [])])],
+        goal: parsed.goal ?? cur.goal,
       }));
       setParseNote("Got it. Check the selections below and fix anything we got wrong.");
     } catch {
@@ -89,7 +95,7 @@ export function Onboarding({
           onChange={(e) => setText(e.target.value)}
           rows={2}
           maxLength={500}
-          placeholder="e.g. I'm halal, allergic to sesame, love spicy food, hate mushrooms"
+          placeholder="e.g. I'm halal, lactose intolerant, lifting to build muscle, love spicy food, hate mushrooms"
           className="mt-2 w-full resize-none rounded-xl border border-stone-300 p-3 text-base outline-none focus:border-cardinal"
         />
         <button
@@ -105,7 +111,7 @@ export function Onboarding({
 
       <section>
         <h2 className="font-semibold">Allergies</h2>
-        <p className="mb-2 text-sm text-stone-500">We hide anything USC labels with these.</p>
+        <p className="mb-2 text-sm text-stone-500">We hide anything USC labels with these. Lactose intolerant? Pick Dairy. Celiac? Pick Gluten/Wheat.</p>
         <div className="flex flex-wrap gap-2">
           {ALLERGENS.map((a: Allergen) => (
             <Chip key={a} label={LABEL_NAMES[a]} selected={p.avoid.includes(a)} onClick={() => setP({ ...p, avoid: toggle(p.avoid, a) })} />
@@ -127,6 +133,33 @@ export function Onboarding({
             <Chip key={d} tone="green" label={DIET_NAMES[d]} selected={p.diet.includes(d)} onClick={() => setP({ ...p, diet: toggle(p.diet, d) })} />
           ))}
         </div>
+        <p className="mt-4 mb-2 text-sm text-stone-500">USC doesn&apos;t label these, so we make a best guess from dish names and estimates.</p>
+        <div className="flex flex-wrap gap-2">
+          {STYLES.map((s) => (
+            <Chip
+              key={s.id}
+              tone="green"
+              label={s.name}
+              selected={(p.styles ?? []).includes(s.id)}
+              onClick={() => setP({ ...p, styles: toggle(p.styles ?? [], s.id) })}
+            />
+          ))}
+        </div>
+        {(p.styles ?? []).length > 0 && (
+          <p className="mt-2 text-xs text-stone-500">{STYLES.filter((s) => p.styles!.includes(s.id)).map((s) => `${s.name}: ${s.blurb.toLowerCase()}`).join(" · ")}</p>
+        )}
+      </section>
+
+      <section>
+        <h2 className="font-semibold">Fitness goal</h2>
+        <p className="mb-2 text-sm text-stone-500">We&apos;ll rank dishes and build a plate that suits it.</p>
+        <div className="flex flex-wrap gap-2">
+          <Chip label="No goal" selected={!p.goal} onClick={() => setP({ ...p, goal: undefined })} />
+          {GOALS.map((g) => (
+            <Chip key={g.id} label={g.name} selected={p.goal === g.id} onClick={() => setP({ ...p, goal: g.id })} />
+          ))}
+        </div>
+        {p.goal && <p className="mt-2 text-xs text-stone-500">{GOALS.find((g) => g.id === p.goal)!.blurb}, using AI estimates from dish names.</p>}
       </section>
 
       <section>
@@ -176,6 +209,20 @@ export function Onboarding({
           </div>
         )}
       </section>
+
+      {taste.count > 0 && (
+        <section className="rounded-2xl bg-white p-4 shadow-sm ring-1 ring-stone-200">
+          <h2 className="font-semibold">Your ratings</h2>
+          <p className="mt-1 text-sm text-stone-600">
+            You&apos;ve rated {taste.count} dish{taste.count === 1 ? "" : "es"}
+            {taste.toward.length ? `. Leaning toward ${taste.toward.join(", ")}` : ""}
+            {taste.away.length ? `${taste.toward.length ? ", away from" : ". Leaning away from"} ${taste.away.join(", ")}` : ""}.
+          </p>
+          <button type="button" onClick={() => setP({ ...p, taste: undefined })} className="mt-2 text-sm font-medium text-cardinal underline">
+            Clear my ratings
+          </button>
+        </section>
+      )}
 
       <section>
         <label htmlFor="dorm" className="font-semibold">Where do you live?</label>
