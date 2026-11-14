@@ -66,7 +66,7 @@ The judge question to prepare for: "USC's site already has an allergen filter." 
 The AI ranks and explains, but plain code enforces allergens. So even if the AI makes a mistake, the system can't recommend a dish USC labeled with your allergen.
 
 1. **Scrape (once a day).** The USC page loads its dishes with JavaScript after the page opens; they aren't in the raw HTML. We find the data feed the page calls in the browser's Network tab and pull from it directly. Labels show up as icons named after the allergen (`gluten.svg`, `sesame.svg`, `halal-ingredients.svg`), which code can read exactly.
-2. **Normalize (Claude Haiku 4.5, once a day for everyone).** Turn the raw data into clean dishes: hall, meal, station, name, USC labels, plus inferred tags like cuisine and protein. Inferred tags never override USC labels.
+2. **Normalize (Claude Haiku 5.5, once a day for everyone).** Turn the raw data into clean dishes: hall, meal, station, name, USC labels, plus inferred tags like cuisine and protein. Inferred tags never override USC labels.
 3. **Filter (plain code).** Remove every dish with a flagged allergen. For allergy profiles, also remove dishes marked "Food Not Analyzed For Allergens."
 4. **Rank and explain (Claude Sonnet 5.5).** Given only the dishes that passed the filter plus the student's tastes, pick a hall and write the reason. Dishes are cited by ID, so it can't invent one.
 5. **Verify (plain code).** Every cited dish must exist today. Every claim like "vegan" or "halal" must match a USC label. A flagged allergen must never get through. Results that fail are regenerated or dropped. The team's test profiles run against this check automatically.
@@ -78,20 +78,20 @@ The USC page also offers Brunch, so weekend meal names differ. Meal periods are 
 | Part | Choice | Verdict | Note |
 | --- | --- | --- | --- |
 | App | Next.js + TypeScript + Tailwind, phone-first | Add | Judges open it on phones. No login: profile saved in a link or cookie. |
-| Database | Replit's built-in Postgres | Add | Replit's deployed file storage resets, so no SQLite files. |
+| Database | None for now | Change | Profiles live in the browser; menus and AI results are cached on the server. |
 | Writing code | Claude Code on Viktor's laptop | Keep | One AI, one codebase. Andrew's Claude Code is overflow only, on separate branches. |
 | Source of truth | GitHub `viktor-lorentz/PS5-winners` | Keep + add | Turn on branch protection so `main` needs a PR. |
-| Hosting + daily job | Replit, imported from GitHub | Keep | Deploys don't happen automatically on merge: Viktor pulls in Replit, then redeploys. The daily job is a separate scheduled deployment. |
-| AI in the app | Haiku 4.5 normalizes, Sonnet 5.5 ranks and explains | Change | There's no "Haiku 5.5". Needs API credits (see decisions). |
+| Hosting + daily job | Vercel (free plan), connected to GitHub | Change | Replaced Replit on Nov 14. Every push to `main` deploys to [ps-5-winners.vercel.app](https://ps-5-winners.vercel.app); a daily Vercel cron warms the menus. |
+| AI in the app | Haiku 5.5 classifies dishes and reads profiles, Sonnet 5.5 picks and explains | Keep | Paid from the $20 Anthropic API credits. |
 | Email | Stretch goal: team Gmail with an app password | Change | Resend needs a domain to email anyone but us. |
-| Replit Agent, Fly.io, DeepSeek | Not using | Keep | Same reasons as the kickoff doc. |
+| Replit, Fly.io, DeepSeek | Not using | Keep | Vercel is simpler for Next.js and deploys automatically. |
 | Safety net | Demo mode on a saved snapshot of Saturday's real menu | Add | The demo works even if USC's site goes down Sunday. |
 
 ## Who does what
 
 | Person | Owns | Edits in the repo |
 | --- | --- | --- |
-| Viktor (ECE) | Runs Claude Code, architecture, merges every PR, Replit deploys | Everything |
+| Viktor (ECE) | Runs Claude Code, architecture, merges every PR (deploys are automatic) | Everything |
 | Andrew (Business) | Scope calls, Devpost page, deck content, video script and narration, test profiles with expected picks, competitor check, judge Q&A, overflow Claude | `docs/`, `data/test-profiles/` |
 | Hailey (Cinema) | Student interviews and live user testing (filmed, so they double as video footage), demo video (storyboard, filming, editing), deck design, "before vs after" visuals | `docs/` (video and interview notes) |
 
@@ -106,7 +106,7 @@ The goal: a live phone link by 17:00 Saturday, feature freeze at 21:00, submissi
 | Time | Viktor + Claude | Andrew | Hailey |
 | --- | --- | --- | --- |
 | Sat 9:00–10:30 | Check-in, opening; ask sponsors about credits | Same | Same |
-| 10:30–11:00 (GO) | CLAUDE.md, PRD, Issues, branch protection, empty app live on Replit; save copies of the menu data | Devpost skeleton, deck outline; check Trojan Dining and DineOn | Storyboard v1, interview guide |
+| 10:30–11:00 (GO) | CLAUDE.md, PRD, Issues, branch protection, empty app live on Vercel; save copies of the menu data | Devpost skeleton, deck outline; check Trojan Dining and DineOn | Storyboard v1, interview guide |
 | 11:00–13:00 | Menu scraper, Haiku normalizer, database, saved snapshot | Problem story, stats, competitor answer | Interview and film 5–10 students with dietary needs (with consent); b-roll at the halls |
 | 13:00–15:00 | Filter, Sonnet ranking, verifier; Claude drafts 6–8 test profiles from interview notes | Check the test profiles' expected picks against the real menu; deck draft | Interview notes into `docs/`; record the "before" footage of the cluttered USC site |
 | 15:00–17:00 | Phone UI: onboarding, today's card, Why? panel. **Live by 17:00** | Video script v1 with Hailey | Deck design; first filmed phone tests with 2–3 students at 17:00 |
@@ -139,7 +139,7 @@ Run these in claude.ai **after GO**. Paste the relevant sections of this doc int
 | Judges say "this already exists" | Our answer: those show menus, we decide across halls and explain why (see [The idea](#the-idea)). |
 | Claude Code usage limits | Sonnet for small tasks; Andrew's Claude Code as overflow on separate branches. |
 | API credits run out | $20 is far more than we need. Backup: sponsor credits (Bedrock or Gemini). |
-| Replit deploy or scheduled job friction | Trigger a protected refresh endpoint from any free cron service. |
+| Slow first load of the day | Daily Vercel cron calls `/api/warm`; results are cached for an hour. |
 | Venue wifi or a judge's phone | QR code on the last slide, plus a backup screen recording. |
 | Scope creep | Out until 21:00 Saturday: macros, maps/distance, push notifications, accounts, chat. Distance goes first if we're ahead. |
 
@@ -147,7 +147,7 @@ Run these in claude.ai **after GO**. Paste the relevant sections of this doc int
 
 - [ ] Viktor: load $20 on the Anthropic Console; never commit the key to the repo
 - [ ] Viktor: make sure Andrew and Hailey have accepted their GitHub invites
-- [ ] Viktor: make sure the Replit account and hackathon credits are active
+- [x] Viktor: Vercel connected, API key added
 - [ ] Viktor: open the USC menu page in Chrome, then DevTools → Network → reload, and screenshot the request that returns the dishes
 - [ ] Hailey: line up 5–10 students with dietary needs for Saturday interviews
 - [ ] Andrew: find a stat on how many students have food allergies or dietary restrictions
