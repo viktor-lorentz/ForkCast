@@ -154,3 +154,14 @@ describe("share link", () => {
     expect(unpackProfile("")).toBeNull();
   });
 });
+
+describe("email database settings", () => {
+  it("finds Upstash settings under any prefix", async () => {
+    const { redisConfig } = await import("./email/store");
+    expect(redisConfig({})).toBeNull();
+    expect(redisConfig({ KV_REST_API_URL: "https://a.upstash.io", KV_REST_API_TOKEN: "t" })).toEqual({ url: "https://a.upstash.io", token: "t" });
+    expect(redisConfig({ STORAGE_KV_REST_API_URL: "https://b.upstash.io", STORAGE_KV_REST_API_TOKEN: "t2" })!.url).toBe("https://b.upstash.io");
+    expect(redisConfig({ UPSTASH_REDIS_REST_URL: "https://c.upstash.io", UPSTASH_REDIS_REST_TOKEN: "t3" })!.token).toBe("t3");
+    expect(redisConfig({ KV_URL: "rediss://x", KV_REST_API_URL: "https://d.upstash.io" })).toBeNull();
+  });
+});
