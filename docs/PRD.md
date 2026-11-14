@@ -18,10 +18,11 @@ A USC student on a meal plan with at least one dietary restriction, deciding whe
 - Live menus for EVK, Parkside, USC Village for today and tomorrow, every meal period
 - Onboarding with USC's 11 allergen labels, 3 diet labels, likes and dislikes, plus a free-text box the AI turns into preferences
 - Hall recommendation with dish picks, explanation, hidden-dish evidence, verifier badge
+- Walking time from the student's residence to each hall (precomputed OpenStreetMap routes), shown per hall and weighed in the pick
 - Demo mode on saved menus; judge links that load a sample profile
 
 ## Out of scope (until the core is done)
-Accounts, push notifications, macros or calories, maps and walking distance, chat. Daily email is the first stretch goal.
+Accounts, push notifications, macros or calories, chat. Daily email is the first stretch goal.
 
 ## AI design
 1. **Classify** (Haiku): each dish name gets a kind (main, side, condiment, dessert, drink, notice), cuisine, protein, spicy flag. Never allergens.

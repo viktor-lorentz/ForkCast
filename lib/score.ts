@@ -3,6 +3,7 @@ import { filterDishes, type Hidden } from "./filter";
 import type { EnrichedDay } from "./menus";
 import type { Profile } from "./profile";
 import type { HallId } from "./types";
+import { findDorm, WALK_PENALTY } from "./walking";
 
 export interface HallScore {
   hall: HallId;
@@ -12,6 +13,8 @@ export interface HallScore {
   sides: EnrichedDish[];
   desserts: EnrichedDish[];
   hidden: Hidden[];
+  /** Walking minutes from the student's residence, when they've set one. */
+  walk: number | null;
 }
 
 function haystack(d: EnrichedDish): string {
@@ -34,18 +37,25 @@ const byScore = (profile: Profile) => (a: EnrichedDish, b: EnrichedDish) => dish
 
 /** Code-only ranking of the three halls for one meal. Instant, deterministic, and the fallback for the AI. */
 export function scoreHalls(day: EnrichedDay, meal: string, profile: Profile): HallScore[] {
+  const dorm = findDorm(profile.dorm);
   return day.halls
     .map((h) => {
-      const { eligible, hidden } = filterDishes(h.dishes.filter((d) => d.meal === meal), profile);
+      // USC sometimes lists the same item twice at a hall (e.g. fruit at two stations); count it once.
+      const seen = new Set<string>();
+      const unique = h.dishes.filter((d) => d.meal === meal && !seen.has(d.name.toLowerCase()) && seen.add(d.name.toLowerCase()));
+      const { eligible, hidden } = filterDishes(unique, profile);
       const sort = byScore(profile);
       const mains = eligible.filter((d) => d.kind === "main").sort(sort);
       const sides = eligible.filter((d) => d.kind === "side").sort(sort);
       const desserts = eligible.filter((d) => d.kind === "dessert").sort(sort);
       // Mains matter most; extra sides help less after the first several.
-      const score =
+      const walk = dorm ? dorm.minutes[h.hall] : null;
+      const food =
         mains.reduce((n, d) => n + Math.max(0, dishScore(d, profile)), 0) +
         sides.slice(0, 8).reduce((n, d) => n + Math.max(0, dishScore(d, profile)), 0) * 0.5;
-      return { hall: h.hall, open: h.meals.includes(meal), score, mains, sides, desserts, hidden };
+      // A hall with nothing to eat doesn't get better by being close.
+      const score = food > 0 ? food - (walk ?? 0) * WALK_PENALTY : 0;
+      return { hall: h.hall, open: h.meals.includes(meal), score, mains, sides, desserts, hidden, walk };
     })
     .sort((a, b) => Number(b.open) - Number(a.open) || b.score - a.score);
 }

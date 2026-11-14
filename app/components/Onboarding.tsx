@@ -3,6 +3,7 @@
 import { useState } from "react";
 import type { Profile } from "@/lib/profile";
 import { ALLERGENS, LABEL_NAMES, PREFERENCES, type Allergen, type Preference } from "@/lib/types";
+import { DORMS } from "@/lib/walking";
 import { Chip } from "./Chip";
 
 const LIKE_IDEAS = ["spicy", "rice", "chicken", "pasta", "mexican", "asian", "burger", "salad", "breakfast", "soup"];
@@ -12,12 +13,22 @@ function toggle<T>(xs: T[], x: T): T[] {
   return xs.includes(x) ? xs.filter((y) => y !== x) : [...xs, x];
 }
 
-export function Onboarding({ initial, onDone }: { initial: Profile; onDone: (p: Profile) => void }) {
+export function Onboarding({
+  initial,
+  onDone,
+  onCancel,
+}: {
+  initial: Profile;
+  onDone: (p: Profile) => void;
+  /** Set when editing an existing profile, so there is something to go back to. */
+  onCancel?: () => void;
+}) {
   const [p, setP] = useState<Profile>(initial);
   const [text, setText] = useState("");
   const [parsing, setParsing] = useState(false);
   const [parseNote, setParseNote] = useState<string | null>(null);
   const [dislike, setDislike] = useState("");
+  const [like, setLike] = useState("");
 
   async function readText() {
     if (!text.trim()) return;
@@ -32,6 +43,7 @@ export function Onboarding({ initial, onDone }: { initial: Profile; onDone: (p: 
       const parsed = await res.json();
       if (!res.ok) throw new Error(parsed.error);
       setP((cur) => ({
+        ...cur,
         avoid: [...new Set([...cur.avoid, ...parsed.avoid])],
         diet: [...new Set([...cur.diet, ...parsed.diet])],
         likes: [...new Set([...cur.likes, ...parsed.likes])],
@@ -45,6 +57,12 @@ export function Onboarding({ initial, onDone }: { initial: Profile; onDone: (p: 
     }
   }
 
+  function addLike() {
+    const w = like.trim().toLowerCase();
+    if (w) setP({ ...p, likes: [...new Set([...p.likes, w])] });
+    setLike("");
+  }
+
   function addDislike() {
     const w = dislike.trim().toLowerCase();
     if (w) setP({ ...p, dislikes: [...new Set([...p.dislikes, w])] });
@@ -52,9 +70,14 @@ export function Onboarding({ initial, onDone }: { initial: Profile; onDone: (p: 
   }
 
   return (
-    <div className="flex flex-col gap-7 pb-28">
+    <div className="rise flex flex-col gap-7 pb-32">
       <header className="pt-2">
-        <h1 className="text-3xl font-bold tracking-tight text-cardinal">Where should I eat?</h1>
+        {onCancel && (
+          <button type="button" onClick={onCancel} className="mb-2 -ml-1 rounded-full px-1 text-sm font-medium text-stone-500">
+            ‹ Back
+          </button>
+        )}
+        <h1 className="text-3xl font-bold tracking-tight text-cardinal">{onCancel ? "Your profile" : "Where should I eat?"}</h1>
         <p className="mt-1 text-stone-600">Tell us what you can&apos;t eat and what you love. We check all three dining halls for you.</p>
       </header>
 
@@ -65,8 +88,9 @@ export function Onboarding({ initial, onDone }: { initial: Profile; onDone: (p: 
           value={text}
           onChange={(e) => setText(e.target.value)}
           rows={2}
+          maxLength={500}
           placeholder="e.g. I'm halal, allergic to sesame, love spicy food, hate mushrooms"
-          className="mt-2 w-full resize-none rounded-xl border border-stone-300 p-3 text-[15px] outline-none focus:border-cardinal"
+          className="mt-2 w-full resize-none rounded-xl border border-stone-300 p-3 text-base outline-none focus:border-cardinal"
         />
         <button
           type="button"
@@ -112,6 +136,20 @@ export function Onboarding({ initial, onDone }: { initial: Profile; onDone: (p: 
             <Chip key={w} label={w} selected={p.likes.includes(w)} onClick={() => setP({ ...p, likes: toggle(p.likes, w) })} />
           ))}
         </div>
+        <div className="mt-2 flex gap-2">
+          <input
+            value={like}
+            onChange={(e) => setLike(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && addLike()}
+            maxLength={40}
+            placeholder="Add your own, e.g. curry"
+            aria-label="Add a food you love"
+            className="min-w-0 flex-1 rounded-xl border border-stone-300 bg-white px-3 py-2 text-base outline-none focus:border-cardinal"
+          />
+          <button type="button" onClick={addLike} className="rounded-xl border border-stone-300 bg-white px-4 text-sm font-medium active:scale-95">
+            Add
+          </button>
+        </div>
       </section>
 
       <section>
@@ -121,8 +159,10 @@ export function Onboarding({ initial, onDone }: { initial: Profile; onDone: (p: 
             value={dislike}
             onChange={(e) => setDislike(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && addDislike()}
+            maxLength={40}
             placeholder="e.g. mushrooms"
-            className="min-w-0 flex-1 rounded-xl border border-stone-300 px-3 py-2 text-[15px] outline-none focus:border-cardinal"
+            aria-label="Add a food you don't like"
+            className="min-w-0 flex-1 rounded-xl border border-stone-300 bg-white px-3 py-2 text-base outline-none focus:border-cardinal"
           />
           <button type="button" onClick={addDislike} className="rounded-xl border border-stone-300 bg-white px-4 text-sm font-medium">
             Add
@@ -137,7 +177,25 @@ export function Onboarding({ initial, onDone }: { initial: Profile; onDone: (p: 
         )}
       </section>
 
-      <div className="fixed inset-x-0 bottom-0 border-t border-stone-200 bg-background/95 p-4 backdrop-blur">
+      <section>
+        <label htmlFor="dorm" className="font-semibold">Where do you live?</label>
+        <p className="mb-2 text-sm text-stone-500">We&apos;ll show the walk to each hall and prefer closer ones when the food is similar.</p>
+        <select
+          id="dorm"
+          value={p.dorm ?? ""}
+          onChange={(e) => setP({ ...p, dorm: e.target.value || undefined })}
+          className="w-full rounded-xl border border-stone-300 bg-white px-3 py-2.5 text-base outline-none focus:border-cardinal"
+        >
+          <option value="">Off campus or rather not say</option>
+          {DORMS.map((d) => (
+            <option key={d.id} value={d.id}>
+              {d.name}
+            </option>
+          ))}
+        </select>
+      </section>
+
+      <div className="fixed inset-x-0 bottom-0 border-t border-stone-200 bg-background/95 px-4 pt-4 pb-[max(1rem,env(safe-area-inset-bottom))] backdrop-blur">
         <button
           type="button"
           onClick={() => onDone(p)}

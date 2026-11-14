@@ -46,7 +46,14 @@ export function describeClaim(claim: Claim): string {
  * Checks an AI recommendation against the real menu. Everything here is plain code:
  * the model can't talk its way past it.
  */
-export function verify(rec: AiRecommendation, dishes: EnrichedDish[], meal: string, profile: Profile): Verification {
+export function verify(
+  rec: AiRecommendation,
+  dishes: EnrichedDish[],
+  meal: string,
+  profile: Profile,
+  /** Walking minutes per hall, when known. Any "N min" the AI writes must be one of these. */
+  walkMinutes: number[] = [],
+): Verification {
   const checks: Check[] = [];
   const add = (ok: boolean, text: string) => checks.push({ ok, text });
   const byId = new Map(dishes.map((d) => [d.id, d]));
@@ -54,6 +61,10 @@ export function verify(rec: AiRecommendation, dishes: EnrichedDish[], meal: stri
   const hall = HALLS.find((h) => h.id === rec.hall);
   add(Boolean(hall), hall ? `${hall.name} is a real dining hall` : `Unknown hall "${rec.hall}"`);
   add(rec.picks.length > 0, `${rec.picks.length} dishes picked`);
+
+  const ids = rec.picks.map((p) => p.dishId);
+  if (new Set(ids).size !== ids.length) add(false, "The same dish was picked twice");
+  if (rec.picks.length > 6) add(false, "Too many dishes picked");
 
   let allExist = true;
   let allEligible = true;
@@ -83,8 +94,14 @@ export function verify(rec: AiRecommendation, dishes: EnrichedDish[], meal: stri
   if (allExist) add(true, "Every dish is on today's USC menu");
   if (allEligible) add(true, `No dish carries an allergen you avoid${profile.diet.length ? " or misses a diet label you need" : ""}`);
   if (allClaimsHold) add(true, "Every label claim matches USC's labels");
-  const summaryOk = !BANNED.test(rec.summary);
-  if (!summaryOk) add(false, "Summary overstates safety");
+  if (BANNED.test(rec.summary)) add(false, "Summary overstates safety");
+
+  const text = [rec.summary, ...rec.picks.map((p) => p.why)].join(" ");
+  const stated = [...text.matchAll(/(\d+)[\s-]*min/gi)].map((m) => Number(m[1]));
+  if (stated.length > 0) {
+    const ok = stated.every((n) => walkMinutes.includes(n));
+    add(ok, ok ? "Walking times match the map data" : "A walking time in the answer doesn't match the map data");
+  }
 
   return { passed: checks.every((c) => c.ok), checks };
 }

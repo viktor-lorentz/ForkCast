@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { DEMO_PROFILES } from "@/lib/demo-profiles";
-import { EMPTY_PROFILE, type Profile } from "@/lib/profile";
+import { cleanProfile, EMPTY_PROFILE, type Profile } from "@/lib/profile";
 import { Onboarding } from "./Onboarding";
 import { Today } from "./Today";
 
@@ -11,7 +11,8 @@ const KEY = "dining-profile-v1";
 function loadSaved(): Profile | null {
   try {
     const raw = localStorage.getItem(KEY);
-    return raw ? (JSON.parse(raw) as Profile) : null;
+    // cleanProfile validates, so a profile saved by an older version can't break the app.
+    return raw ? cleanProfile(JSON.parse(raw)) : null;
   } catch {
     return null;
   }
@@ -28,7 +29,8 @@ function save(p: Profile) {
 function initialProfile(): Profile | null {
   // ?demo=<id> loads a sample student (for judges); otherwise use the saved profile.
   const demoId = new URLSearchParams(window.location.search).get("demo");
-  return DEMO_PROFILES.find((d) => d.id === demoId)?.profile ?? loadSaved();
+  const demo = DEMO_PROFILES.find((d) => d.id === demoId);
+  return demo ? cleanProfile(demo.profile) : loadSaved();
 }
 
 /** Browser-only (see app/page.tsx), so it can read localStorage and the URL on first render. */
@@ -42,6 +44,7 @@ export default function App() {
       {showOnboarding ? (
         <Onboarding
           initial={profile ?? EMPTY_PROFILE}
+          onCancel={profile ? () => setEditing(false) : undefined}
           onDone={(p) => {
             save(p);
             setProfile(p);
@@ -52,7 +55,10 @@ export default function App() {
       ) : (
         <Today
           profile={profile}
-          onEdit={() => setEditing(true)}
+          onEdit={() => {
+            setEditing(true);
+            window.scrollTo(0, 0);
+          }}
           onSwitch={(p) => {
             save(p);
             setProfile(p);
