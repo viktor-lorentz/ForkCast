@@ -1,0 +1,1622 @@
+{
+  "date": "20261114",
+  "location": "usc-village-dining-hall",
+  "meals": [
+    {
+      "name": "Breakfast"
+    },
+    {
+      "name": "Brunch",
+      "stations": [
+        {
+          "station": "Grill",
+          "subtitle": "",
+          "menu": [
+            {
+              "item": "GRILL ITEMS AVAILABLE AT 11AM",
+              "dietary_preferences": [],
+              "allergens": [],
+              "preferences": []
+            },
+            {
+              "item": "Boca Burger on White Bun",
+              "dietary_preferences": [
+                "Sesame",
+                "Soy",
+                "Wheat / Gluten",
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [
+                "sesame",
+                "soy",
+                "gluten"
+              ],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Beef Burger on Martin's Potato Bun",
+              "dietary_preferences": [
+                "Dairy",
+                "Sesame",
+                "Wheat / Gluten"
+              ],
+              "allergens": [
+                "dairy",
+                "sesame",
+                "gluten"
+              ],
+              "preferences": []
+            },
+            {
+              "item": "All Beef Hot Dog on White Bun",
+              "dietary_preferences": [
+                "Sesame",
+                "Soy",
+                "Wheat / Gluten"
+              ],
+              "allergens": [
+                "sesame",
+                "soy",
+                "gluten"
+              ],
+              "preferences": []
+            },
+            {
+              "item": "Assorted French Fries",
+              "dietary_preferences": [
+                "Soy",
+                "Wheat / Gluten",
+                "Vegan"
+              ],
+              "allergens": [
+                "soy",
+                "gluten"
+              ],
+              "preferences": [
+                "vegan"
+              ]
+            },
+            {
+              "item": "Tuna Salad",
+              "dietary_preferences": [
+                "Fish",
+                "Soy",
+                "Halal Ingredients"
+              ],
+              "allergens": [
+                "fish",
+                "soy"
+              ],
+              "preferences": [
+                "halal-ingredients"
+              ]
+            },
+            {
+              "item": "Sliced Turkey",
+              "dietary_preferences": [],
+              "allergens": [],
+              "preferences": []
+            },
+            {
+              "item": "Salami",
+              "dietary_preferences": [
+                "Dairy",
+                "Pork"
+              ],
+              "allergens": [
+                "dairy",
+                "pork"
+              ],
+              "preferences": []
+            },
+            {
+              "item": "Sliced Ham",
+              "dietary_preferences": [
+                "Pork"
+              ],
+              "allergens": [
+                "pork"
+              ],
+              "preferences": []
+            },
+            {
+              "item": "Sliced Roast Beef",
+              "dietary_preferences": [],
+              "allergens": [],
+              "preferences": []
+            },
+            {
+              "item": "Assorted Sliced Cheese",
+              "dietary_preferences": [
+                "Dairy",
+                "Halal Ingredients",
+                "Vegetarian"
+              ],
+              "allergens": [
+                "dairy"
+              ],
+              "preferences": [
+                "halal-ingredients",
+                "vegetarian"
+              ]
+            },
+            {
+              "item": "Traditional Hummus",
+              "dietary_preferences": [
+                "Sesame",
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [
+                "sesame"
+              ],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Lettuce",
+              "dietary_preferences": [
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Sliced Onions",
+              "dietary_preferences": [
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Sliced Tomatoes",
+              "dietary_preferences": [
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Pepperoncini",
+              "dietary_preferences": [
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "vegan"
+              ]
+            },
+            {
+              "item": "Country Style Marinated Olives",
+              "dietary_preferences": [
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "vegan"
+              ]
+            },
+            {
+              "item": "Pickle Chips",
+              "dietary_preferences": [
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "vegan"
+              ]
+            },
+            {
+              "item": "Sunflower Seed Butter",
+              "dietary_preferences": [
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Grape Jelly",
+              "dietary_preferences": [
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Sliced French Bread",
+              "dietary_preferences": [
+                "Wheat / Gluten",
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [
+                "gluten"
+              ],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Sliced Honey Wheat Bread",
+              "dietary_preferences": [
+                "Dairy",
+                "Wheat / Gluten",
+                "Halal Ingredients",
+                "Vegetarian"
+              ],
+              "allergens": [
+                "dairy",
+                "gluten"
+              ],
+              "preferences": [
+                "halal-ingredients",
+                "vegetarian"
+              ]
+            },
+            {
+              "item": "Sliced Honey Multi Grain Bread",
+              "dietary_preferences": [
+                "Wheat / Gluten",
+                "Halal Ingredients",
+                "Vegetarian"
+              ],
+              "allergens": [
+                "gluten"
+              ],
+              "preferences": [
+                "halal-ingredients",
+                "vegetarian"
+              ]
+            },
+            {
+              "item": "Little Northern Bakehouse Allergen Free Bread Available Upon Request",
+              "dietary_preferences": [
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            }
+          ]
+        },
+        {
+          "station": "Sweet and Treats",
+          "subtitle": "",
+          "menu": [
+            {
+              "item": "Butter Balls",
+              "dietary_preferences": [
+                "Dairy",
+                "Halal Ingredients",
+                "Vegetarian"
+              ],
+              "allergens": [
+                "dairy"
+              ],
+              "preferences": [
+                "halal-ingredients",
+                "vegetarian"
+              ]
+            },
+            {
+              "item": "Plain Cream Cheese",
+              "dietary_preferences": [
+                "Dairy",
+                "Halal Ingredients",
+                "Vegetarian"
+              ],
+              "allergens": [
+                "dairy"
+              ],
+              "preferences": [
+                "halal-ingredients",
+                "vegetarian"
+              ]
+            },
+            {
+              "item": "Sunflower Seed Butter",
+              "dietary_preferences": [
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Grape Jelly",
+              "dietary_preferences": [
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Strawberry Preserves",
+              "dietary_preferences": [
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Spicy Salsa Molcajete",
+              "dietary_preferences": [
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Spicy Salsa Verde",
+              "dietary_preferences": [
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Assorted Bagels",
+              "dietary_preferences": [
+                "Sesame",
+                "Wheat / Gluten",
+                "Halal Ingredients",
+                "Vegetarian"
+              ],
+              "allergens": [
+                "sesame",
+                "gluten"
+              ],
+              "preferences": [
+                "halal-ingredients",
+                "vegetarian"
+              ]
+            },
+            {
+              "item": "Sliced Honey Wheat Bread",
+              "dietary_preferences": [
+                "Dairy",
+                "Wheat / Gluten",
+                "Halal Ingredients",
+                "Vegetarian"
+              ],
+              "allergens": [
+                "dairy",
+                "gluten"
+              ],
+              "preferences": [
+                "halal-ingredients",
+                "vegetarian"
+              ]
+            },
+            {
+              "item": "Sliced Honey Multi Grain Bread",
+              "dietary_preferences": [
+                "Wheat / Gluten",
+                "Halal Ingredients",
+                "Vegetarian"
+              ],
+              "allergens": [
+                "gluten"
+              ],
+              "preferences": [
+                "halal-ingredients",
+                "vegetarian"
+              ]
+            },
+            {
+              "item": "Sliced French Bread",
+              "dietary_preferences": [
+                "Wheat / Gluten",
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [
+                "gluten"
+              ],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Little Northern Bakehouse Allergen Free Bread Available Upon Request",
+              "dietary_preferences": [
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            }
+          ]
+        },
+        {
+          "station": "Expo",
+          "subtitle": "",
+          "menu": [
+            {
+              "item": "Scrambled Eggs",
+              "dietary_preferences": [
+                "Eggs",
+                "Halal Ingredients",
+                "Vegetarian"
+              ],
+              "allergens": [
+                "eggs"
+              ],
+              "preferences": [
+                "halal-ingredients",
+                "vegetarian"
+              ]
+            },
+            {
+              "item": "Boiled Eggs",
+              "dietary_preferences": [
+                "Eggs",
+                "Halal Ingredients",
+                "Vegetarian"
+              ],
+              "allergens": [
+                "eggs"
+              ],
+              "preferences": [
+                "halal-ingredients",
+                "vegetarian"
+              ]
+            },
+            {
+              "item": "Crispy Fried Tater Tots",
+              "dietary_preferences": [
+                "Soy",
+                "Vegan"
+              ],
+              "allergens": [
+                "soy"
+              ],
+              "preferences": [
+                "vegan"
+              ]
+            },
+            {
+              "item": "Bacon",
+              "dietary_preferences": [
+                "Pork"
+              ],
+              "allergens": [
+                "pork"
+              ],
+              "preferences": []
+            },
+            {
+              "item": "Chicken Sausage Link",
+              "dietary_preferences": [
+                "Halal Ingredients"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients"
+              ]
+            },
+            {
+              "item": "LUNCH STYLE OPTIONS AVAILABLE AT 11AM",
+              "dietary_preferences": [],
+              "allergens": [],
+              "preferences": []
+            },
+            {
+              "item": "Fried BBQ Tofu",
+              "dietary_preferences": [
+                "Soy",
+                "Vegan"
+              ],
+              "allergens": [
+                "soy"
+              ],
+              "preferences": [
+                "vegan"
+              ]
+            },
+            {
+              "item": "Watermelon Glazed Grilled Chicken",
+              "dietary_preferences": [
+                "Halal Ingredients"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients"
+              ]
+            },
+            {
+              "item": "Roasted Broccoli",
+              "dietary_preferences": [
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Chipotle Roasted Yams",
+              "dietary_preferences": [
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Plain Pasta",
+              "dietary_preferences": [
+                "Wheat / Gluten",
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [
+                "gluten"
+              ],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Chipotle Lime Cream Sauce",
+              "dietary_preferences": [
+                "Dairy",
+                "Halal Ingredients",
+                "Vegetarian"
+              ],
+              "allergens": [
+                "dairy"
+              ],
+              "preferences": [
+                "halal-ingredients",
+                "vegetarian"
+              ]
+            }
+          ]
+        },
+        {
+          "station": "Crepes",
+          "subtitle": "",
+          "menu": [
+            {
+              "item": "Made to Order Omelettes Available Until 2pm",
+              "dietary_preferences": [],
+              "allergens": [],
+              "preferences": []
+            },
+            {
+              "item": "Eggs",
+              "dietary_preferences": [
+                "Eggs",
+                "Halal Ingredients",
+                "Vegetarian"
+              ],
+              "allergens": [
+                "eggs"
+              ],
+              "preferences": [
+                "halal-ingredients",
+                "vegetarian"
+              ]
+            },
+            {
+              "item": "Egg Whites",
+              "dietary_preferences": [
+                "Eggs",
+                "Halal Ingredients",
+                "Vegetarian"
+              ],
+              "allergens": [
+                "eggs"
+              ],
+              "preferences": [
+                "halal-ingredients",
+                "vegetarian"
+              ]
+            },
+            {
+              "item": "Crumbled Tofu",
+              "dietary_preferences": [
+                "Soy",
+                "Vegan"
+              ],
+              "allergens": [
+                "soy"
+              ],
+              "preferences": [
+                "vegan"
+              ]
+            },
+            {
+              "item": "Chopped Turkey",
+              "dietary_preferences": [],
+              "allergens": [],
+              "preferences": []
+            },
+            {
+              "item": "Chopped Bacon",
+              "dietary_preferences": [
+                "Pork"
+              ],
+              "allergens": [
+                "pork"
+              ],
+              "preferences": []
+            },
+            {
+              "item": "Chopped Ham",
+              "dietary_preferences": [
+                "Pork"
+              ],
+              "allergens": [
+                "pork"
+              ],
+              "preferences": []
+            },
+            {
+              "item": "Chopped Bell Peppers",
+              "dietary_preferences": [
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Chopped Onion",
+              "dietary_preferences": [
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Chopped Tomatoes",
+              "dietary_preferences": [
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Sliced Mushrooms",
+              "dietary_preferences": [
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Spinach",
+              "dietary_preferences": [
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Shredded Monterey Jack and Cheddar Cheese Blend",
+              "dietary_preferences": [
+                "Dairy",
+                "Halal Ingredients",
+                "Vegetarian"
+              ],
+              "allergens": [
+                "dairy"
+              ],
+              "preferences": [
+                "halal-ingredients",
+                "vegetarian"
+              ]
+            }
+          ]
+        },
+        {
+          "station": "Salad Bar",
+          "subtitle": "",
+          "menu": [
+            {
+              "item": "Oatmeal",
+              "dietary_preferences": [
+                "Wheat / Gluten",
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [
+                "gluten"
+              ],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Assorted Breakfast Flaky Pastries",
+              "dietary_preferences": [
+                "Dairy",
+                "Eggs",
+                "Wheat / Gluten",
+                "Vegetarian"
+              ],
+              "allergens": [
+                "dairy",
+                "eggs",
+                "gluten"
+              ],
+              "preferences": [
+                "vegetarian"
+              ]
+            },
+            {
+              "item": "Assorted Muffins",
+              "dietary_preferences": [
+                "Dairy",
+                "Eggs",
+                "Soy",
+                "Wheat / Gluten",
+                "Vegetarian"
+              ],
+              "allergens": [
+                "dairy",
+                "eggs",
+                "soy",
+                "gluten"
+              ],
+              "preferences": [
+                "vegetarian"
+              ]
+            },
+            {
+              "item": "Assorted Fruits",
+              "dietary_preferences": [
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Coconut Yogurt",
+              "dietary_preferences": [
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Plain Greek Yogurt",
+              "dietary_preferences": [
+                "Dairy",
+                "Halal Ingredients",
+                "Vegetarian"
+              ],
+              "allergens": [
+                "dairy"
+              ],
+              "preferences": [
+                "halal-ingredients",
+                "vegetarian"
+              ]
+            },
+            {
+              "item": "Strawberry Yogurt",
+              "dietary_preferences": [
+                "Dairy",
+                "Vegetarian"
+              ],
+              "allergens": [
+                "dairy"
+              ],
+              "preferences": [
+                "vegetarian"
+              ]
+            },
+            {
+              "item": "Oat n' Honey Granola",
+              "dietary_preferences": [
+                "Soy",
+                "Wheat / Gluten",
+                "Vegetarian"
+              ],
+              "allergens": [
+                "soy",
+                "gluten"
+              ],
+              "preferences": [
+                "vegetarian"
+              ]
+            },
+            {
+              "item": "Dried Cranberries",
+              "dietary_preferences": [
+                "Halal Ingredients",
+                "Vegetarian"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients",
+                "vegetarian"
+              ]
+            },
+            {
+              "item": "Pepitas",
+              "dietary_preferences": [
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Shredded Coconut",
+              "dietary_preferences": [
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Lunch"
+    },
+    {
+      "name": "Dinner",
+      "stations": [
+        {
+          "station": "Grill",
+          "subtitle": "",
+          "menu": [
+            {
+              "item": "GRILL ITEMS AVAILABLE AT 11AM",
+              "dietary_preferences": [],
+              "allergens": [],
+              "preferences": []
+            },
+            {
+              "item": "Boca Burger on White Bun",
+              "dietary_preferences": [
+                "Sesame",
+                "Soy",
+                "Wheat / Gluten",
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [
+                "sesame",
+                "soy",
+                "gluten"
+              ],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Beef Burger on Martin's Potato Bun",
+              "dietary_preferences": [
+                "Dairy",
+                "Sesame",
+                "Wheat / Gluten"
+              ],
+              "allergens": [
+                "dairy",
+                "sesame",
+                "gluten"
+              ],
+              "preferences": []
+            },
+            {
+              "item": "All Beef Hot Dog on White Bun",
+              "dietary_preferences": [
+                "Sesame",
+                "Soy",
+                "Wheat / Gluten"
+              ],
+              "allergens": [
+                "sesame",
+                "soy",
+                "gluten"
+              ],
+              "preferences": []
+            },
+            {
+              "item": "Assorted French Fries",
+              "dietary_preferences": [
+                "Soy",
+                "Wheat / Gluten",
+                "Vegan"
+              ],
+              "allergens": [
+                "soy",
+                "gluten"
+              ],
+              "preferences": [
+                "vegan"
+              ]
+            },
+            {
+              "item": "Tuna Salad",
+              "dietary_preferences": [
+                "Fish",
+                "Soy",
+                "Halal Ingredients"
+              ],
+              "allergens": [
+                "fish",
+                "soy"
+              ],
+              "preferences": [
+                "halal-ingredients"
+              ]
+            },
+            {
+              "item": "Sliced Turkey",
+              "dietary_preferences": [],
+              "allergens": [],
+              "preferences": []
+            },
+            {
+              "item": "Salami",
+              "dietary_preferences": [
+                "Dairy",
+                "Pork"
+              ],
+              "allergens": [
+                "dairy",
+                "pork"
+              ],
+              "preferences": []
+            },
+            {
+              "item": "Sliced Ham",
+              "dietary_preferences": [
+                "Pork"
+              ],
+              "allergens": [
+                "pork"
+              ],
+              "preferences": []
+            },
+            {
+              "item": "Sliced Roast Beef",
+              "dietary_preferences": [],
+              "allergens": [],
+              "preferences": []
+            },
+            {
+              "item": "Assorted Sliced Cheese",
+              "dietary_preferences": [
+                "Dairy",
+                "Halal Ingredients",
+                "Vegetarian"
+              ],
+              "allergens": [
+                "dairy"
+              ],
+              "preferences": [
+                "halal-ingredients",
+                "vegetarian"
+              ]
+            },
+            {
+              "item": "Traditional Hummus",
+              "dietary_preferences": [
+                "Sesame",
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [
+                "sesame"
+              ],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Lettuce",
+              "dietary_preferences": [
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Sliced Onions",
+              "dietary_preferences": [
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Sliced Tomatoes",
+              "dietary_preferences": [
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Pepperoncini",
+              "dietary_preferences": [
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "vegan"
+              ]
+            },
+            {
+              "item": "Country Style Marinated Olives",
+              "dietary_preferences": [
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "vegan"
+              ]
+            },
+            {
+              "item": "Pickle Chips",
+              "dietary_preferences": [
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "vegan"
+              ]
+            },
+            {
+              "item": "Sunflower Seed Butter",
+              "dietary_preferences": [
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Grape Jelly",
+              "dietary_preferences": [
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Sliced French Bread",
+              "dietary_preferences": [
+                "Wheat / Gluten",
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [
+                "gluten"
+              ],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Sliced Honey Wheat Bread",
+              "dietary_preferences": [
+                "Dairy",
+                "Wheat / Gluten",
+                "Halal Ingredients",
+                "Vegetarian"
+              ],
+              "allergens": [
+                "dairy",
+                "gluten"
+              ],
+              "preferences": [
+                "halal-ingredients",
+                "vegetarian"
+              ]
+            },
+            {
+              "item": "Sliced Honey Multi Grain Bread",
+              "dietary_preferences": [
+                "Wheat / Gluten",
+                "Halal Ingredients",
+                "Vegetarian"
+              ],
+              "allergens": [
+                "gluten"
+              ],
+              "preferences": [
+                "halal-ingredients",
+                "vegetarian"
+              ]
+            },
+            {
+              "item": "Little Northern Bakehouse Allergen Free Bread Available Upon Request",
+              "dietary_preferences": [
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            }
+          ]
+        },
+        {
+          "station": "Salad Bar",
+          "subtitle": "",
+          "menu": [
+            {
+              "item": "SALAD BAR",
+              "dietary_preferences": [],
+              "allergens": [],
+              "preferences": []
+            },
+            {
+              "item": "Assorted Fruits",
+              "dietary_preferences": [
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Creamy Caesar Dressing",
+              "dietary_preferences": [
+                "Dairy",
+                "Eggs",
+                "Soy",
+                "Vegetarian"
+              ],
+              "allergens": [
+                "dairy",
+                "eggs",
+                "soy"
+              ],
+              "preferences": [
+                "vegetarian"
+              ]
+            },
+            {
+              "item": "Creamy Lime Cilantro Mustard Dressing",
+              "dietary_preferences": [
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Oregano, Dijon and Red Wine Vinaigrette",
+              "dietary_preferences": [
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "vegan"
+              ]
+            },
+            {
+              "item": "Ranch Dressing",
+              "dietary_preferences": [
+                "Dairy",
+                "Eggs",
+                "Soy",
+                "Vegetarian"
+              ],
+              "allergens": [
+                "dairy",
+                "eggs",
+                "soy"
+              ],
+              "preferences": [
+                "vegetarian"
+              ]
+            },
+            {
+              "item": "Olive/Canola Oil Blend",
+              "dietary_preferences": [
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Balsamic Vinegar",
+              "dietary_preferences": [
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "vegan"
+              ]
+            },
+            {
+              "item": "Molly's Garden Vegetable Soup with Kidney Beans",
+              "dietary_preferences": [
+                "Soy",
+                "Wheat / Gluten",
+                "Vegan"
+              ],
+              "allergens": [
+                "soy",
+                "gluten"
+              ],
+              "preferences": [
+                "vegan"
+              ]
+            },
+            {
+              "item": "Chicken Noodle Soup with Egg Noodles",
+              "dietary_preferences": [
+                "Eggs",
+                "Wheat / Gluten",
+                "Halal Ingredients"
+              ],
+              "allergens": [
+                "eggs",
+                "gluten"
+              ],
+              "preferences": [
+                "halal-ingredients"
+              ]
+            }
+          ]
+        },
+        {
+          "station": "Flexitarian",
+          "subtitle": "",
+          "menu": [
+            {
+              "item": "Portobello Red Wine \"Pot Roast\"",
+              "dietary_preferences": [
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "vegan"
+              ]
+            },
+            {
+              "item": "Garlic and Herb Roasted Chicken",
+              "dietary_preferences": [
+                "Halal Ingredients"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients"
+              ]
+            },
+            {
+              "item": "Braised Beef Short Ribs",
+              "dietary_preferences": [],
+              "allergens": [],
+              "preferences": []
+            },
+            {
+              "item": "Braised Lentils with Garlic and Lemon",
+              "dietary_preferences": [
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Roasted Lemon Zest Asparagus",
+              "dietary_preferences": [
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Maple Roasted Carrots",
+              "dietary_preferences": [
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Rice Pilaf",
+              "dietary_preferences": [
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Baked Potatoes",
+              "dietary_preferences": [
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Cheddar Cheese Sauce",
+              "dietary_preferences": [
+                "Dairy",
+                "Soy",
+                "Halal Ingredients",
+                "Vegetarian"
+              ],
+              "allergens": [
+                "dairy",
+                "soy"
+              ],
+              "preferences": [
+                "halal-ingredients",
+                "vegetarian"
+              ]
+            },
+            {
+              "item": "Beef Chili with Beans",
+              "dietary_preferences": [
+                "Soy"
+              ],
+              "allergens": [
+                "soy"
+              ],
+              "preferences": []
+            }
+          ]
+        },
+        {
+          "station": "Sweets and Treats",
+          "subtitle": "",
+          "menu": [
+            {
+              "item": "French Style Crepe",
+              "dietary_preferences": [
+                "Dairy",
+                "Eggs",
+                "Wheat / Gluten",
+                "Halal Ingredients",
+                "Vegetarian"
+              ],
+              "allergens": [
+                "dairy",
+                "eggs",
+                "gluten"
+              ],
+              "preferences": [
+                "halal-ingredients",
+                "vegetarian"
+              ]
+            },
+            {
+              "item": "Chocolate Sauce",
+              "dietary_preferences": [
+                "Dairy",
+                "Soy",
+                "Vegetarian"
+              ],
+              "allergens": [
+                "dairy",
+                "soy"
+              ],
+              "preferences": [
+                "vegetarian"
+              ]
+            },
+            {
+              "item": "Raspberry Sauce",
+              "dietary_preferences": [
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "vegan"
+              ]
+            },
+            {
+              "item": "Chocolate Chips",
+              "dietary_preferences": [
+                "Dairy",
+                "Soy",
+                "Vegetarian"
+              ],
+              "allergens": [
+                "dairy",
+                "soy"
+              ],
+              "preferences": [
+                "vegetarian"
+              ]
+            },
+            {
+              "item": "Crumbled Oreo Cookies",
+              "dietary_preferences": [
+                "Soy",
+                "Wheat / Gluten",
+                "Vegetarian"
+              ],
+              "allergens": [
+                "soy",
+                "gluten"
+              ],
+              "preferences": [
+                "vegetarian"
+              ]
+            },
+            {
+              "item": "Whipped Topping",
+              "dietary_preferences": [
+                "Dairy",
+                "Vegetarian"
+              ],
+              "allergens": [
+                "dairy"
+              ],
+              "preferences": [
+                "vegetarian"
+              ]
+            },
+            {
+              "item": "Powdered Sugar",
+              "dietary_preferences": [
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
