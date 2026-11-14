@@ -1,0 +1,1079 @@
+{
+  "date": "20261116",
+  "location": "everybodys-kitchen",
+  "meals": [
+    {
+      "name": "Breakfast",
+      "stations": [
+        {
+          "station": "Fresh from the Farm",
+          "subtitle": "",
+          "menu": [
+            {
+              "item": "Coconut Yogurt",
+              "dietary_preferences": [
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Plain Greek Yogurt",
+              "dietary_preferences": [
+                "Dairy",
+                "Halal Ingredients",
+                "Vegetarian"
+              ],
+              "allergens": [
+                "dairy"
+              ],
+              "preferences": [
+                "halal-ingredients",
+                "vegetarian"
+              ]
+            },
+            {
+              "item": "Strawberry Yogurt",
+              "dietary_preferences": [
+                "Dairy",
+                "Vegetarian"
+              ],
+              "allergens": [
+                "dairy"
+              ],
+              "preferences": [
+                "vegetarian"
+              ]
+            },
+            {
+              "item": "Cottage Cheese",
+              "dietary_preferences": [
+                "Dairy",
+                "Halal Ingredients",
+                "Vegetarian"
+              ],
+              "allergens": [
+                "dairy"
+              ],
+              "preferences": [
+                "halal-ingredients",
+                "vegetarian"
+              ]
+            },
+            {
+              "item": "Make Your Own Waffle Bar",
+              "dietary_preferences": [
+                "Dairy",
+                "Eggs",
+                "Soy",
+                "Wheat / Gluten",
+                "Halal Ingredients",
+                "Vegetarian"
+              ],
+              "allergens": [
+                "dairy",
+                "eggs",
+                "soy",
+                "gluten"
+              ],
+              "preferences": [
+                "halal-ingredients",
+                "vegetarian"
+              ]
+            },
+            {
+              "item": "Assorted Fruits",
+              "dietary_preferences": [
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Raisins",
+              "dietary_preferences": [
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Oat n' Honey Granola",
+              "dietary_preferences": [
+                "Soy",
+                "Wheat / Gluten",
+                "Vegetarian"
+              ],
+              "allergens": [
+                "soy",
+                "gluten"
+              ],
+              "preferences": [
+                "vegetarian"
+              ]
+            },
+            {
+              "item": "Assorted Bagels",
+              "dietary_preferences": [
+                "Sesame",
+                "Wheat / Gluten",
+                "Halal Ingredients",
+                "Vegetarian"
+              ],
+              "allergens": [
+                "sesame",
+                "gluten"
+              ],
+              "preferences": [
+                "halal-ingredients",
+                "vegetarian"
+              ]
+            },
+            {
+              "item": "Plain Cream Cheese",
+              "dietary_preferences": [
+                "Dairy",
+                "Halal Ingredients",
+                "Vegetarian"
+              ],
+              "allergens": [
+                "dairy"
+              ],
+              "preferences": [
+                "halal-ingredients",
+                "vegetarian"
+              ]
+            },
+            {
+              "item": "Grape Jelly",
+              "dietary_preferences": [
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Butter Balls",
+              "dietary_preferences": [
+                "Dairy",
+                "Halal Ingredients",
+                "Vegetarian"
+              ],
+              "allergens": [
+                "dairy"
+              ],
+              "preferences": [
+                "halal-ingredients",
+                "vegetarian"
+              ]
+            },
+            {
+              "item": "Oatmeal",
+              "dietary_preferences": [
+                "Wheat / Gluten",
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [
+                "gluten"
+              ],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Strawberry Banana Smoothie",
+              "dietary_preferences": [
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            }
+          ]
+        },
+        {
+          "station": "Hot Line",
+          "subtitle": "",
+          "menu": [
+            {
+              "item": "MADE TO ORDER OMELETES",
+              "dietary_preferences": [],
+              "allergens": [],
+              "preferences": []
+            },
+            {
+              "item": "Turmeric Scrambled Tofu and Veggie Wrap",
+              "dietary_preferences": [
+                "Soy",
+                "Wheat / Gluten",
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [
+                "soy",
+                "gluten"
+              ],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Ube Pancakes",
+              "dietary_preferences": [
+                "Dairy",
+                "Eggs",
+                "Soy",
+                "Wheat / Gluten",
+                "Vegetarian"
+              ],
+              "allergens": [
+                "dairy",
+                "eggs",
+                "soy",
+                "gluten"
+              ],
+              "preferences": [
+                "vegetarian"
+              ]
+            },
+            {
+              "item": "Scrambled Eggs",
+              "dietary_preferences": [
+                "Eggs",
+                "Halal Ingredients",
+                "Vegetarian"
+              ],
+              "allergens": [
+                "eggs"
+              ],
+              "preferences": [
+                "halal-ingredients",
+                "vegetarian"
+              ]
+            },
+            {
+              "item": "Boiled Eggs",
+              "dietary_preferences": [
+                "Eggs",
+                "Halal Ingredients",
+                "Vegetarian"
+              ],
+              "allergens": [
+                "eggs"
+              ],
+              "preferences": [
+                "halal-ingredients",
+                "vegetarian"
+              ]
+            },
+            {
+              "item": "Fried BBQ Spiced Cubed Potatoes",
+              "dietary_preferences": [
+                "Soy",
+                "Vegan"
+              ],
+              "allergens": [
+                "soy"
+              ],
+              "preferences": [
+                "vegan"
+              ]
+            },
+            {
+              "item": "Fried Falafel",
+              "dietary_preferences": [
+                "Soy",
+                "Vegan"
+              ],
+              "allergens": [
+                "soy"
+              ],
+              "preferences": [
+                "vegan"
+              ]
+            },
+            {
+              "item": "Chicken Sausage Link",
+              "dietary_preferences": [
+                "Halal Ingredients"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients"
+              ]
+            },
+            {
+              "item": "Turkey Sausage Patty",
+              "dietary_preferences": [
+                "Soy"
+              ],
+              "allergens": [
+                "soy"
+              ],
+              "preferences": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Brunch"
+    },
+    {
+      "name": "Lunch",
+      "stations": [
+        {
+          "station": "Hot Line",
+          "subtitle": "",
+          "menu": [
+            {
+              "item": "Veggie Pad See Ew with Beyond Tips",
+              "dietary_preferences": [
+                "Sesame",
+                "Soy",
+                "Wheat / Gluten",
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [
+                "sesame",
+                "soy",
+                "gluten"
+              ],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Sesame Ginger Shrimp Stir Fry",
+              "dietary_preferences": [
+                "Sesame",
+                "Shellfish",
+                "Soy",
+                "Halal Ingredients"
+              ],
+              "allergens": [
+                "sesame",
+                "shellfish",
+                "soy"
+              ],
+              "preferences": [
+                "halal-ingredients"
+              ]
+            },
+            {
+              "item": "Pandan Roasted Chicken",
+              "dietary_preferences": [
+                "Shellfish",
+                "Soy",
+                "Wheat / Gluten"
+              ],
+              "allergens": [
+                "shellfish",
+                "soy",
+                "gluten"
+              ],
+              "preferences": []
+            },
+            {
+              "item": "Steamed Edamame",
+              "dietary_preferences": [
+                "Soy",
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [
+                "soy"
+              ],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Wok Fired Cabbage",
+              "dietary_preferences": [
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Steamed Green Beans",
+              "dietary_preferences": [
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Steamed Jasmine Rice",
+              "dietary_preferences": [
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Coconut Curry Lentils",
+              "dietary_preferences": [
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Rice Noodles",
+              "dietary_preferences": [
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Thai Style Chile Tamarind Dipping Sauce",
+              "dietary_preferences": [
+                "Fish",
+                "Soy",
+                "Wheat / Gluten",
+                "Halal Ingredients"
+              ],
+              "allergens": [
+                "fish",
+                "soy",
+                "gluten"
+              ],
+              "preferences": [
+                "halal-ingredients"
+              ]
+            },
+            {
+              "item": "Margherita  Pizza",
+              "dietary_preferences": [
+                "Dairy",
+                "Soy",
+                "Wheat / Gluten",
+                "Halal Ingredients",
+                "Vegetarian"
+              ],
+              "allergens": [
+                "dairy",
+                "soy",
+                "gluten"
+              ],
+              "preferences": [
+                "halal-ingredients",
+                "vegetarian"
+              ]
+            },
+            {
+              "item": "Chicken Pesto Pizza",
+              "dietary_preferences": [
+                "Dairy",
+                "Soy",
+                "Wheat / Gluten"
+              ],
+              "allergens": [
+                "dairy",
+                "soy",
+                "gluten"
+              ],
+              "preferences": []
+            },
+            {
+              "item": "Daily Grill Specials (including Veggie Burgers)",
+              "dietary_preferences": [
+                "Food Not Analyzed for Allergens"
+              ],
+              "allergens": [
+                "not-analyzed"
+              ],
+              "preferences": []
+            },
+            {
+              "item": "TONKATSU BAR",
+              "dietary_preferences": [],
+              "allergens": [],
+              "preferences": []
+            },
+            {
+              "item": "Fried Shrimp Tempura",
+              "dietary_preferences": [
+                "Shellfish",
+                "Soy",
+                "Wheat / Gluten"
+              ],
+              "allergens": [
+                "shellfish",
+                "soy",
+                "gluten"
+              ],
+              "preferences": []
+            },
+            {
+              "item": "Savory Fried Chicken Katsu Fritter",
+              "dietary_preferences": [
+                "Soy",
+                "Wheat / Gluten"
+              ],
+              "allergens": [
+                "soy",
+                "gluten"
+              ],
+              "preferences": []
+            },
+            {
+              "item": "Sushi White Rice",
+              "dietary_preferences": [
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Napa Cabbage Slaw with Edamame and Miso Dressing",
+              "dietary_preferences": [
+                "Sesame",
+                "Soy",
+                "Vegan"
+              ],
+              "allergens": [
+                "sesame",
+                "soy"
+              ],
+              "preferences": [
+                "vegan"
+              ]
+            },
+            {
+              "item": "Togarashi Sesame Cucumber Salad",
+              "dietary_preferences": [
+                "Sesame",
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [
+                "sesame"
+              ],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Shredded Carrots",
+              "dietary_preferences": [
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Sliced Green Onions",
+              "dietary_preferences": [
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Tonkatsu Sauce",
+              "dietary_preferences": [
+                "Soy",
+                "Wheat / Gluten",
+                "Vegan"
+              ],
+              "allergens": [
+                "soy",
+                "gluten"
+              ],
+              "preferences": [
+                "vegan"
+              ]
+            }
+          ]
+        },
+        {
+          "station": "Fresh from the Farm",
+          "subtitle": "",
+          "menu": [
+            {
+              "item": "SALAD AND DELI BAR",
+              "dietary_preferences": [],
+              "allergens": [],
+              "preferences": []
+            },
+            {
+              "item": "Assorted Fruits",
+              "dietary_preferences": [
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Cucumber Salad with Tajin and Chamoy",
+              "dietary_preferences": [
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "vegan"
+              ]
+            },
+            {
+              "item": "Chicken and Rice Soup",
+              "dietary_preferences": [
+                "Halal Ingredients"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients"
+              ]
+            },
+            {
+              "item": "Cream of Asparagus Soup",
+              "dietary_preferences": [
+                "Dairy",
+                "Halal Ingredients",
+                "Vegetarian"
+              ],
+              "allergens": [
+                "dairy"
+              ],
+              "preferences": [
+                "halal-ingredients",
+                "vegetarian"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Dinner",
+      "stations": [
+        {
+          "station": "Hot Line",
+          "subtitle": "",
+          "menu": [
+            {
+              "item": "Fried Tofu with Mango Salsa",
+              "dietary_preferences": [
+                "Soy",
+                "Vegan"
+              ],
+              "allergens": [
+                "soy"
+              ],
+              "preferences": [
+                "vegan"
+              ]
+            },
+            {
+              "item": "Steamed Tilapia with Thai Chile Garlic Lime Sauce",
+              "dietary_preferences": [
+                "Fish",
+                "Soy",
+                "Wheat / Gluten",
+                "Halal Ingredients"
+              ],
+              "allergens": [
+                "fish",
+                "soy",
+                "gluten"
+              ],
+              "preferences": [
+                "halal-ingredients"
+              ]
+            },
+            {
+              "item": "Coconut Kai Yang Chicken",
+              "dietary_preferences": [
+                "Fish",
+                "Soy",
+                "Wheat / Gluten",
+                "Halal Ingredients"
+              ],
+              "allergens": [
+                "fish",
+                "soy",
+                "gluten"
+              ],
+              "preferences": [
+                "halal-ingredients"
+              ]
+            },
+            {
+              "item": "Steamed Edamame",
+              "dietary_preferences": [
+                "Soy",
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [
+                "soy"
+              ],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Roasted Beets",
+              "dietary_preferences": [
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Sauteed Sugar Snap Peas",
+              "dietary_preferences": [
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Sticky Rice",
+              "dietary_preferences": [
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Miso Roasted Potatoes",
+              "dietary_preferences": [
+                "Soy",
+                "Vegan"
+              ],
+              "allergens": [
+                "soy"
+              ],
+              "preferences": [
+                "vegan"
+              ]
+            },
+            {
+              "item": "Rice Noodles",
+              "dietary_preferences": [
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Thai Style Chile Tamarind Dipping Sauce",
+              "dietary_preferences": [
+                "Fish",
+                "Soy",
+                "Wheat / Gluten",
+                "Halal Ingredients"
+              ],
+              "allergens": [
+                "fish",
+                "soy",
+                "gluten"
+              ],
+              "preferences": [
+                "halal-ingredients"
+              ]
+            },
+            {
+              "item": "Margherita  Pizza",
+              "dietary_preferences": [
+                "Dairy",
+                "Soy",
+                "Wheat / Gluten",
+                "Halal Ingredients",
+                "Vegetarian"
+              ],
+              "allergens": [
+                "dairy",
+                "soy",
+                "gluten"
+              ],
+              "preferences": [
+                "halal-ingredients",
+                "vegetarian"
+              ]
+            },
+            {
+              "item": "Chicken Pesto Pizza",
+              "dietary_preferences": [
+                "Dairy",
+                "Soy",
+                "Wheat / Gluten"
+              ],
+              "allergens": [
+                "dairy",
+                "soy",
+                "gluten"
+              ],
+              "preferences": []
+            },
+            {
+              "item": "Daily Grill Specials (including Veggie Burgers)",
+              "dietary_preferences": [
+                "Food Not Analyzed for Allergens"
+              ],
+              "allergens": [
+                "not-analyzed"
+              ],
+              "preferences": []
+            },
+            {
+              "item": "TONKATSU BAR",
+              "dietary_preferences": [],
+              "allergens": [],
+              "preferences": []
+            },
+            {
+              "item": "Fried Shrimp Tempura",
+              "dietary_preferences": [
+                "Shellfish",
+                "Soy",
+                "Wheat / Gluten"
+              ],
+              "allergens": [
+                "shellfish",
+                "soy",
+                "gluten"
+              ],
+              "preferences": []
+            },
+            {
+              "item": "Savory Fried Chicken Katsu Fritter",
+              "dietary_preferences": [
+                "Soy",
+                "Wheat / Gluten"
+              ],
+              "allergens": [
+                "soy",
+                "gluten"
+              ],
+              "preferences": []
+            },
+            {
+              "item": "Sushi White Rice",
+              "dietary_preferences": [
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Napa Cabbage Slaw with Edamame and Miso Dressing",
+              "dietary_preferences": [
+                "Sesame",
+                "Soy",
+                "Vegan"
+              ],
+              "allergens": [
+                "sesame",
+                "soy"
+              ],
+              "preferences": [
+                "vegan"
+              ]
+            },
+            {
+              "item": "Togarashi Sesame Cucumber Salad",
+              "dietary_preferences": [
+                "Sesame",
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [
+                "sesame"
+              ],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Shredded Carrots",
+              "dietary_preferences": [
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Sliced Green Onions",
+              "dietary_preferences": [
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Tonkatsu Sauce",
+              "dietary_preferences": [
+                "Soy",
+                "Wheat / Gluten",
+                "Vegan"
+              ],
+              "allergens": [
+                "soy",
+                "gluten"
+              ],
+              "preferences": [
+                "vegan"
+              ]
+            }
+          ]
+        },
+        {
+          "station": "Fresh from the Farm",
+          "subtitle": "",
+          "menu": [
+            {
+              "item": "SALAD AND DELI BAR",
+              "dietary_preferences": [],
+              "allergens": [],
+              "preferences": []
+            },
+            {
+              "item": "Assorted Fruits",
+              "dietary_preferences": [
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients",
+                "vegan"
+              ]
+            },
+            {
+              "item": "Cucumber Salad with Tajin and Chamoy",
+              "dietary_preferences": [
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "vegan"
+              ]
+            },
+            {
+              "item": "Chicken and Rice Soup",
+              "dietary_preferences": [
+                "Halal Ingredients"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients"
+              ]
+            },
+            {
+              "item": "Cream of Asparagus Soup",
+              "dietary_preferences": [
+                "Dairy",
+                "Halal Ingredients",
+                "Vegetarian"
+              ],
+              "allergens": [
+                "dairy"
+              ],
+              "preferences": [
+                "halal-ingredients",
+                "vegetarian"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
