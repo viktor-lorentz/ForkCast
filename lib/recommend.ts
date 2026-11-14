@@ -7,6 +7,7 @@ import { findGoal, type Macros } from "./plate";
 import type { EnrichedDay } from "./menus";
 import type { Profile } from "./profile";
 import { scoreHalls, type HallScore } from "./score";
+import { dishKey, formatAvg, type Score } from "./ratings";
 import { STYLES } from "./styles";
 import { ratingOf, tasteSummary } from "./taste";
 import { HALLS, LABEL_NAMES } from "./types";
@@ -85,6 +86,7 @@ In "claims", list only label facts shown on that dish's line ("no:<allergen>" on
 Never call food "safe" or "allergen-free". Speak about USC's labels, e.g. "no sesame per USC labels".
 If the student has a fitness goal, favor dishes that help build a plate close to it (a suggested plate is given per hall). Never write calorie or gram numbers: the app shows its own estimated totals.
 If the student rated dishes, lean toward what they liked and away from what they disliked.
+Some dishes show "students: X/10 (N)", the average score other USC students gave it. It tells you what's actually good: favor dishes students rate 7 or higher (a dish rated 8+ is worth suggesting even if it isn't on the student's likes), and avoid ones rated 4 or lower when there are alternatives. Weigh a score from 1-2 students lightly. Ratings never change which dishes are allowed. If you mention a score, use the exact number shown.
 Write like a helpful friend, briefly.`;
 
 function labelsOf(d: EnrichedDish, profile: Profile): string {
@@ -92,12 +94,19 @@ function labelsOf(d: EnrichedDish, profile: Profile): string {
   return facts.join(" ");
 }
 
-function dishLine(d: EnrichedDish, profile: Profile): string {
-  const m = profile.goal && d.macros ? ` | est ${d.macros.cal}kcal ${d.macros.protein}p ${d.macros.carbs}c ${d.macros.fat}f` : "";
-  return `${d.id} | ${d.station} | ${d.name} | ${d.kind} | ${d.cuisine}/${d.protein}${d.spicy ? " spicy" : ""} | labels: ${labelsOf(d, profile)}${m}`;
+export type RatingMap = Record<string, Score>;
+
+function ratingNote(d: EnrichedDish, ratings?: RatingMap): string {
+  const r = ratings?.[dishKey(d.name)];
+  return r ? ` | students: ${formatAvg(r.avg)}/10 (${r.n})` : "";
 }
 
-export function buildPrompt(profile: Profile, meal: string, scores: HallScore[]): string {
+function dishLine(d: EnrichedDish, profile: Profile, ratings?: RatingMap): string {
+  const m = profile.goal && d.macros ? ` | est ${d.macros.cal}kcal ${d.macros.protein}p ${d.macros.carbs}c ${d.macros.fat}f` : "";
+  return `${d.id} | ${d.station} | ${d.name} | ${d.kind} | ${d.cuisine}/${d.protein}${d.spicy ? " spicy" : ""} | labels: ${labelsOf(d, profile)}${m}${ratingNote(d, ratings)}`;
+}
+
+export function buildPrompt(profile: Profile, meal: string, scores: HallScore[], ratings?: RatingMap): string {
   const dorm = findDorm(profile.dorm);
   const goal = findGoal(profile.goal);
   const taste = tasteSummary(profile.taste);
@@ -124,17 +133,20 @@ export function buildPrompt(profile: Profile, meal: string, scores: HallScore[])
     p.push(`## ${s.hall} (${name}): ${s.mains.length} mains, ${s.sides.length} sides for this student${walk}`);
     // A dish the student gave a thumbs down is never offered to the model again.
     const ok = (d: EnrichedDish) => ratingOf(profile.taste, d.name) !== -1;
-    for (const d of [...s.mains.filter(ok), ...s.sides.filter(ok).slice(0, 15), ...s.desserts.filter(ok).slice(0, 4)]) p.push(dishLine(d, profile));
+    for (const d of [...s.mains.filter(ok), ...s.sides.filter(ok).slice(0, 15), ...s.desserts.filter(ok).slice(0, 4)]) p.push(dishLine(d, profile, ratings));
     if (s.plate.length) p.push(`Suggested plate for the goal: ${s.plate.map((d) => d.id).join(", ")}`);
     p.push("");
   }
   return p.join("\n");
 }
 
-function rulesRecommendation(scores: HallScore[], profile: Profile): AiRecommendation {
+function rulesRecommendation(scores: HallScore[], profile: Profile, ratings?: RatingMap): AiRecommendation {
   const top = scores[0];
   const ok = (d: EnrichedDish) => ratingOf(profile.taste, d.name) !== -1;
-  const dishes = [...top.mains.filter(ok).slice(0, 3), ...top.sides.filter(ok).slice(0, 2)].slice(0, 5);
+  // Without the AI, well-rated dishes go first (unrated ones count as a middling 6).
+  const stars = (d: EnrichedDish) => ratings?.[dishKey(d.name)]?.avg ?? 6;
+  const best = (list: EnrichedDish[]) => [...list].filter(ok).sort((a, b) => stars(b) - stars(a));
+  const dishes = [...best(top.mains).slice(0, 3), ...best(top.sides).slice(0, 2)].slice(0, 5);
   const picks: Pick[] = dishes.map((d) => {
     const claims = [
       ...profile.diet.filter((p) => hasPref(d, p)),
@@ -182,7 +194,7 @@ async function askModel(prompt: string, retryNote?: string): Promise<AiRecommend
  * Full pipeline for one profile and meal: code filters and scores, Sonnet picks and explains,
  * code verifies. A failed check gets one retry with the failures listed, then falls back to the rules pick.
  */
-export async function recommend(day: EnrichedDay, meal: string, profile: Profile): Promise<Recommendation> {
+export async function recommend(day: EnrichedDay, meal: string, profile: Profile, ratings?: RatingMap): Promise<Recommendation> {
   const started = Date.now();
   const scores = scoreHalls(day, meal, profile);
   const dishes = day.halls.flatMap((h) => h.dishes);
@@ -195,7 +207,7 @@ export async function recommend(day: EnrichedDay, meal: string, profile: Profile
   let source: Recommendation["source"] = "rules";
 
   if (anyEligible && getClient()) {
-    const prompt = buildPrompt(profile, meal, scores);
+    const prompt = buildPrompt(profile, meal, scores, ratings);
     let note: string | undefined;
     for (let attempt = 0; attempt < 2 && !rec; attempt++) {
       try {
@@ -221,7 +233,7 @@ export async function recommend(day: EnrichedDay, meal: string, profile: Profile
   }
 
   if (!rec) {
-    rec = anyEligible ? rulesRecommendation(scores, profile) : { hall: scores[0].hall, picks: [], summary: "" };
+    rec = anyEligible ? rulesRecommendation(scores, profile, ratings) : { hall: scores[0].hall, picks: [], summary: "" };
     verification = anyEligible
       ? verify(rec, dishes, meal, profile, walks)
       : {
