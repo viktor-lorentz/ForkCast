@@ -34,7 +34,7 @@ export async function POST(request: Request) {
     const meals = [...new Set(day.halls.flatMap((h) => h.meals))];
     const meal = body.meal && meals.includes(body.meal) ? body.meal : currentMeal(meals);
     if (!meal) return Response.json({ error: `No meals listed for ${date}` }, { status: 404 });
-    const rec = await getRecommendation(profile, date, meal);
+    const rec = await getRecommendation(day, profile, meal);
     // Visible in browser dev tools (Network → Timing) for diagnosing slow responses.
     return Response.json(rec, { headers: { "server-timing": `menu;dur=${t1 - t0}, pick;dur=${Date.now() - t1}, boot;dur=${t0 - BOOT}` } });
   } catch (err) {

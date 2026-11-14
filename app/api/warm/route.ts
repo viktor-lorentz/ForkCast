@@ -22,7 +22,7 @@ export async function GET() {
     const jobs = DEMO_PROFILES.flatMap((d) => meals.map((meal) => ({ profile: cleanProfile(d.profile), meal })));
     // A few at a time, to stay well inside API rate limits.
     for (let i = 0; i < jobs.length; i += 6) {
-      const done = await Promise.allSettled(jobs.slice(i, i + 6).map((j) => getRecommendation(j.profile, today, j.meal)));
+      const done = await Promise.allSettled(jobs.slice(i, i + 6).map((j) => getRecommendation(first.value, j.profile, j.meal)));
       warmed += done.filter((r) => r.status === "fulfilled" && r.value.source === "ai").length;
     }
   }
