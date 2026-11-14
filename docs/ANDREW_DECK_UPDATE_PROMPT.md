@@ -33,7 +33,7 @@ Ratings never override allergens. Say that out loud; judges will wonder.
 - Never write "safe". Keep "no flagged allergens per USC labels, confirm with dining staff".
 
 ## Screenshots I need to give you
-Tell me exactly which ones, with the same instructions as before (Chrome DevTools, iPhone 15 size). Likely: (1) the "How was brunch at EVK?" card on the home screen; (2) a pick card with a ★ badge; (3) the /rate page with one dish open on the 1–10 row; (4) a swipe card in the Quick taste check. The rating card appears about 45 minutes after you've looked at a meal's picks, once that meal has started. For the screenshot, Viktor can trigger it on demand, so just ask me.
+Tell me exactly which ones, with the same instructions as before (Chrome DevTools, iPhone 15 size). Likely: (1) the "How was brunch at EVK?" card on the home screen; (2) a pick card with a ★ badge; (3) the /rate page with one dish open on the 1–10 row; (4) a swipe card in the Quick taste check. The rating card appears about 45 minutes after you've looked at a meal's picks, once that meal has started. For screenshots and the live demo, add `&ask=rate` to the address, e.g. https://forkcast-usc.vercel.app/?demo=halal-sesame&ask=rate, and the card shows right away for that sample student's picks.
 
 When done: export the PNGs, check them yourself at 1920×1080 and 1280×720 like before, update the PDF, and give me a short list of what changed.
 ```
