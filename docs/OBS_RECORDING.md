@@ -48,12 +48,13 @@ Same window → https://hospitality.usc.edu/dining-hall-menus/
 
 **R02 · First run · 60–75 s**
 **⌘⇧N** opens an Incognito window, so there's no saved profile. Redo steps 1.3–1.5 (device toolbar on, iPhone 14 Pro, DPR 3), then point the OBS source at this window and re-check the crop. Go to https://forkcast-usc.vercel.app
-1. Hold 2 s on the welcome screen.
-2. Click **Describe how you eat** and type at a calm speed: `I'm halal, allergic to sesame, love spicy food and rice`
-3. Click **Fill in for me**. Hold while the chips light up (Sesame, Halal ingredients, spicy, rice).
-4. Scroll down slowly. **Where do you live?** → **Birnkrant**.
-5. **Continue** → **Quick taste check:** drag 3–4 cards right and 2 left, and use the ♥/✕ buttons for the rest.
-6. "Got it, ForkCast knows your taste" → the pick appears. **Hold 4 s on the red card.**
+1. Hold 2 s on the welcome screen ("Know where to eat before you go."), then **Get started**.
+2. **Describe how you eat:** type at a calm speed: `I'm halal, allergic to sesame, love spicy food and rice`
+3. Click **Fill in for me**. It reads the text and slides to **Any allergies?** with Sesame already checked. Hold 1.5 s.
+4. **Next** through each screen, holding about 1 s on each: diet (Halal checked) → goal → loves (spicy and rice lit up).
+5. **Where do you live?** → **Birnkrant** → **Next**.
+6. **What looks good?** Drag 3–4 cards right and 2 left, and use the ♥/✕ buttons for the rest.
+7. "Got it, ForkCast knows your taste" → the pick appears. **Hold 4 s on the red card.**
 Then close the Incognito window and point OBS back at the normal window.
 
 **R03 · The pick · 30 s** → https://forkcast-usc.vercel.app/?demo=halal-sesame
