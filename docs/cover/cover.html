@@ -1,134 +1,59 @@
 <!doctype html>
-<html lang="en">
+<html>
 <head>
-<meta charset="utf-8">
+<meta charset="utf-8" />
 <title>ForkCast cover</title>
-<!-- Devpost cover graphic, 3000x2000. Export: open in Chrome, Inspect, Cmd+Shift+P, "Capture full size screenshot".
-     Or: node docs/cover/export.mjs (writes cover.png). Screenshots are real captures of forkcast-usc.vercel.app. -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-  :root { --bg:#faf7f2; --tile:#ffffff; --ink:#1c1917; --muted:#6b645e; --red:#990000; --gold:#ffcc00; --gap:32px; }
-  * { box-sizing:border-box; margin:0; padding:0; }
-  html, body { width:3000px; height:2000px; overflow:hidden; background:var(--bg); }
-  body { font-family:"Geist", system-ui, sans-serif; color:var(--ink); -webkit-font-smoothing:antialiased; padding:100px; }
-  .grid { width:2800px; height:1800px; display:grid; gap:var(--gap); grid-template-columns:repeat(12, 1fr); grid-template-rows:repeat(6, 1fr); }
-  .tile { background:var(--tile); border-radius:40px; box-shadow:0 2px 6px rgba(28,25,23,.04), 0 18px 48px rgba(28,25,23,.07); position:relative; overflow:hidden; padding:52px 56px; display:flex; flex-direction:column; }
-  h2 { font-size:64px; line-height:1.02; font-weight:750; letter-spacing:-0.035em; }
-  p { font-size:32px; line-height:1.3; color:var(--muted); margin-top:16px; font-weight:450; letter-spacing:-0.01em; }
-  .icon { width:84px; height:84px; border-radius:24px; display:flex; align-items:center; justify-content:center; background:#f6eeee; color:var(--red); flex-shrink:0; }
-  .icon svg { width:46px; height:46px; }
-  .small { flex-direction:row; align-items:center; gap:36px; padding:44px 52px; }
-  .small h2 { font-size:52px; }
-  .small p { font-size:29px; margin-top:12px; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 3000px; height: 2000px; overflow: hidden; }
+  body {
+    background: #f5f5f7;
+    font-family: -apple-system, "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #1d1d1f;
+    -webkit-font-smoothing: antialiased;
+    position: relative;
+  }
+  .top { position: absolute; top: 120px; left: 0; right: 0; text-align: center; }
+  .brand { display: inline-flex; align-items: center; gap: 18px; font-size: 52px; font-weight: 600; letter-spacing: -0.01em; }
+  .brand img { height: 58px; }
+  h1 { margin-top: 34px; font-size: 168px; font-weight: 700; letter-spacing: -0.045em; line-height: 1; }
+  h1 span { color: #990000; }
+  .sub { margin-top: 36px; font-size: 52px; font-weight: 400; color: #6e6e73; letter-spacing: -0.01em; }
 
-  /* phone frames */
-  .phone { border:14px solid var(--ink); border-radius:72px; overflow:hidden; background:var(--bg); box-shadow:0 30px 70px rgba(28,25,23,.18); position:absolute; left:50%; transform:translateX(-50%); }
-  .phone img { display:block; width:100%; height:100%; object-fit:cover; object-position:top; }
+  .phones { position: absolute; left: 0; right: 0; top: 640px; height: 1500px; }
+  .phone {
+    position: absolute; width: 640px; height: 1388px; border-radius: 108px; padding: 20px;
+    background: linear-gradient(145deg, #3a3a3c, #1d1d1f 40%, #2c2c2e);
+    box-shadow: 0 0 0 3px #48484a inset, 0 60px 120px -30px rgba(0,0,0,.28), 0 30px 60px -30px rgba(0,0,0,.25);
+  }
+  .phone .screen { width: 100%; height: 100%; border-radius: 90px; overflow: hidden; background: #fff; position: relative; }
+  .phone .screen img { width: 100%; display: block; }
+  .phone .island { position: absolute; top: 34px; left: 50%; transform: translateX(-50%); width: 190px; height: 56px; border-radius: 30px; background: #000; z-index: 2; }
+  .phone .screen::before { content: ""; display: block; height: 0; }
+  .center { left: 50%; margin-left: -320px; top: 0; z-index: 3; }
+  .left { left: 50%; margin-left: -1010px; top: 130px; z-index: 2; transform: scale(.9); transform-origin: top center; }
+  .right { left: 50%; margin-left: 370px; top: 130px; z-index: 2; transform: scale(.9); transform-origin: top center; }
+  /* The screenshots start below the status bar, so leave room for the island. */
+  .pad { height: 70px; background: var(--bar, #f5f5f7); }
+  .right .pad { --bar: #0c0c0e; }
+  .right .screen { background: #0c0c0e; }
 
-  /* hero */
-  .hero { grid-column:1 / 5; grid-row:1 / 7; padding:76px 72px; }
-  .brand { display:flex; align-items:center; gap:24px; font-size:76px; font-weight:800; letter-spacing:-0.045em; }
-  .brand img { height:74px; width:auto; }
-  .brand span { color:var(--red); }
-  .hero h1 { font-size:150px; line-height:.94; font-weight:800; letter-spacing:-0.055em; margin-top:72px; }
-  .hero .sub { font-size:46px; line-height:1.22; color:var(--muted); margin-top:32px; max-width:760px; }
-  .hero .phone { width:540px; height:1170px; top:860px; }
-
-  .verify { grid-column:5 / 8; grid-row:1 / 4; }
-  .verify .phone { width:440px; height:953px; top:300px; }
-
-  .red { grid-column:8 / 13; grid-row:1 / 3; background:var(--red); color:#fff; padding:64px 72px; justify-content:space-between; }
-  .red h2 { font-size:92px; max-width:1050px; letter-spacing:-0.045em; }
-  .red p { color:rgba(255,255,255,.86); font-size:38px; margin-top:22px; }
-  .red .shield { position:absolute; right:72px; top:64px; width:150px; height:150px; color:var(--gold); }
-  .chips { display:flex; gap:16px; flex-wrap:wrap; }
-  .chip { font-size:28px; font-weight:600; padding:12px 26px; border-radius:999px; background:rgba(255,255,255,.14); color:#fff; display:flex; align-items:center; gap:12px; }
-  .chip i { font-style:normal; color:var(--gold); }
-
-  .c1 { grid-column:8 / 11; grid-row:3; }
-  .c2 { grid-column:8 / 11; grid-row:4; }
-  .c3 { grid-column:8 / 11; grid-row:5; }
-  .c4 { grid-column:8 / 11; grid-row:6; }
-  .week { grid-column:5 / 8; grid-row:4; }
-  .fit { grid-column:5 / 8; grid-row:5; }
-  .dark { grid-column:5 / 8; grid-row:6; }
-
-  .langs { grid-column:11 / 13; grid-row:3 / 7; padding:52px 48px; }
-  .langs h2 { font-size:58px; }
-  .langs p { font-size:29px; }
-  .langlist { display:flex; flex-wrap:wrap; gap:10px; margin-top:26px; }
-  .langlist span { font-size:27px; font-weight:550; padding:9px 18px; border-radius:999px; background:#f3efe9; color:var(--ink); }
-  .langlist span.on { background:var(--ink); color:#fff; }
-  .langs .phone { width:360px; height:780px; top:560px; }
-
+  .foot { position: absolute; bottom: 0; left: 0; right: 0; height: 260px; background: linear-gradient(to top, #f5f5f7 30%, rgba(245,245,247,0)); z-index: 5; }
+  .url { position: absolute; bottom: 70px; left: 0; right: 0; text-align: center; z-index: 6; font-size: 34px; color: #86868b; letter-spacing: 0.01em; }
 </style>
 </head>
 <body>
-<div class="grid">
+  <div class="top">
+    <div class="brand"><img src="logo-mark.png" alt="" />ForkCast</div>
+    <h1>Know before <span>you go.</span></h1>
+    <p class="sub">The USC dining hall that fits how you eat. Every meal.</p>
+  </div>
 
-  <section class="tile hero">
-    <div class="brand"><img src="logo-mark.png" alt=""><div>Fork<span>Cast</span></div></div>
-    <h1>Where should I eat?</h1>
-    <div class="sub">The best USC dining hall for you, every meal.</div>
-    <div class="phone"><img src="screenshot-1.png" alt="ForkCast main screen: Everybody's Kitchen picked for dinner"></div>
-  </section>
+  <div class="phones">
+    <div class="phone left"><div class="island"></div><div class="screen"><div class="pad"></div><img src="screen-setup.png" alt="" /></div></div>
+    <div class="phone right"><div class="island"></div><div class="screen"><div class="pad"></div><img src="screen-pick-dark.png" alt="" /></div></div>
+    <div class="phone center"><div class="island"></div><div class="screen"><div class="pad"></div><img src="screen-pick.png" alt="" /></div></div>
+  </div>
 
-  <section class="tile verify">
-    <h2>AI picks,<br><span style="white-space:nowrap">double-checked</span></h2>
-    <p>Every answer is verified by code against USC's labels.</p>
-    <div class="phone"><img src="screenshot-2.png" alt="The How we checked panel"></div>
-  </section>
-
-  <section class="tile red">
-    <svg class="shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M12 2.8l7.5 3v5.6c0 4.6-3.1 8.4-7.5 9.8-4.4-1.4-7.5-5.2-7.5-9.8V5.8z"/><path d="M8.6 12.2l2.4 2.4 4.6-4.8"/></svg>
-    <div>
-      <h2>Your allergens, enforced by code</h2>
-      <p>From USC's own labels. Never left to the AI.</p>
-    </div>
-    <div class="chips">
-      <span class="chip"><i>✕</i> Peanuts</span><span class="chip"><i>✕</i> Sesame</span><span class="chip"><i>✕</i> Gluten</span><span class="chip"><i>✕</i> Dairy</span><span class="chip">Halal</span><span class="chip">Vegan</span><span class="chip">Vegetarian</span>
-    </div>
-  </section>
-
-  <section class="tile small c1">
-    <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9.5 2.5h5"/></svg></div>
-    <div><h2>Closing soon</h2><p>Won't send you to a hall that's about to close</p></div>
-  </section>
-  <section class="tile small c2">
-    <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13" cy="4" r="1.8"/><path d="M10.5 21l2-6-2.5-2.5 1.5-5 3 3 3 1M8 11l2.5-3.5M12.5 15l2.5 6"/></svg></div>
-    <div><h2>Walking time</h2><p>From your dorm to each hall</p></div>
-  </section>
-  <section class="tile small c3">
-    <div class="icon" style="background:#fff7d6;color:#8a6d00"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3.2l2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L12 17l-5.4 2.9 1.1-6.1-4.5-4.2 6.1-.8z"/></svg></div>
-    <div><h2>Rated by students</h2><p>Today's 1–10 scores</p></div>
-  </section>
-  <section class="tile small c4">
-    <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5L20 6.5"/></svg></div>
-    <div><h2>“I ate this”</h2><p>Suggests variety across the week</p></div>
-  </section>
-
-  <section class="tile langs">
-    <h2>7 languages</h2>
-    <p>The whole app, one tap at the top.</p>
-    <div class="langlist"><span>English</span><span class="on">Español</span><span>Français</span><span>中文</span><span>한국어</span><span>हिन्दी</span><span>Tiếng Việt</span></div>
-    <div class="phone"><img src="screenshot-3.png" alt="ForkCast in Spanish"></div>
-  </section>
-
-  <section class="tile small week">
-    <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg></div>
-    <div><h2>This week</h2><p>Best hall for every meal, 7 days ahead</p></div>
-  </section>
-
-  <section class="tile small dark">
-      <div class="icon" style="background:var(--ink);color:var(--gold)"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 14.5A8 8 0 019.5 4a8 8 0 1010.5 10.5z"/></svg></div>
-      <div><h2>Dark mode</h2><p>A switch in the header</p></div>
-  </section>
-  <section class="tile small fit">
-      <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6.5 6.5v11M17.5 6.5v11M3.5 9.5v5M20.5 9.5v5M6.5 12h11"/></svg></div>
-      <div><h2>Fitness goals</h2><p>Protein-forward picks</p></div>
-  </section>
-
-</div>
 </body>
 </html>
