@@ -9,7 +9,7 @@ Everything below is already built as an animated draft in `~/Desktop/ForkCast-vi
 ---
 
 ## Omar (who he is)
-- **Omar Musazai**, freshman, from **Philadelphia**. Lives in **Pardee Tower** (3 min to EVK).
+- **Omar Musazai**, freshman, from **Philadelphia**. Lives in **Cardinal Gardens** (2 min to Village).
 - **Halal, no pork.** **Bulking**: lifts every day and needs real protein at dinner.
 - **Homesick.** His mom cooked Afghan food for him every night: qabuli palaw, mantu, bolani. At home he never had to ask what was in his food.
 - His friends are a big group with no restrictions. Dinner plans happen in the group chat, fast.
