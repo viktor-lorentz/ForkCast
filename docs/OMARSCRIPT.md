@@ -4,7 +4,7 @@
 **Shape** (from Lauren's feedback): persona first → a series of unfortunate events → proof he's not alone → the turn → how ForkCast works → payoff.
 **Look:** ForkCast's own design (light backgrounds, white cards, cardinal red, the app's font). Every graphic is something the app really shows: the group chat that starts dinner, the hall menus, the red pick card, the checks, the hall bars, the plate. It does not copy Brendan's look (no dark map, no grain, no dot grid).
 
-Everything below is already built as an animated draft in `~/Desktop/ForkCast-video` (composition **Omar**). Anything not filmed yet shows as a labeled gray placeholder, so the draft always tells you what's left.
+Every graphic is a slide in **[docs/video-deck/index.html](video-deck/index.html)**. Screen-record it, then put it together in Descript with the footage and voice (steps at the bottom).
 
 ---
 
