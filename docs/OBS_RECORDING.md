@@ -53,22 +53,22 @@ Same window → https://hospitality.usc.edu/dining-hall-menus/
 3. **Do you follow a diet?** → tap **Halal** → **Next**.
 4. **Any fitness goal?** → tap **Bulk up** (it moves on by itself).
 5. **What do you love?** → tap **chicken** and **rice**, type **beef** in the box and tap **Add** → **Next**.
-6. **Where do you live?** → **Pardee Tower** → **Next**.
+6. **Where do you live?** → **Cardinal Gardens** → **Next**.
 7. **Anything else?** → **Skip**.
 8. **What looks good?** Drag 3–4 cards right and 2 left.
 9. The pick appears. **Hold 4 s on the red card.**
-**Keep this Incognito window open for R03–R11** so every clip shows Omar's profile (halal, no pork, bulking, Pardee Tower). Where a clip below gives a `?demo=` link, just stay on the main page instead.
+**Keep this Incognito window open for R03–R11** so every clip shows Omar's profile (halal, no pork, bulking, Cardinal Gardens). Where a clip below gives a `?demo=` link, just stay on the main page instead.
 
 **R03 · The pick · 30 s** (same window)
-1. Hold 3 s on the red card (at dinner on Nov 15 it says **Everybody's Kitchen**).
+1. Hold 3 s on the red card (at dinner on Nov 15 it says **Parkside**).
 2. Scroll slowly through **Your plate**.
 3. Stop at **Dishes that fit you, by hall** and hold on the ★ OUR PICK row.
 4. Click a hall row to open it, scroll its list a little, click again to close.
 
 **R04 · How we checked · 15 s** (same page)
-1. Scroll to **Why EVK? How we checked** and click it.
+1. Scroll to **Why Parkside? How we checked** and click it.
 2. Hold 4 s on the green checks.
-3. Scroll to **Hidden at EVK for you** and hold on a *Contains Pork (USC label)* row.
+3. Scroll to **Hidden at Parkside for you** and hold on a *Contains Pork (USC label)* row.
 
 **R06 · Thumbs, I ate this, rate · 20 s** → https://forkcast-usc.vercel.app/?demo=halal-sesame
 In **Your plate**:
@@ -77,7 +77,7 @@ In **Your plate**:
 3. **I ate this** on the top dish → **How was it?** → **8** → hold on *✓ Saved. Thanks!*
 
 **R07 · Rating card + /rate · 25 s · optional, not in the current cut** → https://forkcast-usc.vercel.app/?demo=halal-sesame&ask=rate
-1. The **How was dinner at EVK?** card: score 2–3 dishes, then **Done**.
+1. The **How was dinner at Parkside?** card: score 2–3 dishes, then **Done**.
 2. Scroll to the bottom → **Ate something else? Rate a dish** → on /rate, click a dish → **9**.
 
 **R08 · This week · 20 s** → https://forkcast-usc.vercel.app/?demo=halal-sesame

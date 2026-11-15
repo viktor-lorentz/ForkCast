@@ -21,7 +21,7 @@ ForkCast asks a few quick questions: what you can't eat, how you eat, your goal,
 Then, every meal, it reads all three USC menus. Code removes anything USC labels with pork, or without halal ingredients, before the AI ever sees it. Claude picks the hall and the dishes, and code checks every answer before Omar does.
 
 **A-04** · 1:42
-It compares every hall: how much of the menu fits, and how far the walk is.
+It compares every hall: how much of the menu fits, how far the walk is, and what's good for his goal. Tonight, it's worth the longer walk.
 
 **A-05** · 1:48
 And because Omar's bulking, it builds a protein-forward plate from what's actually being served tonight.

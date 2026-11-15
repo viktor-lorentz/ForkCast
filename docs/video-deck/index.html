@@ -187,7 +187,7 @@ body.nocursor,body.nocursor *{cursor:none!important}
   <div class="card name a pop" style="--d:.1s">
     <div class="avatar">O</div>
     <div><div class="eyebrow a fade" style="--d:.4s">Meet</div><div class="h2 a" style="--d:.5s;margin-top:10px">Omar Musazai</div>
-    <div class="sub a fade" style="--d:.8s;margin-top:12px">Freshman · from Philadelphia · Pardee Tower</div>
+    <div class="sub a fade" style="--d:.8s;margin-top:12px">Freshman · from Philadelphia · Cardinal Gardens</div>
     <div class="chips"><span class="chip a pop" style="--d:1.3s">Halal</span><span class="chip a pop" style="--d:1.6s">No pork</span><span class="chip g a pop" style="--d:1.9s">Bulking 💪</span></div></div>
   </div>
 </section>
@@ -223,18 +223,18 @@ body.nocursor,body.nocursor *{cursor:none!important}
   <div class="card quote a pop"><q class="a" style="--d:.3s">It's so difficult finding the perfect food.</q><div class="by a fade" style="--d:1s"><b>Jayden</b> · Freshman, USC</div></div>
 </section>
 
-<section class="slide" data-id="G09 Group chat 2" data-dur="4" data-time="1:05" data-note="O-06 “Now, when the group chat says EVK, I know in ten seconds if I can eat there.”">
+<section class="slide" data-id="G09 Group chat 2" data-dur="4" data-time="1:05" data-note="O-06 “Now, when the group chat says Parkside, I know in ten seconds if I can eat there.”">
   <div class="phone"><div class="phead"><div class="pic">🍽️</div><b>dinner crew</b></div><div class="thread" data-chat="2"></div></div>
 </section>
 
-<section class="slide" data-id="G10 EVK yes" data-dur="5" data-time="1:08 (instead of / after R03)" data-note="The app's real dinner pick for Omar on Nov 15.">
+<section class="slide" data-id="G10 Parkside yes" data-dur="5" data-time="1:08 (instead of / after R03)" data-note="The app's real dinner pick for Omar on Nov 15.">
   <div style="display:flex;align-items:center;gap:90px">
-    <div class="pick a pop" style="--d:.1s;width:900px"><div class="ey">DINNER · GO TO</div><h2>Everybody's Kitchen</h2><div class="meta">3 min walk from Pardee Tower</div></div>
-    <div><div class="h1 a" style="--d:.8s;font-size:150px">EVK: <span style="color:var(--green)">yes.</span></div><div class="sub a fade" style="--d:1.4s;margin-top:24px">12 dishes he can eat tonight.</div></div>
+    <div class="pick a pop" style="--d:.1s;width:760px"><div class="ey">DINNER · GO TO</div><h2 class="pk-name"></h2><div class="meta"><span class="pk-walk"></span> min walk from Cardinal Gardens</div></div>
+    <div><div class="h1 a" style="--d:.8s;font-size:128px;white-space:nowrap"><span class="pk-short"></span>: <span style="color:var(--green)">yes.</span></div><div class="sub a fade" style="--d:1.4s;margin-top:24px"><span class="pk-fit"></span> dishes he can eat tonight.</div></div>
   </div>
 </section>
 
-<section class="slide" data-id="G11 Group chat 3" data-dur="5" data-time="1:12" data-note="No voice here. Music only. Then cut to W1 (walking to EVK).">
+<section class="slide" data-id="G11 Group chat 3" data-dur="5" data-time="1:12" data-note="No voice here. Music only. Then cut to W1 (walking to Parkside).">
   <div class="phone"><div class="phead"><div class="pic">🍽️</div><b>dinner crew</b></div><div class="thread" data-chat="3"></div></div>
   <div class="badge a pop" style="--d:1.6s"><b>10 s</b><span>to know</span></div>
 </section>
@@ -252,7 +252,7 @@ body.nocursor,body.nocursor *{cursor:none!important}
     <div class="ph"><span class="n">4</span><span>Code checks every answer</span></div>
   </div>
   <div class="cols" id="cols"></div>
-  <div class="pickbox"><div class="pick"><div class="ey">DINNER · GO TO</div><h2>Everybody's Kitchen</h2><div class="meta">3 min walk</div><p id="typed"></p></div></div>
+  <div class="pickbox"><div class="pick"><div class="ey">DINNER · GO TO</div><h2 class="pk-name"></h2><div class="meta"><span class="pk-walk"></span> min walk</div><p id="typed"></p></div></div>
   <div class="card checks" id="checks"></div>
 </section>
 
@@ -262,7 +262,7 @@ body.nocursor,body.nocursor *{cursor:none!important}
 
 <section class="slide" data-id="G15 Plate" data-dur="8" data-time="1:48" data-note="A-05 “And because Omar's bulking, it builds a protein-forward plate from what's actually being served tonight.”">
   <div class="platewrap"><div class="plate a pop" id="plate"></div>
-  <div><div class="eyebrow a fade" style="--d:.3s">Hearty plate · EVK tonight</div><div class="h2 a" style="--d:.4s;margin:16px 0 36px;font-size:70px">A plate built for his goal.</div><div class="dlist" id="dlist"></div></div></div>
+  <div><div class="eyebrow a fade" style="--d:.3s">Hearty plate · <span class="pk-short"></span> tonight</div><div class="h2 a" style="--d:.4s;margin:16px 0 36px;font-size:70px">A plate built for his goal.</div><div class="dlist" id="dlist"></div></div></div>
 </section>
 
 <section class="slide" data-id="G16 Features" data-dur="8" data-time="1:56" data-note="A-06 “Rate what you ate. Plan the whole week. Skip halls about to close. Seven languages, and your picks by email every morning.”">
@@ -306,8 +306,14 @@ body.nocursor,body.nocursor *{cursor:none!important}
 </div></div>
 
 <script>
-const D={"items": 264, "labels": 617, "tests": 206, "share": 0.6, "halls": [{"hall": "evk", "total": 21, "fit": 12, "walk": 3, "mains": 5, "sides": 7, "sample": [{"name": "Assorted Fruits", "icons": 2, "ok": true}, {"name": "Creamy Chicken and Wild Rice Soup", "icons": 3, "ok": false}, {"name": "Molly's Tomato Bisque", "icons": 3, "ok": false}, {"name": "Jackfruit Tinga with Pickled Red Onion", "icons": 2, "ok": true}, {"name": "Sauteed Papaya BBQ Shrimp", "icons": 2, "ok": true}, {"name": "Roasted Coconut Cilantro Beef Flank Steak", "icons": 2, "ok": true}, {"name": "Braised Cuban Black Beans", "icons": 2, "ok": true}, {"name": "Roasted Delicata Squash", "icons": 2, "ok": true}, {"name": "Sauteed Sofrito Green Beans", "icons": 2, "ok": true}]}, {"hall": "parkside", "total": 22, "fit": 14, "walk": 14, "mains": 7, "sides": 7, "sample": [{"name": "Mexican Street Corn Bowl with Barbacoa Beef", "icons": 1, "ok": false}, {"name": "Mexican Street Corn Bowl (no meat)", "icons": 3, "ok": true}, {"name": "Veggie Enchilada Casserole with Green Sauce", "icons": 3, "ok": true}, {"name": "Sauteed Chipotle Butter Shrimp", "icons": 3, "ok": true}, {"name": "Green Chile Chicken", "icons": 1, "ok": true}, {"name": "Braised Black Beans", "icons": 2, "ok": true}, {"name": "Steamed Peas and Carrots", "icons": 2, "ok": true}, {"name": "Corn on the Cob", "icons": 2, "ok": true}, {"name": "Spanish Rice", "icons": 2, "ok": true}]}, {"hall": "university-village", "total": 29, "fit": 17, "walk": 11, "mains": 7, "sides": 10, "sample": [{"name": "Assorted Fruits", "icons": 2, "ok": true}, {"name": "Vegetable Barley Soup", "icons": 3, "ok": true}, {"name": "Molly's Creamy New England Clam Chowder with Bacon", "icons": 6, "ok": false}, {"name": "Veggie Shepherds Pie with Olive Oil Mashed Potatoes", "icons": 2, "ok": true}, {"name": "Braised Beef Pot Roast with Carrots, Onion, and Celery", "icons": 1, "ok": true}, {"name": "Grilled Pork Chops with Pineapple Salsa", "icons": 1, "ok": false}, {"name": "Braised White Beans and Greens", "icons": 2, "ok": true}, {"name": "Steamed Broccoli and Carrots", "icons": 2, "ok": true}, {"name": "Sauteed Brussels Sprouts, Apples, and Onion", "icons": 2, "ok": true}]}], "pickHall": "evk", "summary": "EVK is your best bet, only a 3 min walk. It has beef, chicken and rice you like, all with halal-ingredients and no pork per USC labels.", "picks": [{"name": "Roasted Coconut Cilantro Beef Flank Steak", "station": "Hot Line", "kind": "main", "why": "Beef flank steak matches your beef pick and your protein goal.", "prefs": ["halal-ingredients"]}, {"name": "Cajun Chicken Pizza", "station": "Hot Line", "kind": "main", "why": "Chicken pizza is a hearty main for bulking, and you like chicken.", "prefs": ["halal-ingredients"]}, {"name": "Coconut Cilantro Rice", "station": "Hot Line", "kind": "side", "why": "Rice side you like, pairs well with the steak.", "prefs": ["halal-ingredients", "vegan"]}, {"name": "Braised Cuban Black Beans", "station": "Hot Line", "kind": "side", "why": "Black beans add extra fuel to round out the plate.", "prefs": ["halal-ingredients", "vegan"]}], "checks": ["Everybody's Kitchen is a real dining hall", "4 dishes picked", "Every dish is on today's USC menu", "No dish carries an allergen you avoid or misses a diet label you need", "Every label claim matches USC's labels", "Walking times match the map data"], "ms": 3298};
+const D={"items": 264, "labels": 617, "tests": 206, "share": 0.6, "halls": [{"hall": "evk", "total": 21, "fit": 12, "walk": 10, "mains": 5, "sides": 7, "sample": [{"name": "Assorted Fruits", "icons": 2, "ok": true}, {"name": "Creamy Chicken and Wild Rice Soup", "icons": 3, "ok": false}, {"name": "Molly's Tomato Bisque", "icons": 3, "ok": false}, {"name": "Jackfruit Tinga with Pickled Red Onion", "icons": 2, "ok": true}, {"name": "Sauteed Papaya BBQ Shrimp", "icons": 2, "ok": true}, {"name": "Roasted Coconut Cilantro Beef Flank Steak", "icons": 2, "ok": true}, {"name": "Braised Cuban Black Beans", "icons": 2, "ok": true}, {"name": "Roasted Delicata Squash", "icons": 2, "ok": true}, {"name": "Sauteed Sofrito Green Beans", "icons": 2, "ok": true}]}, {"hall": "parkside", "total": 22, "fit": 14, "walk": 12, "mains": 7, "sides": 7, "sample": [{"name": "Mexican Street Corn Bowl with Barbacoa Beef", "icons": 1, "ok": false}, {"name": "Mexican Street Corn Bowl (no meat)", "icons": 3, "ok": true}, {"name": "Veggie Enchilada Casserole with Green Sauce", "icons": 3, "ok": true}, {"name": "Sauteed Chipotle Butter Shrimp", "icons": 3, "ok": true}, {"name": "Green Chile Chicken", "icons": 1, "ok": true}, {"name": "Braised Black Beans", "icons": 2, "ok": true}, {"name": "Steamed Peas and Carrots", "icons": 2, "ok": true}, {"name": "Corn on the Cob", "icons": 2, "ok": true}, {"name": "Spanish Rice", "icons": 2, "ok": true}]}, {"hall": "university-village", "total": 29, "fit": 17, "walk": 3, "mains": 7, "sides": 10, "sample": [{"name": "Assorted Fruits", "icons": 2, "ok": true}, {"name": "Vegetable Barley Soup", "icons": 3, "ok": true}, {"name": "Molly's Creamy New England Clam Chowder with Bacon", "icons": 6, "ok": false}, {"name": "Veggie Shepherds Pie with Olive Oil Mashed Potatoes", "icons": 2, "ok": true}, {"name": "Braised Beef Pot Roast with Carrots, Onion, and Celery", "icons": 1, "ok": true}, {"name": "Grilled Pork Chops with Pineapple Salsa", "icons": 1, "ok": false}, {"name": "Braised White Beans and Greens", "icons": 2, "ok": true}, {"name": "Steamed Broccoli and Carrots", "icons": 2, "ok": true}, {"name": "Sauteed Brussels Sprouts, Apples, and Onion", "icons": 2, "ok": true}]}], "pickHall": "parkside", "summary": "Parkside has the best mix of chicken, beef and rice for your bulk, all halal-ingredient with no pork per USC labels. It's a 12 min walk, but worth it.", "picks": [{"name": "Green Chile Chicken", "station": "Eurasia", "kind": "main", "why": "Chicken main you like, with solid protein for bulking.", "prefs": ["halal-ingredients"]}, {"name": "Beef and Rice Soup", "station": "Eurasia", "kind": "main", "why": "Beef and rice soup hits two of your likes.", "prefs": ["halal-ingredients"]}, {"name": "Sauteed Chipotle Butter Shrimp", "station": "Eurasia", "kind": "main", "why": "Extra protein-rich main to build a bigger plate.", "prefs": ["halal-ingredients"]}, {"name": "Spanish Rice", "station": "Eurasia", "kind": "side", "why": "Spanish Rice adds filling carbs and fits your rice love.", "prefs": ["halal-ingredients", "vegan"]}, {"name": "Braised Black Beans", "station": "Eurasia", "kind": "side", "why": "Black beans add more protein and carbs to the plate.", "prefs": ["halal-ingredients", "vegan"]}], "checks": ["Parkside is a real dining hall", "5 dishes picked", "Every dish is on today's USC menu", "No dish carries an allergen you avoid or misses a diet label you need", "Every label claim matches USC's labels", "Walking times match the map data"], "ms": 3334};
 const HN={evk:"EVK","parkside":"Parkside","university-village":"USC Village"};
+const FULL={evk:"Everybody's Kitchen",parkside:"Parkside","university-village":"USC Village"};
+const PH=D.halls.find(h=>h.hall===D.pickHall);
+document.querySelectorAll('.pk-name').forEach(e=>e.textContent=FULL[D.pickHall]);
+document.querySelectorAll('.pk-short').forEach(e=>e.textContent=HN[D.pickHall]);
+document.querySelectorAll('.pk-walk').forEach(e=>e.textContent=PH.walk);
+document.querySelectorAll('.pk-fit').forEach(e=>e.textContent=PH.fit);
 const stage=document.getElementById('stage');
 function fit(){const s=Math.min(innerWidth/1920,innerHeight/1080);stage.style.transform=`scale(${s}) translate(-50%,-50%)`;stage.style.transform=`translate(${-960*s}px,${-540*s}px) scale(${s})`}
 addEventListener('resize',fit);fit();
@@ -333,9 +339,9 @@ function chat(thread,steps){thread.innerHTML='';let t=0;let last=null;
     if(!anim)n.style.animation='none';thread.append(n)}
 }
 const CHATS={
- 1:[{from:"Sara",text:"EVK in 10?",wait:400},{from:"Jay",text:"yesss",wait:300},{from:"Lina",text:"omw",wait:200},{from:"Sara",text:"omar u coming?",wait:500},{me:true,text:"go ahead, I'll catch up",wait:2200}],
- 2:[{from:"Sara",text:"EVK in 10?",wait:400}],
- 3:[{pre:true,from:"Sara",text:"EVK in 10?"},{me:true,text:"omw 🏃 save me a seat",wait:500}],
+ 1:[{from:"Sara",text:"Parkside in 10?",wait:400},{from:"Jay",text:"yesss",wait:300},{from:"Lina",text:"omw",wait:200},{from:"Sara",text:"omar u coming?",wait:500},{me:true,text:"go ahead, I'll catch up",wait:2200}],
+ 2:[{from:"Sara",text:"Parkside in 10?",wait:400}],
+ 3:[{pre:true,from:"Sara",text:"Parkside in 10?"},{me:true,text:"omw 🏃 save me a seat",wait:500}],
  mom:[{photo:true,wait:500},{me:true,text:"Not as good as yours. But close.",wait:700},{from:"Mom",text:"❤️ proud of you",wait:900,type:1200}]
 };
 
@@ -356,7 +362,7 @@ const ENTER={
    const Q=[["Any allergies?",[["🥜","Peanuts"],["🦐","Shellfish"],["🥓","Pork"],["🥯","Sesame"]],2],
             ["Do you follow a diet?",[["🌙","Halal"],["🌱","Vegan"],["🥕","Vegetarian"]],0],
             ["Any fitness goal?",[["💪","Build muscle"],["🏃","Lean out"],["🍽️","Bulk up"],["🙂","No goal"]],2],
-            ["Where do you live?",[["🏢","Pardee Tower"],["🏠","Birnkrant"],["🏙️","New North"],["🌴","Webb Tower"]],0]];
+            ["Where do you live?",[["🌳","Cardinal Gardens"],["🏢","Pardee Tower"],["🏠","Birnkrant"],["🌴","Webb Tower"]],0]];
    const steps=Q.map((q,k)=>{const st=el('div','step',`<div class="bar"><i style="width:${(k+1)*25}%"></i></div><div class="k">Step ${k+1} of 4</div><h3>${q[0]}</h3><div class="tiles">${q[1].map(t=>`<div class="tile"><em>${t[0]}</em>${t[1]}<span class="rip"></span><span class="ck">✓</span></div>`).join('')}</div>`);w.append(st);return st});
    const per=1350;steps.forEach((st,k)=>{T(()=>{st.classList.add('in');labels[k].classList.add('act')},200+k*per);T(()=>st.querySelectorAll('.tile')[Q[k][2]].classList.add('sel'),200+k*per+600);
      if(k<3)T(()=>{st.classList.add('out');st.classList.remove('in');labels[k].classList.remove('act');labels[k].classList.add('done')},200+(k+1)*per);else T(()=>{labels[k].classList.remove('act');labels[k].classList.add('done')},200+k*per+1200)})},
@@ -373,10 +379,12 @@ const ENTER={
  "G14 Every hall"(s){const b=$('#bars');b.innerHTML='';const hs=[...D.halls].sort((a,c)=>(a.hall===D.pickHall?-1:c.hall===D.pickHall?1:a.walk-c.walk));
    hs.forEach((h,k)=>{const best=h.hall===D.pickHall;const r=el('div','brow a'+(best?' best':''),`<div class="nm">${HN[h.hall]}${best?'<span class="star">★ OUR PICK</span>':''}<small>${h.walk} min walk</small></div><div class="track"><i></i></div><div class="ct">${h.fit} of ${h.total}</div>`);
      r.style.setProperty('--d',(.4+k*.25)+'s');b.append(r);T(()=>$('.track i',r).style.width=(h.fit/h.total*100)+'%',900+k*250)});
-   b.append(el('div','sub a fade','Dishes that fit Omar, out of everything on the menu tonight.'));b.lastChild.style.cssText='--d:1.8s;font-size:26px;margin-top:20px'},
- "G15 Plate"(s){const p=$('#plate'),l=$('#dlist');p.innerHTML='';l.innerHTML='';const E=["🥩","🍕","🍚","🫘"],pos=[[120,140],[340,120],[150,350],[350,340]];
-   D.picks.forEach((d,k)=>{const f=el('span','f a drop',E[k]);f.style.cssText=`left:${pos[k][0]}px;top:${pos[k][1]}px;--d:${.9+k*.7}s`;p.append(f);
-     const r=el('div','card dish a left',`<em>${E[k]}</em><div><b>${esc(d.name)}</b><small>${d.kind==='main'?'Main':'Side'} · ${esc(d.station)}</small></div>`);r.style.setProperty('--d',(1+k*.7)+'s');l.append(r)})},
+   b.append(el('div','sub a fade',`Bars: dishes that fit Omar, out of everything on tonight's menu. Tonight's pick is ${HN[D.pickHall]}, for the dishes he likes.`));b.lastChild.style.cssText='--d:1.8s;font-size:26px;margin-top:20px'},
+ "G15 Plate"(s){const p=$('#plate'),l=$('#dlist');p.innerHTML='';l.innerHTML='';
+   const em=n=>{n=n.toLowerCase();return n.includes('soup')?'🍲':n.includes('chicken')?'🍗':n.includes('shrimp')?'🍤':n.includes('steak')||n.includes('beef')?'🥩':n.includes('pizza')?'🍕':n.includes('rice')?'🍚':n.includes('bean')?'🫘':'🍽️'};
+   const pos=[[90,150],[330,100],[400,320],[200,390],[110,300]].slice(0,D.picks.length);const gap=D.picks.length>4?.55:.7;
+   D.picks.forEach((d,k)=>{const E=em(d.name);const f=el('span','f a drop',E);f.style.cssText=`left:${pos[k][0]}px;top:${pos[k][1]}px;--d:${.9+k*gap}s;font-size:${D.picks.length>4?110:130}px`;p.append(f);
+     const r=el('div','card dish a left',`<em>${E}</em><div><b>${esc(d.name)}</b><small>${d.kind==='main'?'Main':'Side'} · ${esc(d.station)}</small></div>`);r.style.setProperty('--d',(1+k*gap)+'s');if(D.picks.length>4)r.style.padding='20px 30px';l.append(r)})},
  "G16 Features"(s){const t=$('#ftrack');t.style.transition='none';t.style.transform='none';t.innerHTML='';
    [["⭐","Rate what you ate","Thumbs up, thumbs down. Tomorrow's picks get better."],["📅","The whole week","See every meal before you plan your day."],["⏱️","Closing soon","Skips halls that close before you'd get there."],["🌐","7 languages","English, Español, Français, 中文, 한국어, हिन्दी, Tiếng Việt"],["✉️","Every morning","Today's picks in your USC inbox around 7 AM."]]
    .forEach((f,k)=>{const c=el('div','card feat a',`<em>${f[0]}</em><b>${f[1]}</b><span>${f[2]}</span>`);c.style.setProperty('--d',(.3+k*.15)+'s');t.append(c)});

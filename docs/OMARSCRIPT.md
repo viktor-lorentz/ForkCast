@@ -9,7 +9,7 @@ Everything below is already built as an animated draft in `~/Desktop/ForkCast-vi
 ---
 
 ## Omar (who he is)
-- **Omar Musazai**, freshman, from **Philadelphia**. Lives in **Cardinal Gardens** (2 min to Village).
+- **Omar Musazai**, freshman, from **Philadelphia**. Lives in **Cardinal Gardens** (3 min to USC Village, 10 to EVK, 12 to Parkside, per the app's walking data).
 - **Halal, no pork.** **Bulking**: lifts every day and needs real protein at dinner.
 - **Homesick.** His mom cooked Afghan food for him every night: qabuli palaw, mantu, bolani. At home he never had to ask what was in his food.
 - His friends are a big group with no restrictions. Dinner plans happen in the group chat, fast.
@@ -30,7 +30,7 @@ Everything below is already built as an animated draft in `~/Desktop/ForkCast-vi
 | 0:08 | **D1** (film) | Omar at his dorm desk, gym bag on the floor, USC hoodie. Looks up at camera's left, not into it. | 🎙O-02: "Now I'm at USC. I eat halal, no pork, and I'm trying to bulk." | White profile card: **Meet Omar Musazai** · Freshman · from Philadelphia · chips **Halal · No pork · Bulking** |
 | 0:14 | **D2** (film) | His hands, phone: USC's dining menus. Thumb scrolls, zooms on icons. *(Backup: B03)* | 🎙O-03: "Every meal starts the same way. Three menus, one hall at a time, and a row of tiny icons after every dish." | |
 | 0:17 | Graphic **Menus** | Three menu cards (EVK, Parkside, Village) fan in with tonight's real dish names; tiny icon dots pop in after every dish. | | **264 dishes** · **617 icons to read** |
-| 0:23 | Graphic **Group chat** | "dinner crew 🍽️": Sara: *EVK in 10?* · Jay: *yesss* · Lina: *omw* · Sara: *omar u coming?* … typing … Omar: *go ahead, I'll catch up* | 🎙O-04: "By the time I figure out where I can actually eat, my friends have already sat down." | |
+| 0:23 | Graphic **Group chat** | "dinner crew 🍽️": Sara: *Parkside in 10?* · Jay: *yesss* · Lina: *omw* · Sara: *omar u coming?* … typing … Omar: *go ahead, I'll catch up* | 🎙O-04: "By the time I figure out where I can actually eat, my friends have already sat down." | |
 | 0:30 | **D3** (film) | Omar alone on his bed, puts the phone face down, exhales. | | |
 | 0:33 | **G1** (film) | Omar lifting at the gym (or push-ups in his room). Two or three hard reps. | 🎙O-05: "I'm lifting every day, and dinner ends up being rice and salad, because it's the only thing I'm sure about." | |
 | 0:36 | **G2** (film) | A sad plate: plain rice and a little salad. He eats alone at his desk. | *(O-05 continues)* | |
@@ -47,19 +47,19 @@ Everything below is already built as an animated draft in `~/Desktop/ForkCast-vi
 ### Part 3 · The turn (1:05–1:19)
 | Time | Shot | What we see | Audio | On screen |
 |---|---|---|---|---|
-| 1:05 | Graphic **Group chat** | Same chat. Sara: *EVK in 10?* | 🎙O-06: "Now, when the group chat says EVK, I know in ten seconds if I can eat there." | |
-| 1:08 | **R03** in phone | ForkCast: **DINNER · GO TO Everybody's Kitchen**, push in on the red card | | **EVK: yes.** 12 dishes he can eat, 3 minutes away. |
+| 1:05 | Graphic **Group chat** | Same chat. Sara: *Parkside in 10?* | 🎙O-06: "Now, when the group chat says Parkside, I know in ten seconds if I can eat there." | |
+| 1:08 | **R03** in phone | ForkCast: **DINNER · GO TO Parkside**, push in on the red card | | **Parkside: yes.** 14 dishes he can eat tonight. |
 | 1:12 | Graphic **Group chat** | Omar replies: *omw 🏃 save me a seat* | | **10 s** to know he can eat there |
-| 1:16 | **W1** (film) | Omar walking up to EVK at night, phone in hand, small smile. *(Backup: B04)* | | |
+| 1:16 | **W1** (film) | Omar walking up to Parkside at night, phone in hand, small smile. *(Backup: B04)* | | |
 
 ### Part 4 · How ForkCast works (1:19–2:11)
 | Time | Shot | What we see | Audio | On screen |
 |---|---|---|---|---|
-| 1:19 | Graphic **Taps** | The app's own setup tiles get tapped, one question per screen: **Pork** ✓ → **Halal** ✓ → **Bulk up** ✓ → **Pardee Tower** ✓ | 🎙A-02: "ForkCast asks a few quick questions: what you can't eat, how you eat, your goal, and where you live." | Step 1 of 4 … Step 4 of 4 |
+| 1:19 | Graphic **Taps** | The app's own setup tiles get tapped, one question per screen: **Pork** ✓ → **Halal** ✓ → **Bulk up** ✓ → **Cardinal Gardens** ✓ | 🎙A-02: "ForkCast asks a few quick questions: what you can't eat, how you eat, your goal, and where you live." | Step 1 of 4 … Step 4 of 4 |
 | 1:24 | **R02** in phone | The real setup on the app, at 1.5× | | |
-| 1:27 | Graphic **Engine** | ① three menus appear → ② dishes he can't eat get struck through in red and slide away ("12 of 21 fit Omar") → ③ the red pick card types out ForkCast's real sentence for tonight → ④ six green checks tick one by one | 🎙A-03: "Then, every meal, it reads all three USC menus. Code removes anything USC labels with pork, or without halal ingredients, before the AI ever sees it. Claude picks the hall and the dishes, and code checks every answer before Omar does." | 1 Read all 3 menus · 2 Code removes what he can't eat · 3 Claude picks · 4 Code checks |
-| 1:42 | Graphic **Bars** | The app's "Dishes that fit you" bars grow to tonight's numbers | 🎙A-04: "It compares every hall: how much of the menu fits, and how far the walk is." | **Every hall, compared.** EVK ★ OUR PICK · 3 min · 12 of 21 · Village 11 min · 17 of 29 · Parkside 14 min · 14 of 22 |
-| 1:48 | Graphic **Plate** | Tonight's real picks drop onto a plate: Roasted Coconut Cilantro Beef Flank Steak, Cajun Chicken Pizza, Coconut Cilantro Rice, Braised Cuban Black Beans | 🎙A-05: "And because Omar's bulking, it builds a protein-forward plate from what's actually being served tonight." | **A plate built for his goal.** (words only, no numbers) |
+| 1:27 | Graphic **Engine** | ① three menus appear → ② dishes he can't eat get struck through in red and slide away ("14 of 22 fit Omar" at Parkside) → ③ the red pick card types out ForkCast's real sentence for tonight → ④ six green checks tick one by one | 🎙A-03: "Then, every meal, it reads all three USC menus. Code removes anything USC labels with pork, or without halal ingredients, before the AI ever sees it. Claude picks the hall and the dishes, and code checks every answer before Omar does." | 1 Read all 3 menus · 2 Code removes what he can't eat · 3 Claude picks · 4 Code checks |
+| 1:42 | Graphic **Bars** | The app's "Dishes that fit you" bars grow to tonight's numbers | 🎙A-04: "It compares every hall: how much of the menu fits, how far the walk is, and what's good for his goal. Tonight, it's worth the longer walk." | **Every hall, compared.** Parkside ★ OUR PICK · 12 min · 14 of 22 · USC Village 3 min · 17 of 29 · EVK 10 min · 12 of 21 |
+| 1:48 | Graphic **Plate** | Tonight's real picks drop onto a plate: Green Chile Chicken, Beef and Rice Soup, Sauteed Chipotle Butter Shrimp, Spanish Rice, Braised Black Beans | 🎙A-05: "And because Omar's bulking, it builds a protein-forward plate from what's actually being served tonight." | **A plate built for his goal.** (words only, no numbers) |
 | 1:56 | Graphic **Features** | Cards glide by: ⭐ Rate what you ate · 📅 The whole week · ⏱️ Closing soon · 🌐 7 languages · ✉️ Every morning | 🎙A-06: "Rate what you ate. Plan the whole week. Skip halls about to close. Seven languages, and your picks by email every morning." | **And it keeps up with him.** |
 | 2:04 | Graphic **Numbers** | Four numbers count up | 🎙A-07: "Allergens and diet labels are enforced by code, never by the AI. Two hundred and six automated tests make sure of it." | **264** dishes read tonight · **617** USC labels checked · **206** automated tests · **0** allergen decisions made by AI |
 
@@ -85,16 +85,16 @@ Everything below is already built as an animated draft in `~/Desktop/ForkCast-vi
 | **G1** | Gym or room | 2–3 hard reps (bench, curls or push-ups) | Low angle, close. Ask the gym first; no other people in frame. |
 | **G2** | Desk | Plain rice + salad on a plate; he eats alone, slowly | Top-down first, then wide. |
 | **D4** | Desk | Phone on speaker, Mom calling; he answers | **Record the call audio live** (his mom or anyone playing her says "Omar jan, are you eating?"; he says "Yeah, Mom. I'm eating."). Keep the room quiet. |
-| **W1** | Outside EVK, night | Omar walks toward EVK glancing at his phone | Camera across the path, wide. Only Omar in frame. |
-| **F1** | EVK table | Omar + friends eating, laughing | **Only friends who agree to be filmed.** Give them a real topic to talk about. Angle so strangers aren't visible. |
-| **F2** | EVK table | Omar photographs his plate and sends it | Over his shoulder; the chat bubbles are added in the edit. |
+| **W1** | Outside Parkside, night | Omar walks toward Parkside glancing at his phone | Camera across the path, wide. Only Omar in frame. |
+| **F1** | Parkside table | Omar + friends eating, laughing | **Only friends who agree to be filmed.** Give them a real topic to talk about. Angle so strangers aren't visible. |
+| **F2** | Parkside table | Omar photographs his plate and sends it | Over his shoulder; the chat bubbles are added in the edit. |
 
 **Already have, used as backups:** B03 (hands on the USC menu site), B04 (walking with phone, first 16 s), B01 (food stations, no people), B02 (building entrance, no people), T1 Jayden, T3 Samikshya. **Not used:** B01B (diners' faces), the end of B04B (a passerby), X (Jayden's take 2).
 
 ## What to screen record (OBS, see [OBS_RECORDING.md](OBS_RECORDING.md))
-Do these **as Omar**. In an Incognito window, set up: **Pork** → **Halal** → **Bulk up** → loves **chicken, rice, beef** → **Pardee Tower** → Skip.
+Do these **as Omar**. In an Incognito window, set up: **Pork** → **Halal** → **Bulk up** → loves **chicken, rice** (type **beef** and tap Add) → **Cardinal Gardens** → Skip.
 - **R02 · Setup (20 s):** record that setup at a calm pace.
-- **R03 · The pick (15 s):** hold on the red card (it should say **Everybody's Kitchen** at dinner), then scroll *Your plate* and the hall bars.
+- **R03 · The pick (15 s):** hold on the red card (on Nov 15 at dinner it says **Parkside**; the AI's pick can change if the menu changes), then scroll *Your plate* and the hall bars.
 - Optional extras (we can cut them in if they look good): R06 thumbs and rating, R08 This week, R10 languages, R11 email.
 
 ## What Omar and Andrew record (voice)
@@ -106,7 +106,7 @@ One file per line, named exactly as below, in a quiet small room, phone voice re
 - **O-03** Every meal starts the same way. Three menus, one hall at a time, and a row of tiny icons after every dish.
 - **O-04** By the time I figure out where I can actually eat, my friends have already sat down.
 - **O-05** I'm lifting every day, and dinner ends up being rice and salad, because it's the only thing I'm sure about.
-- **O-06** Now, when the group chat says EVK, I know in ten seconds if I can eat there. *(lighter, a small smile)*
+- **O-06** Now, when the group chat says Parkside, I know in ten seconds if I can eat there. *(lighter, a small smile)*
 - **O-07** It's not my mom's cooking. But it's dinner with my friends. *(slow)*
 
 **Andrew** (clear, confident, a bit faster): see [NARRATION_ANDREW.md](NARRATION_ANDREW.md) for A-01…A-08.
@@ -115,9 +115,9 @@ One file per line, named exactly as below, in a quiet small room, phone voice re
 | On screen | Source |
 |---|---|
 | 264 dishes, 617 labels (tonight) | USC Hospitality menus for **Sun Nov 15, 2026**, via ForkCast's `/api/menu` |
-| EVK 12 of 21 · Parkside 14 of 22 · Village 17 of 29 (dinner) | Those menus through the app's own filter (`lib/filter.ts`) for halal + no pork |
-| EVK pick, 3 min from Pardee Tower, the four plate dishes and the summary sentence | The live app's actual recommendation for Omar's profile tonight (made in 3.3 s, all 6 checks passed) |
-| 11 and 14 min walks | The app's walking data (OpenStreetMap routing) |
+| Parkside 14 of 22 · USC Village 17 of 29 · EVK 12 of 21 (dinner) | Those menus through the app's own filter (`lib/filter.ts`) for halal + no pork |
+| Parkside pick, 12 min from Cardinal Gardens, the five plate dishes and the summary sentence | The live app's actual recommendation for Omar's profile tonight (made in 3.3 s, all 6 checks passed) |
+| 3, 10 and 12 min walks | The app's walking data (OpenStreetMap routing) |
 | 51 surveyed, about 6 in 10 with a restriction | Our survey. **Send me the exact count** (e.g. "31 of 51") and the frustration rating, and I'll put the exact numbers in (Lauren: exact beats "about"). |
 | 206 automated tests | `npm test` (includes 8 test student profiles that fail if a flagged dish is ever recommended) |
 | 0 allergen decisions made by AI | How the app is built: code filters before Claude and verifies after |
@@ -147,8 +147,8 @@ Each slide plays its own animation as soon as it appears, timed to its voice lin
 | G05 | Same week, rice & salad | 0:40 | end of O-05 |
 | G06 | Survey, 51 students, about 6 in 10 | 0:50 | A-01 |
 | G07 / G08 | Samikshya and Jayden quotes | 0:56 / 1:01 | their clips (T3, T1) |
-| G09 | Group chat: "EVK in 10?" | 1:05 | O-06 |
-| G10 | EVK: yes. | 1:08 | with or after R03 |
+| G09 | Group chat: "Parkside in 10?" | 1:05 | O-06 |
+| G10 | Parkside: yes. | 1:08 | with or after R03 |
 | G11 | "omw 🏃 save me a seat" + 10 s | 1:12 | music |
 | G12 | Quick questions (4 taps) | 1:19 | A-02, then R02 |
 | G13 | How it picks (4 phases, 16 s) | 1:27 | A-03 |
