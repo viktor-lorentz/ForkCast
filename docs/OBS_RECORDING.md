@@ -106,7 +106,7 @@ In **Your plate**:
 Scroll to **Your plate** (protein-forward plate) and hold 3 s.
 
 ## 5. Narration (after the clips, 20 min)
-Record each line as its **own file**, named `VO-01` … `VO-11`, in a quiet small room. Use your phone's voice recorder 15–20 cm from your mouth, slightly to the side. Read each line 2–3 times and keep the best take. Relaxed pace, smile a little (it's audible).
+Andrew's clean read-along copy: [NARRATION_ANDREW.md](NARRATION_ANDREW.md). Record each line as its **own file**, named `VO-01` … `VO-11`, in a quiet small room. Use your phone's voice recorder 15–20 cm from your mouth, slightly to the side. Read each line 2–3 times and keep the best take. Relaxed pace, smile a little (it's audible).
 
 | File | Line |
 |---|---|
