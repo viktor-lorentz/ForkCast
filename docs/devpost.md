@@ -46,7 +46,7 @@ We never call food "safe." We say "no flagged allergens per USC labels" and tell
 
 - **App:** Next.js 16, TypeScript and Tailwind 4, hosted on Vercel.
 - **AI:** Claude through the Anthropic SDK. A fast model classifies dishes and turns a one-sentence description into a profile; a stronger model picks the plate and writes the explanation. Every model output is validated with zod.
-- **Data:** USC Hospitality's public menu feed and hours; walking times for 23 residences precomputed from OpenStreetMap foot routes.
+- **Data:** USC Hospitality's public menu feed and hours; walking times for 22 residences precomputed from OpenStreetMap foot routes.
 - **Storage:** profiles live in the student's browser. Upstash Redis holds only opt-in email subscriptions and anonymous dish ratings.
 - **Quality:** 206 automated tests run the same sample students judges can open.
 - **Deck:** built in Slidev, with real screenshots and real numbers from the live app.
