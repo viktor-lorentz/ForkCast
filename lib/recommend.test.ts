@@ -150,3 +150,15 @@ describe("student ratings in picks", () => {
     if (rec.hall === top.hall) expect(rec.picks[0].name).toBe(last.name);
   });
 });
+
+describe("rulesOnly switch", () => {
+  it("never calls the model and still passes the verifier", async () => {
+    const [, day] = [...days.entries()][0];
+    const profile = cleanProfile({ avoid: ["sesame"], diet: [], likes: [], dislikes: [] });
+    const meal = day.halls[0].meals[0];
+    const rec = await recommend(day, meal, profile, undefined, { rulesOnly: true });
+    expect(rec.source).toBe("rules");
+    expect(rec.attempts).toBe(0);
+    expect(rec.verification.passed).toBe(true);
+  });
+});

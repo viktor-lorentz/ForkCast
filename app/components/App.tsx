@@ -4,6 +4,7 @@ import { useState } from "react";
 import { DEMO_PROFILES } from "@/lib/demo-profiles";
 import { cleanProfile, EMPTY_PROFILE, type Profile } from "@/lib/profile";
 import { unpackProfile } from "@/lib/share";
+import { Banner } from "./Banner";
 import { Onboarding } from "./Onboarding";
 import { Today } from "./Today";
 
@@ -49,6 +50,7 @@ export default function App() {
   const showOnboarding = editing || !profile;
   return (
     <main className="mx-auto w-full max-w-md px-4 pt-5">
+      <Banner />
       {showOnboarding ? (
         <Onboarding
           initial={profile ?? EMPTY_PROFILE}
