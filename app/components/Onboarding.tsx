@@ -7,10 +7,17 @@ import { STYLES } from "@/lib/styles";
 import { rate, tasteSummary } from "@/lib/taste";
 import { ALLERGENS, LABEL_NAMES, PREFERENCES, type Allergen, type Preference } from "@/lib/types";
 import { DORMS } from "@/lib/walking";
-import { Chip } from "./Chip";
+import { allergenFor, cleanExclude } from "@/lib/exclude";
+import { dishEmoji } from "@/lib/emoji";
+import { Chip, Tile } from "./Chip";
 import { TasteQuiz } from "./TasteQuiz";
 
 const LIKE_IDEAS = ["spicy", "rice", "chicken", "pasta", "mexican", "asian", "burger", "salad", "breakfast", "soup"];
+const ALLERGEN_ICON: Record<Allergen, string> = {
+  dairy: "🥛", eggs: "🥚", fish: "🐟", gluten: "🌾", peanuts: "🥜", pork: "🥓", sesame: "🥯", shellfish: "🦐", soy: "🫘", "tree-nuts": "🌰",
+};
+const NEVER_IDEAS = ["beef", "chicken", "lamb", "mushroom"];
+const NEVER_ICON: Record<string, string> = { beef: "🥩", chicken: "🍗", lamb: "🐑", mushroom: "🍄", turkey: "🦃", duck: "🦆", onion: "🧅", garlic: "🧄", tomato: "🍅", avocado: "🥑", corn: "🌽", coconut: "🥥", pepper: "🫑", meat: "🍖", "red meat": "🥩" };
 const DIET_NAMES: Record<Preference, string> = { "halal-ingredients": "Halal", vegan: "Vegan", vegetarian: "Vegetarian" };
 
 function toggle<T>(xs: T[], x: T): T[] {
@@ -33,6 +40,8 @@ export function Onboarding({
   const [parseNote, setParseNote] = useState<string | null>(null);
   const [dislike, setDislike] = useState("");
   const [like, setLike] = useState("");
+  const [never, setNever] = useState("");
+  const [neverNote, setNeverNote] = useState<string | null>(null);
   const taste = tasteSummary(p.taste);
   // First-time setup gets a short swipe step after the profile; editing keeps it as an optional card.
   const [step, setStep] = useState<"profile" | "taste">("profile");
@@ -60,6 +69,7 @@ export function Onboarding({
         diet: [...new Set([...cur.diet, ...parsed.diet])],
         likes: [...new Set([...cur.likes, ...parsed.likes])],
         dislikes: [...new Set([...cur.dislikes, ...parsed.dislikes])],
+        exclude: [...new Set([...(cur.exclude ?? []), ...(parsed.exclude ?? [])])],
         styles: [...new Set([...(cur.styles ?? []), ...(parsed.styles ?? [])])],
         goal: parsed.goal ?? cur.goal,
       }));
@@ -77,6 +87,20 @@ export function Onboarding({
     setLike("");
   }
 
+  function addNever() {
+    const w = cleanExclude(never);
+    setNever("");
+    if (!w) return;
+    const label = allergenFor(w);
+    if (label) {
+      setP({ ...p, avoid: [...new Set([...p.avoid, label])] });
+      setNeverNote(`USC labels that as ${LABEL_NAMES[label]}, so we selected it above.`);
+    } else {
+      setP({ ...p, exclude: [...new Set([...(p.exclude ?? []), w])] });
+      setNeverNote(null);
+    }
+  }
+
   function addDislike() {
     const w = dislike.trim().toLowerCase();
     if (w) setP({ ...p, dislikes: [...new Set([...p.dislikes, w])] });
@@ -90,9 +114,9 @@ export function Onboarding({
           <button type="button" onClick={() => setStep("profile")} className="mb-2 -ml-1 rounded-full px-1 text-sm font-medium text-stone-500">
             ‹ Back
           </button>
-          <p className="text-sm font-semibold uppercase tracking-wide text-cardinal">Last step · 15 seconds</p>
+          <p className="text-xs font-bold uppercase tracking-widest text-cardinal">Last step</p>
           <h1 className="mt-1 text-3xl font-bold tracking-tight">What looks good?</h1>
-          <p className="mt-1 text-stone-600">Five dishes from today&apos;s menus. Swipe right if you&apos;d eat it, left if not, and we&apos;ll pick better for you.</p>
+          <p className="mt-1 text-stone-500">Swipe right on what you&apos;d eat. Five dishes from today&apos;s menus.</p>
         </header>
         <TasteQuiz profile={p} onRate={(dish, v) => setP((cur) => ({ ...cur, taste: rate(cur.taste, dish, v) }))} onFinish={finish} />
         <div className="fixed inset-x-0 bottom-0 px-4 pt-3 pb-[max(1rem,env(safe-area-inset-bottom))]">
@@ -144,10 +168,10 @@ export function Onboarding({
 
       <section>
         <h2 className="font-semibold">Allergies</h2>
-        <p className="mb-2 text-sm text-stone-500">We hide anything USC labels with these. Lactose intolerant? Pick Dairy. Celiac? Pick Gluten/Wheat.</p>
-        <div className="flex flex-wrap gap-2">
+        <p className="mb-3 text-sm text-stone-500">We hide anything USC labels with these. Lactose intolerant? Pick Dairy. Celiac? Pick Gluten/Wheat.</p>
+        <div className="grid grid-cols-2 gap-2">
           {ALLERGENS.map((a: Allergen) => (
-            <Chip key={a} label={LABEL_NAMES[a]} selected={p.avoid.includes(a)} onClick={() => setP({ ...p, avoid: toggle(p.avoid, a) })} />
+            <Tile key={a} icon={ALLERGEN_ICON[a]} label={LABEL_NAMES[a]} selected={p.avoid.includes(a)} onClick={() => setP({ ...p, avoid: toggle(p.avoid, a) })} />
           ))}
         </div>
         {p.avoid.length > 0 && (
@@ -156,20 +180,53 @@ export function Onboarding({
             I&apos;m registered for Parkside&apos;s Allergen Awareness Zone
           </label>
         )}
+
+        <h3 className="mt-6 font-semibold">Anything else you never eat?</h3>
+        <p className="mb-3 text-sm text-stone-500">For foods USC doesn&apos;t label, like beef. We hide dishes whose names include them, so it&apos;s a best guess.</p>
+        <div className="grid grid-cols-2 gap-2">
+          {[...new Set([...NEVER_IDEAS, ...(p.exclude ?? [])])].map((w) => {
+            const on = (p.exclude ?? []).includes(w);
+            return (
+              <Tile
+                key={w}
+                icon={NEVER_ICON[w] ?? dishEmoji(w)}
+                label={w[0].toUpperCase() + w.slice(1)}
+                selected={on}
+                removable={on && !NEVER_IDEAS.includes(w)}
+                onClick={() => setP({ ...p, exclude: toggle(p.exclude ?? [], w) })}
+              />
+            );
+          })}
+        </div>
+        <div className="mt-2 flex gap-2">
+          <input
+            value={never}
+            onChange={(e) => setNever(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && addNever()}
+            maxLength={30}
+            placeholder="Add another, e.g. turkey"
+            aria-label="Add a food you never eat"
+            className="h-12 min-w-0 flex-1 rounded-xl border border-stone-200 bg-white px-3 text-base outline-none focus:border-cardinal"
+          />
+          <button type="button" onClick={addNever} disabled={!never.trim()} className="h-12 rounded-xl bg-stone-900 px-5 text-sm font-semibold text-white transition active:scale-95 disabled:opacity-30">
+            Add
+          </button>
+        </div>
+        {neverNote && <p className="mt-2 text-sm text-cardinal">{neverNote}</p>}
       </section>
 
       <section>
         <h2 className="font-semibold">Diet</h2>
-        <p className="mb-2 text-sm text-stone-500">Only dishes USC labels this way.</p>
-        <div className="flex flex-wrap gap-2">
+        <p className="mb-3 text-sm text-stone-500">Only dishes USC labels this way.</p>
+        <div className="grid grid-cols-2 gap-2">
           {PREFERENCES.map((d) => (
-            <Chip key={d} tone="green" label={DIET_NAMES[d]} selected={p.diet.includes(d)} onClick={() => setP({ ...p, diet: toggle(p.diet, d) })} />
+            <Tile key={d} tone="green" label={DIET_NAMES[d]} selected={p.diet.includes(d)} onClick={() => setP({ ...p, diet: toggle(p.diet, d) })} />
           ))}
         </div>
-        <p className="mt-4 mb-2 text-sm text-stone-500">USC doesn&apos;t label these, so we make a best guess from dish names and estimates.</p>
-        <div className="flex flex-wrap gap-2">
+        <p className="mt-4 mb-3 text-sm text-stone-500">USC doesn&apos;t label these, so we make a best guess from dish names and estimates.</p>
+        <div className="grid grid-cols-2 gap-2">
           {STYLES.map((s) => (
-            <Chip
+            <Tile
               key={s.id}
               tone="green"
               label={s.name}
@@ -186,10 +243,10 @@ export function Onboarding({
       <section>
         <h2 className="font-semibold">Fitness goal</h2>
         <p className="mb-2 text-sm text-stone-500">We&apos;ll rank dishes and build a plate that suits it.</p>
-        <div className="flex flex-wrap gap-2">
-          <Chip label="No goal" selected={!p.goal} onClick={() => setP({ ...p, goal: undefined })} />
+        <div className="grid grid-cols-2 gap-2">
+          <Tile label="No goal" selected={!p.goal} onClick={() => setP({ ...p, goal: undefined })} />
           {GOALS.map((g) => (
-            <Chip key={g.id} label={g.name} selected={p.goal === g.id} onClick={() => setP({ ...p, goal: g.id })} />
+            <Tile key={g.id} label={g.name} selected={p.goal === g.id} onClick={() => setP({ ...p, goal: g.id })} />
           ))}
         </div>
         {p.goal && <p className="mt-2 text-xs text-stone-500">{GOALS.find((g) => g.id === p.goal)!.blurb}, using AI estimates from dish names.</p>}

@@ -81,7 +81,6 @@ export function TasteQuiz({
 
   const ratings = useScores(cards?.map((c) => c.name) ?? NO_NAMES);
   const card = cards?.[i];
-  const next = cards?.[i + 1];
 
   function decide(value: 1 | -1) {
     if (!card || exit) return;
@@ -121,13 +120,17 @@ export function TasteQuiz({
 
   const done = cards && i >= cards.length;
   const offset = exit ? exit * 480 : dx;
+  const lean = Math.max(-1, Math.min(1, offset / 110));
+  const cardH = step ? "h-[21rem]" : "h-72";
 
   return (
     <section className={step ? "" : "rise rounded-2xl bg-white p-4 shadow-sm ring-1 ring-stone-200"}>
       {step ? (
-        <div className="flex justify-center gap-1.5" aria-label={cards ? `${Math.min(i + 1, cards.length)} of ${cards.length}` : undefined}>
+        <div className="flex gap-1.5" aria-label={cards ? `${Math.min(i + 1, cards.length)} of ${cards.length}` : undefined}>
           {Array.from({ length: cards?.length || total }, (_, n) => (
-            <span key={n} className={`h-1.5 w-8 rounded-full transition-colors duration-300 ${n < i ? "bg-cardinal" : n === i ? "bg-cardinal/40" : "bg-stone-200"}`} />
+            <span key={n} className="h-1 flex-1 overflow-hidden rounded-full bg-stone-200">
+              <span className={`block h-full rounded-full bg-cardinal transition-all duration-300 ease-out ${n < i ? "w-full" : "w-0"}`} />
+            </span>
           ))}
         </div>
       ) : (
@@ -141,32 +144,39 @@ export function TasteQuiz({
         </div>
       )}
 
-      {failed && <p className="mt-2 text-sm text-stone-500">Couldn&apos;t load today&apos;s dishes. You can skip this.</p>}
-      {!cards && !failed && <div className="mt-3 h-52 animate-pulse rounded-2xl bg-stone-100" />}
-      {cards && cards.length === 0 && <p className="mt-2 text-sm text-stone-500">No dishes to rate right now.</p>}
+      {failed && <p className="mt-4 text-sm text-stone-500">Couldn&apos;t load today&apos;s dishes. You can skip this.</p>}
+      {!cards && !failed && <div className={`mt-4 ${cardH} animate-pulse rounded-3xl bg-stone-200/60`} />}
+      {cards && cards.length === 0 && <p className="mt-4 text-sm text-stone-500">No dishes to rate right now.</p>}
 
       {done && cards.length > 0 && (
-        <div className="rise mt-3 rounded-2xl bg-emerald-50 p-4 text-center">
-          <p className="text-2xl" aria-hidden>
-            ✨
-          </p>
-          <p className="mt-1 font-semibold text-emerald-900">Got it. ForkCast knows your taste now.</p>
-          <p className="text-sm text-emerald-800">{step ? "Finding your dining hall..." : "Keep tapping the thumbs on any dish to fine-tune it."}</p>
+        <div className={`rise mt-4 flex ${cardH} flex-col items-center justify-center rounded-3xl bg-white p-6 text-center shadow-sm ring-1 ring-stone-200`}>
+          <span className="flex h-16 w-16 items-center justify-center rounded-full bg-emerald-50 text-emerald-600 ring-1 ring-emerald-200">
+            <svg viewBox="0 0 24 24" className="h-8 w-8" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+              <path d="M5 12.5l4.5 4.5L19 7.5" />
+            </svg>
+          </span>
+          <p className="mt-4 text-lg font-bold">Got it, ForkCast knows your taste</p>
+          <p className="mt-1 text-sm text-stone-500">{step ? "Finding your dining hall..." : "Keep using the thumbs on any dish to fine-tune it."}</p>
         </div>
       )}
 
       {card && (
         <>
-          <div className="relative mt-3 h-52 select-none">
-            {next && (
-              <div className="absolute inset-0 scale-95 rounded-2xl bg-stone-50 ring-1 ring-stone-200" aria-hidden />
-            )}
+          <div className={`relative mt-4 mb-8 ${cardH} select-none`}>
+            {cards!.slice(i + 1, i + 3).map((c, n) => (
+              <div
+                key={c.id}
+                className="absolute inset-0 rounded-3xl bg-white shadow-sm ring-1 ring-stone-200 transition-transform duration-300"
+                style={{ transform: `translateY(${(n + 1) * 16}px) scale(${1 - (n + 1) * 0.04})`, zIndex: 1 - n }}
+                aria-hidden
+              />
+            ))}
             <div
               key={card.id}
-              className={`rise absolute inset-0 flex touch-pan-y flex-col justify-between rounded-2xl bg-white p-5 shadow-md ring-1 ring-stone-200 ${
+              className={`rise absolute inset-0 z-10 flex touch-pan-y cursor-grab flex-col overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-stone-200 active:cursor-grabbing ${
                 dragging ? "" : "transition-transform duration-200 ease-out"
               }`}
-              style={{ transform: `translateX(${offset}px) rotate(${offset / 18}deg)` }}
+              style={{ transform: `translateX(${offset}px) rotate(${offset / 20}deg)` }}
               onPointerDown={(e) => {
                 start.current = e.clientX;
                 setDragging(true);
@@ -185,52 +195,62 @@ export function TasteQuiz({
                 setDx(0);
               }}
             >
-              <div className="flex items-start justify-between gap-3">
-                <span className="text-5xl" aria-hidden>
+              <div className="relative flex flex-1 items-center justify-center bg-gradient-to-b from-amber-50 to-white">
+                <span className="text-[5.5rem] leading-none drop-shadow-sm" aria-hidden>
                   {dishEmoji(card.name)}
                 </span>
                 <span
-                  className={`rounded-full px-3 py-1 text-sm font-bold transition-opacity ${dx > 0 ? "bg-emerald-600 text-white" : "bg-stone-800 text-white"}`}
-                  style={{ opacity: Math.min(1, Math.abs(offset) / 90) }}
+                  className="absolute left-4 top-4 -rotate-12 rounded-lg border-[3px] border-emerald-500 px-2 py-0.5 text-lg font-black tracking-wider text-emerald-600"
+                  style={{ opacity: Math.max(0, lean) }}
                   aria-hidden
                 >
-                  {offset > 0 ? "Yum" : "Nah"}
+                  YUM
+                </span>
+                <span
+                  className="absolute right-4 top-4 rotate-12 rounded-lg border-[3px] border-stone-500 px-2 py-0.5 text-lg font-black tracking-wider text-stone-600"
+                  style={{ opacity: Math.max(0, -lean) }}
+                  aria-hidden
+                >
+                  NAH
                 </span>
               </div>
-              <div>
+              <div className="px-5 pb-5 pt-3">
                 <p className="text-xl font-bold leading-snug">{card.name}</p>
                 <p className="mt-0.5 text-sm text-stone-500">
                   {hallShort(card.hall)} · {card.station.replace(/\s*\(.*\)\s*$/, "")}
                 </p>
-                <div className="mt-2 flex flex-wrap items-center gap-1.5">
+                <div className="mt-2.5 flex min-h-6 flex-wrap items-center gap-1.5">
                   <ScoreBadge score={ratings.scoreOf(card.name)} long />
                   <FoodTags dish={card} />
                 </div>
               </div>
             </div>
           </div>
-          <div className="mt-4 flex items-center justify-center gap-4">
+          <div className="flex items-center justify-center gap-6">
             <button
               type="button"
               onClick={() => decide(-1)}
               aria-label={`No to ${card.name}`}
-              className="flex h-14 w-14 items-center justify-center rounded-full bg-white text-2xl shadow ring-1 ring-stone-200 transition active:scale-90"
+              className={`flex h-16 w-16 items-center justify-center rounded-full bg-white text-stone-500 shadow-md ring-1 ring-stone-200 transition active:scale-90 ${lean < -0.3 ? "scale-110 text-stone-800" : ""}`}
             >
-              👎
+              <svg viewBox="0 0 24 24" className="h-7 w-7" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden>
+                <path d="M6 6l12 12M18 6L6 18" />
+              </svg>
             </button>
-            <button type="button" onClick={skip} className="rounded-full px-4 py-2 text-sm font-medium text-stone-500 active:scale-95">
+            <button type="button" onClick={skip} className="rounded-full px-3 py-2 text-sm font-medium text-stone-400 active:scale-95">
               Not sure
             </button>
             <button
               type="button"
               onClick={() => decide(1)}
               aria-label={`Yes to ${card.name}`}
-              className="flex h-14 w-14 items-center justify-center rounded-full bg-white text-2xl shadow ring-1 ring-stone-200 transition active:scale-90"
+              className={`flex h-16 w-16 items-center justify-center rounded-full bg-cardinal text-white shadow-md shadow-cardinal/30 transition active:scale-90 ${lean > 0.3 ? "scale-110" : ""}`}
             >
-              👍
+              <svg viewBox="0 0 24 24" className="h-7 w-7" fill="currentColor" aria-hidden>
+                <path d="M12 20.5s-7.5-4.6-9.3-9.2C1.5 8.2 3.4 4.5 7 4.5c2 0 3.6 1.1 5 2.9 1.4-1.8 3-2.9 5-2.9 3.6 0 5.5 3.7 4.3 6.8-1.8 4.6-9.3 9.2-9.3 9.2z" />
+              </svg>
             </button>
           </div>
-          <p className="mt-2 text-center text-xs text-stone-400">Swipe right if you&apos;d eat it, left if not.</p>
         </>
       )}
     </section>

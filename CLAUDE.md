@@ -18,7 +18,7 @@ returns `{date, location, meals:[{name, stations:[{station, subtitle, menu:[{ite
 Saved copies live in `data/snapshots/<date>/<hall>.json`; `DEMO_MODE=1` reads only those.
 
 ## Layout
-- `lib/`: data (`usc.ts`, `hours.ts`), AI (`enrich.ts`, `recommend.ts`, `profile.ts`), rules (`filter.ts`, `score.ts`, `verify.ts`), taste and fitness (`taste.ts` thumbs ratings, `plate.ts` estimates and goal plates, `styles.ts` pescatarian/keto/Word of Wisdom), student ratings (`ratings.ts` 1–10 scores averaged across browsers, stored in Upstash by `ratings-store.ts`; `/rate` page)
+- `lib/`: data (`usc.ts`, `hours.ts`), AI (`enrich.ts`, `recommend.ts`, `profile.ts`), rules (`filter.ts`, `score.ts`, `verify.ts`, `exclude.ts` for foods USC doesn't label, matched by dish name), taste and fitness (`taste.ts` thumbs ratings, `plate.ts` estimates and goal plates, `styles.ts` pescatarian/keto/Word of Wisdom), student ratings (`ratings.ts` 1–10 scores averaged across browsers, stored in Upstash by `ratings-store.ts`; `/rate` page)
 - `app/`: pages and `app/api/*` route handlers
 - `data/test-profiles/`: sample students plus expected results (Andrew edits these)
 - `data/snapshots/`: saved USC menus for tests and demo mode

@@ -10,6 +10,7 @@ type Packed = {
   d?: string[];
   l?: string[];
   x?: string[];
+  e?: string[];
   z?: 1;
   r?: string;
   g?: string;
@@ -39,6 +40,7 @@ export function packProfile(p: Profile): string {
   if (p.diet.length) o.d = p.diet;
   if (p.likes.length) o.l = p.likes;
   if (p.dislikes.length) o.x = p.dislikes;
+  if (p.exclude?.length) o.e = p.exclude;
   if (p.aaz) o.z = 1;
   if (p.dorm) o.r = p.dorm;
   if (p.goal) o.g = p.goal;
@@ -59,6 +61,7 @@ export function unpackProfile(hash: string): Profile | null {
       diet: o.d ?? [],
       likes: o.l ?? [],
       dislikes: o.x ?? [],
+      exclude: o.e,
       aaz: o.z === 1,
       dorm: o.r,
       goal: o.g,
