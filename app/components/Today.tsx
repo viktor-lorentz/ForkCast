@@ -9,7 +9,6 @@ import { cleanProfile, profileKey, type Profile } from "@/lib/profile";
 import type { Recommendation } from "@/lib/recommend";
 import { currentMeal, scoreHalls, type HallScore } from "@/lib/score";
 import { HALLS, LABEL_NAMES, NOT_ANALYZED } from "@/lib/types";
-import { describeClaim } from "@/lib/verify";
 import { STYLES } from "@/lib/styles";
 import { rate, ratingOf, type Rated } from "@/lib/taste";
 import { findDorm } from "@/lib/walking";
@@ -17,6 +16,9 @@ import { LabelTag } from "./Chip";
 import { TakeItWithYou } from "./TakeItWithYou";
 import { Logo } from "./Logo";
 import { ThisWeek } from "./ThisWeek";
+import { LangButton, useLang, useT } from "./I18n";
+import { trClaim, trServer } from "@/lib/i18n-patterns";
+import type { T } from "@/lib/i18n";
 import { card, mealName } from "@/lib/lang";
 import { ateNote, ateOn, logAte, pruneHistory, type Ate } from "@/lib/history";
 import { closingMap, closingText, HERO_WINDOW, laMinutes } from "@/lib/closing";
@@ -56,16 +58,16 @@ async function getJson<T>(url: string, init?: RequestInit): Promise<T> {
   return res.json();
 }
 
-function ProfileLine({ profile }: { profile: Profile }) {
+function ProfileLine({ profile, t }: { profile: Profile; t: T }) {
   const parts = [
-    ...profile.avoid.map((a) => `No ${LABEL_NAMES[a]}`),
-    ...(profile.exclude ?? []).map((w) => `No ${w}`),
-    ...profile.diet.map((d) => LABEL_NAMES[d]),
-    ...(profile.styles ?? []).map((s) => STYLES.find((x) => x.id === s)!.name),
-    ...(profile.goal ? [findGoal(profile.goal)!.name] : []),
-    ...profile.likes.slice(0, 3).map((l) => `Loves ${l}`),
+    ...profile.avoid.map((a) => t("No {food}", { food: t(LABEL_NAMES[a]) })),
+    ...(profile.exclude ?? []).map((w) => t("No {food}", { food: t(w) })),
+    ...profile.diet.map((d) => t(LABEL_NAMES[d])),
+    ...(profile.styles ?? []).map((s) => t(STYLES.find((x) => x.id === s)!.name)),
+    ...(profile.goal ? [t(findGoal(profile.goal)!.name)] : []),
+    ...profile.likes.slice(0, 3).map((l) => t("Loves {food}", { food: t(l) })),
   ];
-  return <p className="truncate text-sm text-stone-500">{parts.length ? parts.join(" · ") : "No restrictions set"}</p>;
+  return <p className="truncate text-sm text-stone-500">{parts.length ? parts.join(" · ") : t("No restrictions set")}</p>;
 }
 
 function HallRow({
@@ -80,7 +82,9 @@ function HallRow({
   ratings,
   ate,
   today,
+  t,
 }: {
+  t: T;
   ate?: Ate[];
   today: string;
   ratings: Ratings;
@@ -102,9 +106,9 @@ function HallRow({
         aria-expanded={open}
         aria-label={[
           hallShort(s.hall),
-          isPick ? "our pick" : null,
-          s.walk !== null ? `${s.walk} minute walk` : null,
-          s.open ? `${s.mains.length} mains and ${s.sides.length} sides you can eat` : `not serving ${meal.toLowerCase()}`,
+          isPick ? t("our pick") : null,
+          s.walk !== null ? t("{n} minute walk", { n: s.walk }) : null,
+          s.open ? t("{mains} mains and {sides} sides you can eat", { mains: s.mains.length, sides: s.sides.length }) : t("not serving {meal}", { meal: t(meal) }),
           hoursText?.text ?? null,
         ]
           .filter(Boolean)
@@ -114,11 +118,11 @@ function HallRow({
         <div className="flex items-baseline justify-between gap-2 text-sm">
           <span className={`font-semibold transition-colors ${isPick ? "text-cardinal" : ""}`}>
             {hallShort(s.hall)}
-            {isPick && <span aria-label="our pick"> ★</span>}
-            {s.walk !== null && <span className="ml-2 font-normal text-stone-400">{s.walk} min walk</span>}
+            {isPick && <span aria-label={t("our pick")}> ★</span>}
+            {s.walk !== null && <span className="ml-2 font-normal text-stone-400">{t("{n} min walk", { n: s.walk })}</span>}
           </span>
           <span className="shrink-0 text-stone-500">
-            {s.open ? `${s.mains.length} mains · ${s.sides.length} sides` : `Not serving ${meal.toLowerCase()}`}
+            {s.open ? t("{mains} mains · {sides} sides", { mains: s.mains.length, sides: s.sides.length }) : t("Not serving {meal}", { meal: t(meal) })}
             <span className="ml-1.5 inline-block w-2 text-stone-400">{open ? "−" : "+"}</span>
           </span>
         </div>
@@ -147,12 +151,12 @@ function HallRow({
       </button>
       {open && (
         <div className="rise mt-3 rounded-xl bg-stone-50 p-3 text-sm">
-          {n === 0 && <p className="text-stone-500">Nothing here fits your profile for {meal.toLowerCase()}.</p>}
+          {n === 0 && <p className="text-stone-500">{t("Nothing here fits your profile for {meal}.", { meal: t(meal) })}</p>}
           {(["mains", "sides"] as const).map(
             (group) =>
               s[group].length > 0 && (
                 <div key={group} className="mb-2 last:mb-0">
-                  <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-stone-400">{group}</p>
+                  <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-stone-400">{t(group)}</p>
                   <ul className="flex flex-col gap-2">
                     {s[group].map((d) => (
                       <li key={d.id} className="flex items-center justify-between gap-2">
@@ -163,7 +167,7 @@ function HallRow({
                           </span>
                           <span className="block truncate text-xs text-stone-400">
                             {shortStation(d.station)}
-                            {ateNote(ate, d.name, today) && <span className="text-amber-900"> · {ateNote(ate, d.name, today)}</span>}
+                            {ateNote(ate, d.name, today) && <span className="text-amber-900"> · {trServer(t, ateNote(ate, d.name, today)!)}</span>}
                           </span>
                         </span>
                         <Thumbs small dish={d} {...rateProps} />
@@ -305,7 +309,9 @@ export function Today({
   const totalDishes = day ? day.halls.reduce((n, h) => n + h.dishes.filter((d) => d.meal === meal && d.kind !== "notice").length, 0) : 0;
   const totalHidden = scores.reduce((n, s) => n + s.hidden.length, 0);
   const dorm = findDorm(profile.dorm);
-  const t = card(profile.lang);
+  const c = card(profile.lang);
+  const t = useT();
+  const { lang } = useLang();
   // "I ate this" keeps 7 days; drop older entries when the app opens.
   useEffect(() => {
     const kept = pruneHistory(profile.ate, laDate(0));
@@ -345,10 +351,10 @@ export function Today({
     const h = hours?.halls.find((x) => x.hall === hall);
     if (!h) return null;
     const soon = closingText(closing[hall as keyof typeof closing]);
-    if (soon) return { text: soon, open: null, warn: true };
+    if (soon) return { text: trServer(t, soon), open: null, warn: true };
     const { hours: range, label } = hoursOn(h, date);
     const status = dayOffset === 0 ? openStatus(range, nowMin) : null;
-    return { text: `${status ? status.text : range}${label ? ` · ${label}` : ""}`, open: status ? status.open : null, warn: false };
+    return { text: `${status ? trServer(t, status.text) : range}${label ? ` · ${label}` : ""}`, open: status ? status.open : null, warn: false };
   };
   const askVisit = useMemo(
     () => (askNow && rec && meal && rec.picks.length > 0 ? { date, meal, hall: rec.hall, dishes: rec.picks.map((p) => p.name), at: 0 } : null),
@@ -379,7 +385,7 @@ export function Today({
             <button
               type="button"
               onClick={goHome}
-              aria-label="ForkCast: back to today's pick"
+              aria-label={t("ForkCast: back to today's pick")}
               className="select-none text-xl transition active:scale-95 active:opacity-70"
             >
               <Logo />
@@ -387,16 +393,17 @@ export function Today({
           </h1>
           {starter ? (
             <p className="text-sm text-stone-500">
-              Quick start: {starter} ·{" "}
+              {t("Quick start: {name}", { name: t(starter) })} ·{" "}
               <button type="button" onClick={onEdit} className="font-semibold text-cardinal underline-offset-2 active:underline">
-                Adjust
+                {t("Adjust")}
               </button>
             </p>
           ) : (
-            <ProfileLine profile={profile} />
+            <ProfileLine profile={profile} t={t} />
           )}
         </div>
         <div className="flex shrink-0 gap-2">
+          <LangButton />
           <a
             href={`/rate?date=${date}${meal ? `&meal=${encodeURIComponent(meal)}` : ""}${pickHall ? `&hall=${pickHall}` : ""}`}
             className="flex items-center gap-1 rounded-full bg-[#1c1917] px-3.5 py-1.5 text-sm font-semibold text-white ring-1 ring-white/15 transition active:scale-95"
@@ -404,25 +411,25 @@ export function Today({
             <svg viewBox="0 0 20 20" className="h-3.5 w-3.5 fill-gold" aria-hidden>
               <path d="M10 1.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.5 7.7l5.9-.9z" />
             </svg>
-            Rate
+            {t("Rate")}
           </a>
           <button
             type="button"
             onClick={onEdit}
             className="rounded-full border border-stone-300 bg-card px-3.5 py-1.5 text-sm font-medium transition active:scale-95"
           >
-            Edit
+            {t("Edit")}
           </button>
         </div>
       </header>
 
       <div className="flex flex-wrap gap-2">
         {[
-          "Today",
-          "Tomorrow",
+          t("Today"),
+          t("Tomorrow"),
           // A later day opened from "This week" gets its own chip.
           ...(dayOffset >= 2
-            ? [new Date(`${date}T12:00:00Z`).toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric", timeZone: "UTC" })]
+            ? [new Date(`${date}T12:00:00Z`).toLocaleDateString(lang === "en" ? "en-US" : lang, { weekday: "short", month: "short", day: "numeric", timeZone: "UTC" })]
             : []),
         ].map((label, idx) => {
           const i = idx === 2 ? dayOffset : idx;
@@ -456,7 +463,7 @@ export function Today({
       )}
 
       {meals.length > 1 && (
-        <div className="flex gap-1 rounded-xl bg-stone-200/70 p-1" role="tablist" aria-label="Meal">
+        <div className="flex gap-1 rounded-xl bg-stone-200/70 p-1" role="tablist" aria-label={t("Meal")}>
           {meals.map((m) => (
             <button
               key={m}
@@ -469,7 +476,7 @@ export function Today({
               }}
               className={`flex-1 rounded-lg py-2 text-sm font-semibold transition ${m === meal ? "bg-card text-cardinal shadow-sm" : "text-stone-600"}`}
             >
-              {m}
+              {t(m)}
             </button>
           ))}
         </div>
@@ -477,56 +484,56 @@ export function Today({
 
       {menuEntry?.ok === false && (
         <div className="rise rounded-2xl bg-card p-5 text-center shadow-sm ring-1 ring-stone-200">
-          <p className="font-semibold">Couldn&apos;t load USC&apos;s menus</p>
-          <p className="mt-1 text-sm text-stone-500">Check your connection and try again.</p>
+          <p className="font-semibold">{t("Couldn't load USC's menus")}</p>
+          <p className="mt-1 text-sm text-stone-500">{t("Check your connection and try again.")}</p>
           <button type="button" onClick={retry} className="mt-3 rounded-full bg-brand px-5 py-2 text-sm font-semibold text-white active:brightness-90">
-            Try again
+            {t("Try again")}
           </button>
         </div>
       )}
 
       {!menuEntry && (
         <div className="rounded-3xl bg-brand p-5 text-white shadow-lg">
-          <p className="text-sm font-medium uppercase tracking-wide text-gold">Just a moment</p>
-          <p className="mt-1 animate-pulse text-3xl font-bold leading-tight text-white/70">Reading menus...</p>
-          <p className="mt-2 min-h-[4.5rem] text-[0.9375rem] leading-snug text-white/90">Getting the dishes from all three dining halls.</p>
+          <p className="text-sm font-medium uppercase tracking-wide text-gold">{t("Just a moment")}</p>
+          <p className="mt-1 animate-pulse text-3xl font-bold leading-tight text-white/70">{t("Reading menus...")}</p>
+          <p className="mt-2 min-h-[4.5rem] text-[0.9375rem] leading-snug text-white/90">{t("Getting the dishes from all three dining halls.")}</p>
         </div>
       )}
 
       {day && !meal && (
         <div className="rise rounded-2xl bg-card p-5 text-center shadow-sm ring-1 ring-stone-200">
-          <p className="font-semibold">No menus posted yet</p>
-          <p className="mt-1 text-sm text-stone-500">USC hasn&apos;t published menus for this day.</p>
+          <p className="font-semibold">{t("No menus posted yet")}</p>
+          <p className="mt-1 text-sm text-stone-500">{t("USC hasn't published menus for this day.")}</p>
         </div>
       )}
 
       {day && meal && (
         <>
-          <section className="rounded-3xl bg-brand p-5 text-white shadow-lg" aria-live="polite" lang={profile.lang ?? "en"}>
+          <section className="rounded-3xl bg-brand p-5 text-white shadow-lg" aria-live="polite">
             <p className="text-sm font-medium uppercase tracking-wide text-gold">
-              {mealName(meal, profile.lang)} · {nothing ? t.headsUp : t.goTo}
+              {mealName(meal, lang)} · {nothing ? c.headsUp : c.goTo}
             </p>
             {nothing ? (
-              <p className="mt-1 text-3xl font-bold leading-tight">{t.noMatch}</p>
+              <p className="mt-1 text-3xl font-bold leading-tight">{c.noMatch}</p>
             ) : pickHall ? (
               <p key={`${date}|${meal}|${pickHall}`} className="rise mt-1 text-3xl font-bold leading-tight">
                 {hallName(pickHall)}
               </p>
             ) : recFailed ? (
-              <p className="mt-1 text-3xl font-bold leading-tight">Hmm, that didn&apos;t work</p>
+              <p className="mt-1 text-3xl font-bold leading-tight">{t("Hmm, that didn't work")}</p>
             ) : (
-              <p className="mt-1 animate-pulse text-3xl font-bold leading-tight text-white/70">{t.comparing}</p>
+              <p className="mt-1 animate-pulse text-3xl font-bold leading-tight text-white/70">{c.comparing}</p>
             )}
 
             <div className="mt-2 min-h-[4.5rem] text-[0.9375rem] leading-snug text-white/90">
               {rec ? (
                 <div key={rec.summary} className="rise">
                   {pickClosing && !nothing && (
-                    <p className="mb-1 text-sm font-semibold text-gold">⏱ {t.closesAt(pickClosing)}</p>
+                    <p className="mb-1 text-sm font-semibold text-gold">⏱ {c.closesAt(pickClosing)}</p>
                   )}
                   {pickScore && pickScore.walk !== null && dorm && !nothing && (
                     <p className="mb-1 text-sm font-medium text-gold">
-                      {t.walk(pickScore.walk, dorm.name)}
+                      {c.walk(pickScore.walk, dorm.name)}
                     </p>
                   )}
                   <p>{rec.summary}</p>
@@ -535,18 +542,20 @@ export function Today({
                 <div>
                   <p>
                     {recEntry && !recEntry.ok && recEntry.tooMany
-                      ? `${TOO_MANY}. The hall comparison below still works.`
-                      : "We couldn't get your picks. The hall comparison below still works."}
+                      ? t("Too many requests, try again in a minute. The hall comparison below still works.")
+                      : t("We couldn't get your picks. The hall comparison below still works.")}
                   </p>
                   <button type="button" onClick={retry} className="mt-2 rounded-full bg-card px-4 py-1.5 text-sm font-semibold text-cardinal active:scale-95">
-                    Try again
+                    {t("Try again")}
                   </button>
                 </div>
               ) : nothing ? (
-                <p>Nothing on USC&apos;s {meal.toLowerCase()} menus matches your profile.</p>
+                <p>{t("Nothing on USC's {meal} menus matches your profile.", { meal: t(meal) })}</p>
               ) : (
                 <p>
-                  Checked {totalDishes} dishes at 3 halls{totalHidden > 0 ? ` and hid ${totalHidden} that don't fit you` : ""}. Picking your plate...
+                  {totalHidden > 0
+                    ? t("Checked {n} dishes at 3 halls and hid {hidden} that don't fit you. Picking your plate...", { n: totalDishes, hidden: totalHidden })
+                    : t("Checked {n} dishes at 3 halls. Picking your plate...", { n: totalDishes })}
                 </p>
               )}
             </div>
@@ -557,13 +566,13 @@ export function Today({
                 onClick={() => setWhyOpenFor(recKey)}
                 className="rise mt-3 inline-flex items-center gap-1.5 rounded-full bg-white/15 px-3 py-1 text-xs font-semibold transition active:scale-95"
               >
-                <span className="text-gold">✓</span> {t.checked}
+                <span className="text-gold">✓</span> {c.checked}
               </button>
             )}
           </section>
 
           <section className="rounded-2xl bg-card p-4 shadow-sm ring-1 ring-stone-200">
-            <h2 className="mb-3 text-sm font-semibold text-stone-500">Dishes that fit you, by hall</h2>
+            <h2 className="mb-3 text-sm font-semibold text-stone-500">{t("Dishes that fit you, by hall")}</h2>
             <ul className="flex flex-col gap-3.5">
               {scores.map((s) => (
                 <HallRow
@@ -576,6 +585,7 @@ export function Today({
                   ratings={ratings}
                   ate={profile.ate}
                   today={laDate(0)}
+                  t={t}
                   hoursText={hoursFor(s.hall)}
                   open={openHall === s.hall}
                   onToggle={() => setOpenHall(openHall === s.hall ? null : s.hall)}
@@ -583,9 +593,9 @@ export function Today({
               ))}
             </ul>
             <p className="mt-3 text-xs text-stone-400">
-              Tap a hall to see everything you can eat there. Thumbs up or down any dish to teach ForkCast your taste.{" "}
+              {t("Tap a hall to see everything you can eat there. Thumbs up or down any dish to teach ForkCast your taste.")}{" "}
               <a href={`/rate?date=${date}&meal=${encodeURIComponent(meal)}${pickHall ? `&hall=${pickHall}` : ""}`} className="font-medium text-cardinal">
-                Rate what you ate →
+                {t("Rate what you ate")} →
               </a>
             </p>
           </section>
@@ -593,16 +603,16 @@ export function Today({
           {!nothing && !recFailed && (
             <section className="flex flex-col gap-2">
               <h2 className="flex justify-between px-1 text-sm font-semibold text-stone-500">
-                <span>Your plate{pickHall ? ` at ${hallShort(pickHall)}` : ""}</span>
+                <span>{pickHall ? t("Your plate at {hall}", { hall: hallShort(pickHall) }) : t("Your plate")}</span>
                 {ratingsPending && rec && (
                   <button type="button" onClick={refreshPicks} className="rise rounded-full bg-ink px-3 py-1 text-xs font-semibold text-ink-fg transition active:scale-95">
-                    ↻ Refresh picks
+                    ↻ {t("Refresh picks")}
                   </button>
                 )}
               </h2>
               {!rec && [0, 1, 2].map((i) => <div key={i} className="h-[5.5rem] animate-pulse rounded-2xl bg-card ring-1 ring-stone-200" />)}
               {rec && shownPicks.length === 0 && (
-                <p className="rise rounded-2xl bg-card p-4 text-sm text-stone-500 ring-1 ring-stone-200">You passed on all of these. Tap Refresh picks for new ones.</p>
+                <p className="rise rounded-2xl bg-card p-4 text-sm text-stone-500 ring-1 ring-stone-200">{t("You passed on all of these. Tap Refresh picks for new ones.")}</p>
               )}
               {shownPicks.map((p, i) => {
                 const others = p.allergens.filter((a) => a !== NOT_ANALYZED && !(profile.avoid as string[]).includes(a));
@@ -620,15 +630,15 @@ export function Today({
                       </div>
                       {byId.get(p.id) && <Thumbs dish={byId.get(p.id)!} taste={profile.taste} onRate={ratePick(p.id)} />}
                     </div>
-                    <p className="mt-1 text-sm text-stone-600" lang={profile.lang ?? "en"}>
+                    <p className="mt-1 text-sm text-stone-600">
                       {p.why}
                     </p>
                     <FoodTags dish={p} className="mt-1.5" />
                     <div className="mt-2 flex flex-wrap gap-1">
                       {p.claims.map((c) => (
-                        <LabelTag key={c} tone="green" text={describeClaim(c)} />
+                        <LabelTag key={c} tone="green" text={trClaim(t, c)} />
                       ))}
-                      {others.length > 0 && <LabelTag tone="stone" text={`Contains ${others.map((a) => LABEL_NAMES[a] ?? a).join(", ")}`} />}
+                      {others.length > 0 && <LabelTag tone="stone" text={t("Contains {list}", { list: others.map((a) => t(LABEL_NAMES[a] ?? a)).join(", ") })} />}
                     </div>
                     <RateInline
                       name={p.name}
@@ -637,7 +647,7 @@ export function Today({
                         dayOffset === 0 && byId.get(p.id)
                           ? {
                               eaten: ateOn(profile.ate, p.name, date),
-                              note: ateNote(profile.ate, p.name, date),
+                              note: ateNote(profile.ate, p.name, date) && trServer(t, ateNote(profile.ate, p.name, date)!),
                               onToggle: () => onChange({ ...profile, ate: logAte(profile.ate, byId.get(p.id)!, date, !ateOn(profile.ate, p.name, date)) }),
                             }
                           : undefined
@@ -669,32 +679,32 @@ export function Today({
                 onClick={() => setWhyOpenFor(showWhy ? null : recKey)}
                 className="flex w-full items-center justify-between p-4 text-left font-semibold"
               >
-                Why {hallShort(rec.hall)}? How we checked
+                {t("Why {hall}? How we checked", { hall: hallShort(rec.hall) })}
                 <span className="text-stone-400">{showWhy ? "−" : "+"}</span>
               </button>
               {showWhy && (
                 <div className="rise flex flex-col gap-4 border-t border-stone-100 p-4 text-sm">
                   <div>
                     <p className="mb-1 font-semibold">
-                      {rec.source === "ai" ? "AI picks, verified by code against USC's labels" : "Picked by our rules (the AI was unavailable)"}
+                      {rec.source === "ai" ? t("AI picks, verified by code against USC's labels") : t("Picked by our rules (the AI was unavailable)")}
                     </p>
                     <ul className="flex flex-col gap-1">
                       {rec.verification.checks.map((c, i) => (
                         <li key={i} className="flex gap-2">
                           <span className={c.ok ? "text-emerald-700" : "text-red-700"}>{c.ok ? "✓" : "✗"}</span>
-                          <span className="text-stone-700">{c.text}</span>
+                          <span className="text-stone-700">{trServer(t, c.text)}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
                   {rec.hidden.length > 0 && (
                     <div>
-                      <p className="mb-1 font-semibold">Hidden at {hallShort(rec.hall)} for you</p>
+                      <p className="mb-1 font-semibold">{t("Hidden at {hall} for you", { hall: hallShort(rec.hall) })}</p>
                       <ul className="flex flex-col gap-1.5">
                         {rec.hidden.map((h) => (
                           <li key={h.id} className="flex flex-col">
                             <span className="text-stone-800">{h.name}</span>
-                            <span className="text-xs text-red-700">{h.reason}</span>
+                            <span className="text-xs text-red-700">{trServer(t, h.reason)}</span>
                           </li>
                         ))}
                       </ul>
@@ -704,7 +714,7 @@ export function Today({
                     <p className="text-xs text-stone-500">
                       {rec.halls
                         .filter((h) => h.open)
-                        .map((h) => `${hallShort(h.hall)}: ${h.hiddenForAllergens} hidden for allergies`)
+                        .map((h) => `${hallShort(h.hall)}: ${t("{n} hidden for allergies", { n: h.hiddenForAllergens })}`)
                         .join(" · ")}
                     </p>
                   )}
@@ -735,7 +745,7 @@ export function Today({
             onClick={() => setShowWeek(!showWeek)}
             className="flex w-full items-center justify-between p-4 text-left font-semibold"
           >
-            Dining hall hours
+            {t("Dining hall hours")}
             <span className="text-stone-400">{showWeek ? "−" : "+"}</span>
           </button>
           {showWeek && (
@@ -746,8 +756,8 @@ export function Today({
                   <ul className="grid grid-cols-[3rem_1fr] gap-x-2 gap-y-0.5 text-stone-600">
                     {Object.entries(h.regular).map(([d, r]) => (
                       <li key={d} className="contents">
-                        <span className="text-stone-400">{d}</span>
-                        <span>{r}</span>
+                        <span className="text-stone-400">{t(d)}</span>
+                        <span>{/closed/i.test(r) ? t("Closed") : r}</span>
                       </li>
                     ))}
                   </ul>
@@ -760,22 +770,23 @@ export function Today({
                     ))}
                 </div>
               ))}
-              <p className="text-xs text-stone-400">From USC Hospitality&apos;s hours page{hours.source === "saved" ? " (saved copy)" : ", updated every few hours"}.</p>
+              <p className="text-xs text-stone-400">{hours.source === "saved" ? t("From USC Hospitality's hours page (saved copy).") : t("From USC Hospitality's hours page, updated every few hours.")}</p>
             </div>
           )}
         </section>
       )}
 
       <p className="px-1 text-xs leading-relaxed text-stone-500">
-        Based on USC Hospitality&apos;s allergen and diet labels{day?.source === "snapshot" ? " (saved copy)" : ""}. Labels can change and kitchens
-        share equipment, so always confirm with dining staff if you have a serious allergy.
-        {dorm && " Walking times are estimates from OpenStreetMap."}
+        {day?.source === "snapshot"
+          ? t("Based on USC Hospitality's allergen and diet labels (saved copy). Labels can change and kitchens share equipment, so always confirm with dining staff if you have a serious allergy.")
+          : t("Based on USC Hospitality's allergen and diet labels. Labels can change and kitchens share equipment, so always confirm with dining staff if you have a serious allergy.")}
+        {dorm && ` ${t("Walking times are estimates from OpenStreetMap.")}`}
       </p>
 
       {toast && (
         <div className="fixed inset-x-0 bottom-0 z-20 flex justify-center px-4 pb-[max(1rem,env(safe-area-inset-bottom))]" role="status">
-          <div key={toast.at} className="rise flex w-full max-w-md items-center justify-between gap-3 rounded-2xl bg-ink px-4 py-3 text-sm text-ink-fg shadow-xl">
-            <span className="min-w-0 truncate">We&apos;ll skip {toast.dish.name} from now on</span>
+          <div key={toast.at} className="rise flex w-full max-w-md items-center justify-between gap-3 rounded-2xl bg-[#1c1917] px-4 py-3 text-sm text-white shadow-xl ring-1 ring-white/10">
+            <span className="min-w-0 truncate">{t("We'll skip {dish} from now on", { dish: toast.dish.name })}</span>
             <button
               type="button"
               onClick={() => {
@@ -784,14 +795,14 @@ export function Today({
               }}
               className="shrink-0 font-semibold text-gold"
             >
-              Undo
+              {t("Undo")}
             </button>
           </div>
         </div>
       )}
 
       <label className="flex items-center gap-2 px-1 text-xs text-stone-500">
-        <span className="shrink-0">Try a sample student:</span>
+        <span className="shrink-0">{t("Try a sample student:")}</span>
         <select
           className="min-w-0 flex-1 rounded-lg border border-stone-300 bg-card px-2 py-1.5 text-stone-700"
           value=""
@@ -800,7 +811,7 @@ export function Today({
             if (demo) onSwitch(cleanProfile(demo.profile));
           }}
         >
-          <option value="">Choose...</option>
+          <option value="">{t("Choose...")}</option>
           {DEMO_PROFILES.map((d) => (
             <option key={d.id} value={d.id}>
               {d.label}

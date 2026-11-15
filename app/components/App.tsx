@@ -1,6 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
+import { isLang, type LangId } from "@/lib/lang";
+import { LangProvider } from "./I18n";
 import { DEMO_PROFILES } from "@/lib/demo-profiles";
 import { cleanProfile, EMPTY_PROFILE, type Profile } from "@/lib/profile";
 import { unpackProfile } from "@/lib/share";
@@ -9,6 +11,16 @@ import { Onboarding } from "./Onboarding";
 import { Today } from "./Today";
 
 const KEY = "dining-profile-v1";
+const LANG_KEY = "forkcast-lang";
+
+function initialLang(profile: Profile | null): LangId {
+  if (profile?.lang) return profile.lang;
+  try {
+    const saved = localStorage.getItem(LANG_KEY);
+    if (isLang(saved)) return saved;
+  } catch {}
+  return "en";
+}
 
 function loadSaved(): Profile | null {
   try {
@@ -49,8 +61,28 @@ export default function App() {
   // Which one-tap starter they used, so the main screen can offer "Adjust" until they edit.
   const [starter, setStarter] = useState<string | null>(null);
 
+  // The whole app follows this language; it's also saved in the profile so the AI writes in it.
+  const [lang, setLangState] = useState<LangId>(() => initialLang(profile));
+  const withLang = useCallback((p: Profile): Profile => ({ ...p, lang: lang === "en" ? undefined : lang }), [lang]);
+  const setLang = useCallback(
+    (l: LangId) => {
+      setLangState(l);
+      try {
+        localStorage.setItem(LANG_KEY, l);
+      } catch {}
+      setProfile((cur) => {
+        if (!cur) return cur;
+        const next = { ...cur, lang: l === "en" ? undefined : l };
+        save(next);
+        return next;
+      });
+    },
+    [],
+  );
+
   const showOnboarding = editing || !profile;
   return (
+    <LangProvider lang={lang} setLang={setLang}>
     <main className="mx-auto w-full max-w-md px-4 pt-5">
       <Banner />
       {showOnboarding ? (
@@ -58,12 +90,14 @@ export default function App() {
           initial={profile ?? EMPTY_PROFILE}
           onCancel={profile ? () => setEditing(false) : undefined}
           onStarter={(s) => {
-            save(s.profile);
-            setProfile(s.profile);
+            const p = withLang(s.profile);
+            save(p);
+            setProfile(p);
             setStarter(s.label);
             window.scrollTo(0, 0);
           }}
-          onDone={(p) => {
+          onDone={(done) => {
+            const p = withLang(done);
             save(p);
             setProfile(p);
             setEditing(false);
@@ -79,7 +113,8 @@ export default function App() {
             setEditing(true);
             window.scrollTo(0, 0);
           }}
-          onSwitch={(p) => {
+          onSwitch={(sample) => {
+            const p = withLang(sample);
             save(p);
             setProfile(p);
             window.scrollTo(0, 0);
@@ -91,5 +126,6 @@ export default function App() {
         />
       )}
     </main>
+    </LangProvider>
   );
 }

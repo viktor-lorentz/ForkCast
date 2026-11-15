@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useT } from "./I18n";
 import {
   applyScore,
   dishKey,
@@ -131,23 +132,25 @@ export function ScoreBadge({
   long?: boolean;
   className?: string;
 }) {
+  const t = useT();
   if (!all) return null;
   // Prefer what students said about today's menu.
   const score = all.today ?? all;
-  const when = all.today ? " today" : "";
-  const n = `${score.n} student${score.n === 1 ? "" : "s"}${when}`;
+  const n = all.today
+    ? score.n === 1 ? t("1 student today") : t("{n} students today", { n: score.n })
+    : score.n === 1 ? t("1 student") : t("{n} students", { n: score.n });
   return (
     <span
       className={`inline-flex shrink-0 items-center gap-1 rounded-full bg-[#1c1917] px-2 py-0.5 text-xs font-semibold text-white ring-1 ring-white/10 ${className}`}
-      title={`Students rate it ${formatAvg(score.avg)} out of 10 (${n})`}
-      aria-label={`Students rate it ${formatAvg(score.avg)} out of 10, ${n}`}
+      title={t("Students rate it {score} out of 10 ({who})", { score: formatAvg(score.avg), who: n })}
+      aria-label={t("Students rate it {score} out of 10 ({who})", { score: formatAvg(score.avg), who: n })}
     >
       <span className="text-gold">
         <Star />
       </span>
       <span className="tabular-nums">{formatAvg(score.avg)}</span>
       <span className="font-normal text-white/60">
-        {long ? `/10 · ${n}` : `· ${score.n}${when}`}
+        {long ? `/10 · ${n}` : all.today ? `· ${t("{n} today", { n: score.n })}` : `· ${score.n}`}
       </span>
     </span>
   );
@@ -165,11 +168,12 @@ export function ScorePicker({
   label: string;
   hint?: boolean;
 }) {
+  const t = useT();
   return (
     <div>
       <div
         role="radiogroup"
-        aria-label={`Rate ${label} from 1 to 10`}
+        aria-label={t("Rate {dish} from 1 to 10", { dish: label })}
         className="flex gap-1"
       >
         {Array.from({ length: MAX_SCORE }, (_, i) => i + 1).map((v) => {
@@ -180,7 +184,7 @@ export function ScorePicker({
               type="button"
               role="radio"
               aria-checked={on}
-              aria-label={`${v} out of 10`}
+              aria-label={t("{n} out of 10", { n: v })}
               onClick={() => onPick(v)}
               className={`h-8 min-w-0 flex-1 rounded-lg text-sm font-semibold tabular-nums transition-colors active:scale-90 ${
                 on
@@ -199,12 +203,12 @@ export function ScorePicker({
         <p className="mt-1 flex justify-between text-[0.6875rem] text-stone-400">
           {value !== null ? (
             <span className="font-medium text-cardinal">
-              You gave it {value}: {scoreWord(value).toLowerCase()}
+              {t("You gave it {n}: {word}", { n: value, word: t(scoreWord(value)) })}
             </span>
           ) : (
             <>
-              <span>1 skip it</span>
-              <span>10 get it again</span>
+              <span>{t("1 skip it")}</span>
+              <span>{t("10 get it again")}</span>
             </>
           )}
         </p>
@@ -282,6 +286,7 @@ export function RateMealPrompt({
   ratings: Ratings;
   onClose: () => void;
 }) {
+  const t = useT();
   const [thanks, setThanks] = useState(false);
   const hall = HALLS.find((h) => h.id === visit.hall)?.short ?? visit.hall;
   const rated = visit.dishes.filter((d) => ratings.mineOf(d) !== null).length;
@@ -299,7 +304,7 @@ export function RateMealPrompt({
     return (
       <section className="rise rounded-2xl bg-emerald-50 p-4 text-center ring-1 ring-emerald-200">
         <p className="font-semibold text-emerald-900">
-          Thanks! Your scores help other students pick.
+          {t("Thanks! Your scores help other students pick.")}
         </p>
       </section>
     );
@@ -310,16 +315,16 @@ export function RateMealPrompt({
       <div className="flex items-start justify-between gap-3">
         <div>
           <h2 className="font-semibold">
-            How was {visit.meal.toLowerCase()} at {hall}?
+            {t("How was {meal} at {hall}?", { meal: t(visit.meal), hall })}
           </h2>
           <p className="text-sm text-stone-500">
-            Rate what you ate. Everyone sees the average.
+            {t("Rate what you ate. Everyone sees the average.")}
           </p>
         </div>
         <button
           type="button"
           onClick={dismiss}
-          aria-label="Not now"
+          aria-label={t("Not now")}
           className="-mr-1 -mt-1 rounded-full p-1.5 text-stone-400 transition active:scale-90"
         >
           <svg
@@ -356,7 +361,7 @@ export function RateMealPrompt({
           href={`/rate?date=${visit.date}&meal=${encodeURIComponent(visit.meal)}&hall=${visit.hall}`}
           className="text-sm font-medium text-cardinal"
         >
-          Ate something else?
+          {t("Ate something else?")}
         </a>
         <div className="flex gap-2">
           {rated === 0 && (
@@ -365,7 +370,7 @@ export function RateMealPrompt({
               onClick={dismiss}
               className="rounded-full px-3 py-1.5 text-sm font-medium text-stone-500 active:scale-95"
             >
-              Didn&apos;t go
+              {t("Didn't go")}
             </button>
           )}
           <button
@@ -374,7 +379,7 @@ export function RateMealPrompt({
             disabled={rated === 0}
             className="rounded-full bg-ink px-4 py-1.5 text-sm font-semibold text-ink-fg transition active:scale-95 disabled:opacity-30"
           >
-            Done
+            {t("Done")}
           </button>
         </div>
       </div>
@@ -392,6 +397,7 @@ export interface AteToggle {
 }
 
 export function RateInline({ name, ratings, ate }: { name: string; ratings: Ratings; ate?: AteToggle }) {
+  const t = useT();
   const [open, setOpen] = useState(false);
   const mine = ratings.mineOf(name);
   const score = ratings.scoreOf(name);
@@ -399,13 +405,13 @@ export function RateInline({ name, ratings, ate }: { name: string; ratings: Rati
     <div className="mt-3 border-t border-stone-100 pt-2.5">
       {ate?.note && !ate.eaten && <p className="mb-2 text-xs font-medium text-amber-900">↺ {ate.note}</p>}
       <div className="flex flex-wrap items-center justify-between gap-2">
-        {score ? <ScoreBadge score={score} long /> : <span className="text-xs text-stone-500">No ratings yet today</span>}
+        {score ? <ScoreBadge score={score} long /> : <span className="text-xs text-stone-500">{t("No ratings yet today")}</span>}
         <span className="flex shrink-0 gap-1.5">
         {ate && (
           <button
             type="button"
             aria-pressed={ate.eaten}
-            aria-label={ate.eaten ? `You ate ${name} today. Tap to undo` : `I ate ${name}`}
+            aria-label={ate.eaten ? t("You ate {dish} today. Tap to undo", { dish: name }) : t("I ate {dish}", { dish: name })}
             onClick={() => {
               if (!ate.eaten && mine === null) setOpen(true);
               ate.onToggle();
@@ -414,7 +420,7 @@ export function RateInline({ name, ratings, ate }: { name: string; ratings: Rati
               ate.eaten ? "bg-emerald-50 text-emerald-800 ring-1 ring-emerald-200" : "bg-stone-100 text-stone-700"
             }`}
           >
-            {ate.eaten ? "✓ Ate it" : "I ate this"}
+            {ate.eaten ? `✓ ${t("Ate it")}` : t("I ate this")}
           </button>
         )}
         <button
@@ -426,7 +432,7 @@ export function RateInline({ name, ratings, ate }: { name: string; ratings: Rati
           }`}
         >
           <Star />
-          {mine !== null ? `You: ${mine}` : ate ? "Rate it" : "Ate it? Rate it"}
+          {mine !== null ? t("You: {n}", { n: mine }) : ate ? t("Rate it") : t("Ate it? Rate it")}
         </button>
         </span>
       </div>

@@ -19,6 +19,7 @@ Saved copies live in `data/snapshots/<date>/<hall>.json`; `DEMO_MODE=1` reads on
 
 ## Layout
 - `lib/`: data (`usc.ts`, `hours.ts`), AI (`enrich.ts`, `recommend.ts`, `profile.ts`), rules (`filter.ts`, `score.ts`, `verify.ts`, `exclude.ts` for foods USC doesn't label, matched by dish name), taste and fitness (`taste.ts` thumbs ratings, `plate.ts` estimates and goal plates, `styles.ts` pescatarian/keto/Word of Wisdom), student ratings (`ratings.ts` 1–10 scores averaged across browsers, stored in Upstash by `ratings-store.ts`; `/rate` page)
+- Translation: every on-screen string goes through `t("English text", { vars })` from `useT()` (app/components/I18n.tsx). English is the key; `lib/i18n/<lang>.json` holds the translations. After adding or changing UI text, run `npm run i18n` (needs `ANTHROPIC_API_KEY` in `.env.local`); `lib/i18n.test.ts` fails until every language has every string. Dish, hall and dorm names are never translated.
 - `app/`: pages and `app/api/*` route handlers
 - `data/test-profiles/`: sample students plus expected results (Andrew edits these)
 - `data/snapshots/`: saved USC menus for tests and demo mode
