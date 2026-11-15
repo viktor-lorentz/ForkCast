@@ -7,7 +7,7 @@ export default function manifest(): MetadataRoute.Manifest {
     description: "Which USC dining hall has food you can eat, every meal.",
     start_url: "/",
     display: "standalone",
-    background_color: "#faf7f2",
+    background_color: "#f5f5f7",
     theme_color: "#990000",
     icons: [
       { src: "/icon-192.png", sizes: "192x192", type: "image/png" },

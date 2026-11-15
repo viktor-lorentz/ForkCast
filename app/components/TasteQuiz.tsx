@@ -182,7 +182,7 @@ export function TasteQuiz({
                 setDx(0);
               }}
             >
-              <div className="relative flex flex-1 items-center justify-center bg-gradient-to-b from-amber-50 to-white">
+              <div className="relative flex flex-1 items-center justify-center bg-gradient-to-b from-amber-50 to-card">
                 <span className="text-[5.5rem] leading-none drop-shadow-sm" aria-hidden>
                   {dishEmoji(card.name)}
                 </span>
