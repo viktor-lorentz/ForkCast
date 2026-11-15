@@ -60,6 +60,7 @@ Same window → https://hospitality.usc.edu/dining-hall-menus/
 **Keep this Incognito window open for R03–R11** so every clip shows Omar's profile (halal, no pork, bulking, Cardinal Gardens). Where a clip below gives a `?demo=` link, just stay on the main page instead.
 
 **R03 · The pick · 30 s** (same window)
+0. **Tap Dinner** first. After midnight the app opens on brunch, and the story is about dinner. The red card should say **Parkside**.
 1. Hold 3 s on the red card (at dinner on Nov 15 it says **Parkside**).
 2. Scroll slowly through **Your plate**.
 3. Stop at **Dishes that fit you, by hall** and hold on the ★ OUR PICK row.

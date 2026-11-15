@@ -80,7 +80,7 @@ body.nocursor,body.nocursor *{cursor:none!important}
 .day b{font-size:28px;color:var(--muted);font-weight:600}.day .e{font-size:92px}.day span{font-size:26px;font-weight:600;text-align:center}
 /* survey */
 .survey{display:flex;align-items:center;gap:110px}
-.grid{display:grid;grid-template-columns:repeat(9,72px);gap:14px}
+.grid{display:grid;grid-template-columns:repeat(10,72px);gap:14px}
 .grid svg{width:72px;height:72px;fill:#cfcfd6;transition:fill .5s var(--glide),transform .5s var(--spring)}
 .grid svg.r{fill:var(--red);transform:scale(1.08)}
 .src{font-size:22px;color:var(--muted);margin-top:28px}
@@ -207,12 +207,16 @@ body.nocursor,body.nocursor *{cursor:none!important}
   <div class="sub a fade" style="--d:2.9s;margin-top:44px;font-size:44px;color:var(--ink);font-weight:650">Not much of a bulk.</div></div>
 </section>
 
-<section class="slide" data-id="G06 Survey" data-dur="7" data-time="0:50 (after D4 mom call)" data-note="A-01 “Omar isn't the only one. We surveyed 51 USC students. About 6 in 10 have a dietary restriction.” Change the text if you get the exact count.">
+<section class="slide" data-id="G05b Mom texts" data-dur="6" data-time="0:44 (intercut with D4)" data-note="No voice. Music only. Omar reads it at the table, types, looks at the empty fridge.">
+  <div class="phone"><div class="phead"><div class="pic">❤️</div><b>Mom</b></div><div class="thread" data-chat="momcall"></div></div>
+</section>
+
+<section class="slide" data-id="G06 Survey" data-dur="7" data-time="0:50 (after D4 mom call)" data-note="A-01 “Omar isn't the only one. We surveyed 50 USC students. 27 of them have a dietary restriction. More than half.” Data: docs/survey/responses.csv">
   <div class="survey"><div class="grid" id="grid"></div>
   <div style="width:720px"><div class="eyebrow a fade" style="--d:.2s">Omar isn't the only one</div>
-  <div class="h2 a" style="--d:.4s;margin-top:20px;font-size:68px">We surveyed <span style="color:var(--red)">51</span> USC students.</div>
-  <div class="a" style="--d:3.2s;margin-top:36px"><div style="font-size:112px;font-weight:800;letter-spacing:-.045em;line-height:1;color:var(--red);white-space:nowrap">About 6 in 10</div><div class="sub" style="margin-top:14px">have a dietary restriction.</div></div>
-  <div class="src a fade" style="--d:3.8s">ForkCast student survey · 51 responses</div></div></div>
+  <div class="h2 a" style="--d:.4s;margin-top:20px;font-size:68px">We surveyed <span style="color:var(--red)">50</span> USC students.</div>
+  <div class="a" style="--d:3.2s;margin-top:36px"><div style="font-size:112px;font-weight:800;letter-spacing:-.045em;line-height:1;color:var(--red);white-space:nowrap">27 of 50</div><div class="sub" style="margin-top:14px">have a dietary restriction. More than half.</div></div>
+  <div class="src a fade" style="--d:3.8s">ForkCast student survey · Nov 14, 2026 · 50 responses</div></div></div>
 </section>
 
 <section class="slide" data-id="G07 Quote Samikshya" data-dur="5" data-time="0:56" data-note="Put T3 (her clip) right before or as a picture-in-picture in Descript. Her own words.">
@@ -279,7 +283,7 @@ body.nocursor,body.nocursor *{cursor:none!important}
   </div>
 </section>
 
-<section class="slide" data-id="G18 Text to Mom" data-dur="7" data-time="2:15 (with F2)" data-note="O-07 “It's not my mom's cooking. But it's dinner with my friends.”">
+<section class="slide" data-id="G18 Text to Mom" data-dur="7" data-time="2:15 (with F2)" data-note="O-07 “It's not my mom's cooking. But it's dinner with my friends.” Goes with F1 (the three of you heading out).">
   <div class="phone"><div class="phead"><div class="pic">❤️</div><b>Mom</b></div><div class="thread" data-chat="mom"></div></div>
 </section>
 
@@ -306,7 +310,7 @@ body.nocursor,body.nocursor *{cursor:none!important}
 </div></div>
 
 <script>
-const D={"items": 264, "labels": 617, "tests": 206, "share": 0.6, "halls": [{"hall": "evk", "total": 21, "fit": 12, "walk": 10, "mains": 5, "sides": 7, "sample": [{"name": "Assorted Fruits", "icons": 2, "ok": true}, {"name": "Creamy Chicken and Wild Rice Soup", "icons": 3, "ok": false}, {"name": "Molly's Tomato Bisque", "icons": 3, "ok": false}, {"name": "Jackfruit Tinga with Pickled Red Onion", "icons": 2, "ok": true}, {"name": "Sauteed Papaya BBQ Shrimp", "icons": 2, "ok": true}, {"name": "Roasted Coconut Cilantro Beef Flank Steak", "icons": 2, "ok": true}, {"name": "Braised Cuban Black Beans", "icons": 2, "ok": true}, {"name": "Roasted Delicata Squash", "icons": 2, "ok": true}, {"name": "Sauteed Sofrito Green Beans", "icons": 2, "ok": true}]}, {"hall": "parkside", "total": 22, "fit": 14, "walk": 12, "mains": 7, "sides": 7, "sample": [{"name": "Mexican Street Corn Bowl with Barbacoa Beef", "icons": 1, "ok": false}, {"name": "Mexican Street Corn Bowl (no meat)", "icons": 3, "ok": true}, {"name": "Veggie Enchilada Casserole with Green Sauce", "icons": 3, "ok": true}, {"name": "Sauteed Chipotle Butter Shrimp", "icons": 3, "ok": true}, {"name": "Green Chile Chicken", "icons": 1, "ok": true}, {"name": "Braised Black Beans", "icons": 2, "ok": true}, {"name": "Steamed Peas and Carrots", "icons": 2, "ok": true}, {"name": "Corn on the Cob", "icons": 2, "ok": true}, {"name": "Spanish Rice", "icons": 2, "ok": true}]}, {"hall": "university-village", "total": 29, "fit": 17, "walk": 3, "mains": 7, "sides": 10, "sample": [{"name": "Assorted Fruits", "icons": 2, "ok": true}, {"name": "Vegetable Barley Soup", "icons": 3, "ok": true}, {"name": "Molly's Creamy New England Clam Chowder with Bacon", "icons": 6, "ok": false}, {"name": "Veggie Shepherds Pie with Olive Oil Mashed Potatoes", "icons": 2, "ok": true}, {"name": "Braised Beef Pot Roast with Carrots, Onion, and Celery", "icons": 1, "ok": true}, {"name": "Grilled Pork Chops with Pineapple Salsa", "icons": 1, "ok": false}, {"name": "Braised White Beans and Greens", "icons": 2, "ok": true}, {"name": "Steamed Broccoli and Carrots", "icons": 2, "ok": true}, {"name": "Sauteed Brussels Sprouts, Apples, and Onion", "icons": 2, "ok": true}]}], "pickHall": "parkside", "summary": "Parkside has the best mix of chicken, beef and rice for your bulk, all halal-ingredient with no pork per USC labels. It's a 12 min walk, but worth it.", "picks": [{"name": "Green Chile Chicken", "station": "Eurasia", "kind": "main", "why": "Chicken main you like, with solid protein for bulking.", "prefs": ["halal-ingredients"]}, {"name": "Beef and Rice Soup", "station": "Eurasia", "kind": "main", "why": "Beef and rice soup hits two of your likes.", "prefs": ["halal-ingredients"]}, {"name": "Sauteed Chipotle Butter Shrimp", "station": "Eurasia", "kind": "main", "why": "Extra protein-rich main to build a bigger plate.", "prefs": ["halal-ingredients"]}, {"name": "Spanish Rice", "station": "Eurasia", "kind": "side", "why": "Spanish Rice adds filling carbs and fits your rice love.", "prefs": ["halal-ingredients", "vegan"]}, {"name": "Braised Black Beans", "station": "Eurasia", "kind": "side", "why": "Black beans add more protein and carbs to the plate.", "prefs": ["halal-ingredients", "vegan"]}], "checks": ["Parkside is a real dining hall", "5 dishes picked", "Every dish is on today's USC menu", "No dish carries an allergen you avoid or misses a diet label you need", "Every label claim matches USC's labels", "Walking times match the map data"], "ms": 3334};
+const D={"items": 264, "labels": 617, "tests": 206, "surveyN": 50, "surveyYes": 27, "halls": [{"hall": "evk", "total": 21, "fit": 12, "walk": 10, "mains": 5, "sides": 7, "sample": [{"name": "Assorted Fruits", "icons": 2, "ok": true}, {"name": "Creamy Chicken and Wild Rice Soup", "icons": 3, "ok": false}, {"name": "Molly's Tomato Bisque", "icons": 3, "ok": false}, {"name": "Jackfruit Tinga with Pickled Red Onion", "icons": 2, "ok": true}, {"name": "Sauteed Papaya BBQ Shrimp", "icons": 2, "ok": true}, {"name": "Roasted Coconut Cilantro Beef Flank Steak", "icons": 2, "ok": true}, {"name": "Braised Cuban Black Beans", "icons": 2, "ok": true}, {"name": "Roasted Delicata Squash", "icons": 2, "ok": true}, {"name": "Sauteed Sofrito Green Beans", "icons": 2, "ok": true}]}, {"hall": "parkside", "total": 22, "fit": 14, "walk": 12, "mains": 7, "sides": 7, "sample": [{"name": "Mexican Street Corn Bowl with Barbacoa Beef", "icons": 1, "ok": false}, {"name": "Mexican Street Corn Bowl (no meat)", "icons": 3, "ok": true}, {"name": "Veggie Enchilada Casserole with Green Sauce", "icons": 3, "ok": true}, {"name": "Sauteed Chipotle Butter Shrimp", "icons": 3, "ok": true}, {"name": "Green Chile Chicken", "icons": 1, "ok": true}, {"name": "Braised Black Beans", "icons": 2, "ok": true}, {"name": "Steamed Peas and Carrots", "icons": 2, "ok": true}, {"name": "Corn on the Cob", "icons": 2, "ok": true}, {"name": "Spanish Rice", "icons": 2, "ok": true}]}, {"hall": "university-village", "total": 29, "fit": 17, "walk": 3, "mains": 7, "sides": 10, "sample": [{"name": "Assorted Fruits", "icons": 2, "ok": true}, {"name": "Vegetable Barley Soup", "icons": 3, "ok": true}, {"name": "Molly's Creamy New England Clam Chowder with Bacon", "icons": 6, "ok": false}, {"name": "Veggie Shepherds Pie with Olive Oil Mashed Potatoes", "icons": 2, "ok": true}, {"name": "Braised Beef Pot Roast with Carrots, Onion, and Celery", "icons": 1, "ok": true}, {"name": "Grilled Pork Chops with Pineapple Salsa", "icons": 1, "ok": false}, {"name": "Braised White Beans and Greens", "icons": 2, "ok": true}, {"name": "Steamed Broccoli and Carrots", "icons": 2, "ok": true}, {"name": "Sauteed Brussels Sprouts, Apples, and Onion", "icons": 2, "ok": true}]}], "pickHall": "parkside", "summary": "Parkside has the best mix of chicken, beef and rice for your bulk, all halal-ingredient with no pork per USC labels. It's a 12 min walk, but worth it.", "picks": [{"name": "Green Chile Chicken", "station": "Eurasia", "kind": "main", "why": "Chicken main you like, with solid protein for bulking.", "prefs": ["halal-ingredients"]}, {"name": "Beef and Rice Soup", "station": "Eurasia", "kind": "main", "why": "Beef and rice soup hits two of your likes.", "prefs": ["halal-ingredients"]}, {"name": "Sauteed Chipotle Butter Shrimp", "station": "Eurasia", "kind": "main", "why": "Extra protein-rich main to build a bigger plate.", "prefs": ["halal-ingredients"]}, {"name": "Spanish Rice", "station": "Eurasia", "kind": "side", "why": "Spanish Rice adds filling carbs and fits your rice love.", "prefs": ["halal-ingredients", "vegan"]}, {"name": "Braised Black Beans", "station": "Eurasia", "kind": "side", "why": "Black beans add more protein and carbs to the plate.", "prefs": ["halal-ingredients", "vegan"]}], "checks": ["Parkside is a real dining hall", "5 dishes picked", "Every dish is on today's USC menu", "No dish carries an allergen you avoid or misses a diet label you need", "Every label claim matches USC's labels", "Walking times match the map data"], "ms": 3334};
 const HN={evk:"EVK","parkside":"Parkside","university-village":"USC Village"};
 const FULL={evk:"Everybody's Kitchen",parkside:"Parkside","university-village":"USC Village"};
 const PH=D.halls.find(h=>h.hall===D.pickHall);
@@ -339,10 +343,11 @@ function chat(thread,steps){thread.innerHTML='';let t=0;let last=null;
     if(!anim)n.style.animation='none';thread.append(n)}
 }
 const CHATS={
- 1:[{from:"Sara",text:"Parkside in 10?",wait:400},{from:"Jay",text:"yesss",wait:300},{from:"Lina",text:"omw",wait:200},{from:"Sara",text:"omar u coming?",wait:500},{me:true,text:"go ahead, I'll catch up",wait:2200}],
- 2:[{from:"Sara",text:"Parkside in 10?",wait:400}],
- 3:[{pre:true,from:"Sara",text:"Parkside in 10?"},{me:true,text:"omw 🏃 save me a seat",wait:500}],
- mom:[{photo:true,wait:500},{me:true,text:"Not as good as yours. But close.",wait:700},{from:"Mom",text:"❤️ proud of you",wait:900,type:1200}]
+ 1:[{from:"Andrew",text:"Parkside in 10?",wait:400},{from:"Viktor",text:"yesss",wait:300},{from:"Viktor",text:"omw",wait:200},{from:"Andrew",text:"omar u coming?",wait:500},{me:true,text:"go ahead, I'll catch up",wait:2200}],
+ momcall:[{from:"Mom",text:"Omar jan, are you eating?",wait:400,type:1100},{me:true,text:"Yeah, Mom. I'm eating.",wait:2000}],
+ 2:[{from:"Andrew",text:"Parkside in 10?",wait:400}],
+ 3:[{pre:true,from:"Andrew",text:"Parkside in 10?"},{me:true,text:"omw 🏃 save me a seat",wait:500}],
+ mom:[{me:true,text:"At Parkside with Andrew and Viktor 🙂",wait:500},{me:true,text:"Not as good as yours. But close.",wait:900},{from:"Mom",text:"❤️ proud of you",wait:900,type:1200}]
 };
 
 const ENTER={
@@ -353,8 +358,8 @@ const ENTER={
  "G04 Group chat 1"(s){chat($('[data-chat="1"]',s),CHATS[1])},
  "G05 Same week"(s){const w=$('#week');w.innerHTML='';["Mon","Tue","Wed","Thu","Fri","Sat","Sun"].forEach((d,k)=>{const c=el('div','card day a pop',`<b>${d}</b><div class="e">🍚</div><span>Rice &amp; salad</span>`);c.style.setProperty('--d',(.5+k*.28)+'s');w.append(c)})},
  "G06 Survey"(s){const g=$('#grid');g.innerHTML='';const P='<path d="M36 8a11 11 0 1 1 0 22a11 11 0 1 1 0-22zM16 64c0-14 9-24 20-24s20 10 20 24z"/>';
-   const icons=[];for(let k=0;k<51;k++){const v=el('span','a pop');v.style.setProperty('--d',(.6+k*.025)+'s');v.innerHTML=`<svg viewBox="0 0 72 72">${P}</svg>`;g.append(v);icons.push(v.firstChild)}
-   const red=Math.round(51*D.share);const order=[...Array(51).keys()].sort((a,b)=>((a*37)%51)-((b*37)%51)).slice(0,red);
+   const icons=[];for(let k=0;k<D.surveyN;k++){const v=el('span','a pop');v.style.setProperty('--d',(.6+k*.025)+'s');v.innerHTML=`<svg viewBox="0 0 72 72">${P}</svg>`;g.append(v);icons.push(v.firstChild)}
+   const red=D.surveyYes,N=D.surveyN;const order=[...Array(N).keys()].sort((a,b)=>((a*37)%N)-((b*37)%N)).slice(0,red);
    order.forEach((k,j)=>T(()=>icons[k].classList.add('r'),2200+j*30))},
  "G09 Group chat 2"(s){chat($('[data-chat="2"]',s),CHATS[2])},
  "G11 Group chat 3"(s){chat($('[data-chat="3"]',s),CHATS[3])},
@@ -390,6 +395,7 @@ const ENTER={
    .forEach((f,k)=>{const c=el('div','card feat a',`<em>${f[0]}</em><b>${f[1]}</b><span>${f[2]}</span>`);c.style.setProperty('--d',(.3+k*.15)+'s');t.append(c)});
    void t.offsetWidth;T(()=>{t.style.transition='';t.style.transform=`translateX(${-(5*604+200-1920+200)}px)`},1200)},
  "G17 Numbers"(s){counters(s)},
+ "G05b Mom texts"(s){chat($('[data-chat="momcall"]',s),CHATS.momcall)},
  "G18 Text to Mom"(s){chat($('[data-chat="mom"]',s),CHATS.mom)}
 };
 

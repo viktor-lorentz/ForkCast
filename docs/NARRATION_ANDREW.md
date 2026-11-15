@@ -12,7 +12,7 @@ For **OMARSCRIPT** ([OMARSCRIPT.md](OMARSCRIPT.md)). Omar tells his own story; y
 ## Script
 
 **A-01** · 0:50
-Omar isn't the only one. We surveyed fifty-one USC students. About six in ten have a dietary restriction.
+Omar isn't the only one. We surveyed fifty USC students. Twenty-seven of them have a dietary restriction. More than half.
 
 **A-02** · 1:19
 ForkCast asks a few quick questions: what you can't eat, how you eat, your goal, and where you live.

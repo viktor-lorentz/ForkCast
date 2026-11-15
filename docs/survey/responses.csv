@@ -1,0 +1,51 @@
+response,date,year,dietary_restrictions,frustration_1_to_10,has_restriction
+1,11/14/2026,Freshman,Lactose intolerant,10,yes
+2,11/14/2026,Freshman,None,7,no
+3,11/14/2026,Freshman,"gluten free, protein rich, high fiber",6,yes
+4,11/14/2026,Freshman,n/a,4,no
+5,11/14/2026,Freshman,vegetarian,7,yes
+6,11/14/2026,Freshman,Kosher,7,yes
+7,11/14/2026,Freshman,vegan,6,yes
+8,11/14/2026,Freshman,Lactose Intolerant,8,yes
+9,11/14/2026,Senior,none,4,no
+10,11/14/2026,Sophmore,None,4,no
+11,11/14/2026,Freshman,Nons,7,no
+12,11/14/2026,Sophmore,halal diet,10,yes
+13,11/14/2026,Freshman,lactose intolerant,3,yes
+14,11/14/2026,Freshman,"allergic to peanuts, tree nuts",3,yes
+15,11/14/2026,Junior,None,7,no
+16,11/14/2026,Junior,NA,7,no
+17,11/14/2026,Senior,N/a,4,no
+18,11/14/2026,Freshman,Certain dairy products,6,yes
+19,11/14/2026,Freshman,N/A,6,no
+20,11/14/2026,Freshman,Vegetarian,4,yes
+21,11/14/2026,Freshman,No pork,7,yes
+22,11/14/2026,Senior,lactose intolerant,6,yes
+23,11/14/2026,Freshman,Dairy,4,yes
+24,11/14/2026,Freshman,n/a,6,no
+25,11/14/2026,Freshman,"Life-threatening food allergies to mustard; barley; avocado; kiwi; all seeds except flax, chia, and sunflower seeds.",6,yes
+26,11/14/2026,Senior,"No puerco, low carb, high protein.",1,yes
+27,11/14/2026,Freshman,N/A,10,no
+28,11/14/2026,Freshman,Nuts,4,yes
+29,11/14/2026,Freshman,Vegetarian,4,yes
+30,11/14/2026,Freshman,None,2,no
+31,11/14/2026,Freshman,shellfish allergy,7,yes
+32,11/14/2026,Junior,Pescatarian,6,yes
+33,11/14/2026,Freshman,None,3,no
+34,11/14/2026,Freshman,I don’t have any,2,no
+35,11/14/2026,Freshman,No beef,2,yes
+36,11/14/2026,Freshman,Diabetic,5,yes
+37,11/14/2026,Freshman,none,7,no
+38,11/14/2026,Freshman,"Beef [rest of answer removed: a joke, not a diet]",9,yes
+39,11/14/2026,Freshman,Vegan,8,yes
+40,11/14/2026,Freshman,None,3,no
+41,11/14/2026,Freshman,No red meat (beef pork lamb..),6,yes
+42,11/14/2026,Freshman,gluten free,6,yes
+43,11/14/2026,Sophmore,N/A,6,no
+44,11/14/2026,Junior,High cholesterol,5,yes
+45,11/14/2026,Freshman,None,8,no
+46,11/14/2026,Freshman,None,2,no
+47,11/14/2026,Freshman,Mone,8,no
+48,11/14/2026,Freshman,n/a,6,no
+49,11/14/2026,Freshman,n/a,1,no
+50,11/14/2026,Freshman,N/A,7,no
