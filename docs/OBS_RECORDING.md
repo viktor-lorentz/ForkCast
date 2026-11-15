@@ -46,21 +46,21 @@ Same window → https://hospitality.usc.edu/dining-hall-menus/
 2. Hover over a dish with several tiny allergen icons and pause there (the zoom gets added in the edit).
 3. Click the **Parkside** tab, scroll a bit, then **USC Village**, scroll a bit.
 
-**R02 · First run, as Maya · 45–60 s**
+**R02 · First run, as Omar · 45–60 s**
 **⌘⇧N** opens an Incognito window, so there's no saved profile. Redo steps 1.3–1.5 (device toolbar on, iPhone 14 Pro, DPR 3), then point the OBS source at this window and re-check the crop. Go to https://forkcast-usc.vercel.app
 1. Hold 2 s on the welcome screen, then **Get started**.
-2. **Any allergies?** → tap **Sesame** → **Next**.
+2. **Any allergies?** → tap **Pork** → **Next**.
 3. **Do you follow a diet?** → tap **Halal** → **Next**.
-4. **Any fitness goal?** → tap **No goal** (it moves on by itself).
-5. **What do you love?** → tap **spicy** and **rice** → **Next**.
-6. **Where do you live?** → **Cardinal Gardens** → **Next**.
+4. **Any fitness goal?** → tap **Bulk up** (it moves on by itself).
+5. **What do you love?** → tap **chicken** and **rice**, type **beef** in the box and tap **Add** → **Next**.
+6. **Where do you live?** → **Pardee Tower** → **Next**.
 7. **Anything else?** → **Skip**.
 8. **What looks good?** Drag 3–4 cards right and 2 left.
 9. The pick appears. **Hold 4 s on the red card.**
-**Keep this Incognito window open for R03–R11** so every clip shows Maya's profile (halal, sesame, Cardinal Gardens). Where a clip below gives a `?demo=` link, just stay on the main page instead.
+**Keep this Incognito window open for R03–R11** so every clip shows Omar's profile (halal, no pork, bulking, Pardee Tower). Where a clip below gives a `?demo=` link, just stay on the main page instead.
 
 **R03 · The pick · 30 s** (same window)
-1. Hold 3 s on the red card.
+1. Hold 3 s on the red card (at dinner on Nov 15 it says **Everybody's Kitchen**).
 2. Scroll slowly through **Your plate**.
 3. Stop at **Dishes that fit you, by hall** and hold on the ★ OUR PICK row.
 4. Click a hall row to open it, scroll its list a little, click again to close.
@@ -68,7 +68,7 @@ Same window → https://hospitality.usc.edu/dining-hall-menus/
 **R04 · How we checked · 15 s** (same page)
 1. Scroll to **Why EVK? How we checked** and click it.
 2. Hold 4 s on the green checks.
-3. Scroll to **Hidden at EVK for you** and hold on *Contains Sesame (USC label)*.
+3. Scroll to **Hidden at EVK for you** and hold on a *Contains Pork (USC label)* row.
 
 **R06 · Thumbs, I ate this, rate · 20 s** → https://forkcast-usc.vercel.app/?demo=halal-sesame
 In **Your plate**:
