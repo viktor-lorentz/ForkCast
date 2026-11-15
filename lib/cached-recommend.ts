@@ -6,6 +6,7 @@ import { formatAvg } from "./ratings";
 import { lookupScores } from "./ratings-store";
 import { recommend, type RatingMap, type Recommendation } from "./recommend";
 import { scoreHalls } from "./score";
+import { getSwitches } from "./switches";
 
 /** Student ratings for the dishes this profile could get at this meal; empty if the store is down. */
 async function relevantRatings(day: EnrichedDay, profile: Profile, meal: string): Promise<RatingMap> {
@@ -31,7 +32,9 @@ function ratingsKey(r: RatingMap): string {
  * skipped the menu cache and re-ran AI tagging on every cold server instance.
  */
 export async function getRecommendation(day: EnrichedDay, profile: Profile, meal: string): Promise<Recommendation> {
-  const ratings = await relevantRatings(day, profile, meal);
+  const [ratings, switches] = await Promise.all([relevantRatings(day, profile, meal), getSwitches()]);
+  // Emergency switch: code-only picks, no AI call and no cached AI answer.
+  if (switches.rulesOnly) return recommend(day, meal, profile, ratings, { rulesOnly: true });
   const cached = unstable_cache(
     async () => {
       const rec = await recommend(day, meal, profile, ratings);

@@ -165,6 +165,13 @@ Run these in claude.ai **after GO**. Paste the relevant sections of this doc int
 | Venue wifi or a judge's phone | QR code on the last slide, plus a backup screen recording. |
 | Scope creep | Out until 21:00 Saturday: macros, maps/distance, push notifications, accounts, chat. Distance goes first if we're ahead. |
 
+### Emergency switches during judging (no redeploy)
+1. Open Vercel → project **forkcast** → **Storage** → our Global Config store → **Items**. Changes are live in about 15–30 seconds.
+2. USC's site is down or slow: set `"useSavedMenus": true`. The app reads `data/snapshots/` (saved for Nov 14–16).
+3. The AI is slow, failing or out of credits: set `"rulesOnly": true`. Picks come from code only and still pass the allergen checks.
+4. Tell users what's going on: set `"banner": "Menus are from earlier today. Confirm with dining staff."`, or `""` to hide it.
+5. Afterwards, set both flags back to `false` and the banner to `""`. If the store is missing or unreadable, everything stays off.
+
 ## Before Saturday
 
 - [ ] Viktor: load $20 on the Anthropic Console; never commit the key to the repo

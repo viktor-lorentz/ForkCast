@@ -195,7 +195,13 @@ async function askModel(prompt: string, retryNote?: string): Promise<AiRecommend
  * Full pipeline for one profile and meal: code filters and scores, Sonnet picks and explains,
  * code verifies. A failed check gets one retry with the failures listed, then falls back to the rules pick.
  */
-export async function recommend(day: EnrichedDay, meal: string, profile: Profile, ratings?: RatingMap): Promise<Recommendation> {
+export async function recommend(
+  day: EnrichedDay,
+  meal: string,
+  profile: Profile,
+  ratings?: RatingMap,
+  opts: { rulesOnly?: boolean } = {},
+): Promise<Recommendation> {
   const started = Date.now();
   const scores = scoreHalls(day, meal, profile);
   const dishes = day.halls.flatMap((h) => h.dishes);
@@ -207,7 +213,7 @@ export async function recommend(day: EnrichedDay, meal: string, profile: Profile
   let verification: Verification | null = null;
   let source: Recommendation["source"] = "rules";
 
-  if (anyEligible && getClient()) {
+  if (anyEligible && !opts.rulesOnly && getClient()) {
     const prompt = buildPrompt(profile, meal, scores, ratings);
     let note: string | undefined;
     for (let attempt = 0; attempt < 2 && !rec; attempt++) {

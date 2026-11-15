@@ -2,6 +2,7 @@ import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { HALLS, type DayMenus, type Dish, type HallId, type HallMenu, type UscRawMenu } from "./types";
+import { getSwitches } from "./switches";
 
 const USC_API = "https://hospitality.usc.edu/wp-json/hsp-api/v1/get-res-dining-menus";
 const SNAPSHOT_DIR = path.join(process.cwd(), "data", "snapshots");
@@ -82,11 +83,11 @@ export async function readSnapshot(hall: HallId, date: string): Promise<UscRawMe
 }
 
 /**
- * Menus for all three halls on a date. Live from USC unless DEMO_MODE=1;
+ * Menus for all three halls on a date. Live from USC unless DEMO_MODE=1 or the useSavedMenus switch is on;
  * if any live fetch fails, the whole day falls back to the saved snapshot.
  */
 export async function getDayMenus(date: string): Promise<DayMenus> {
-  const demo = process.env.DEMO_MODE === "1";
+  const demo = process.env.DEMO_MODE === "1" || (await getSwitches()).useSavedMenus;
   if (!demo) {
     try {
       const raws = await Promise.all(HALLS.map((h) => fetchLive(h.id, date)));

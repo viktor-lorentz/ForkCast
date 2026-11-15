@@ -246,39 +246,24 @@
               "preferences": []
             },
             {
-              "item": "Pepperoni Pizza",
+              "item": "Steak and Chimichurri Pizza",
               "dietary_preferences": [
-                "Dairy",
-                "Pork",
-                "Soy",
-                "Wheat / Gluten"
+                "Food Not Analyzed for Allergens"
               ],
               "allergens": [
-                "dairy",
-                "pork",
-                "soy",
-                "gluten"
+                "not-analyzed"
               ],
               "preferences": []
             },
             {
-              "item": "Cheese Pizza",
+              "item": "Mushroom and Truffle Pizza",
               "dietary_preferences": [
-                "Dairy",
-                "Soy",
-                "Wheat / Gluten",
-                "Halal Ingredients",
-                "Vegetarian"
+                "Food Not Analyzed for Allergens"
               ],
               "allergens": [
-                "dairy",
-                "soy",
-                "gluten"
+                "not-analyzed"
               ],
-              "preferences": [
-                "halal-ingredients",
-                "vegetarian"
-              ]
+              "preferences": []
             }
           ]
         },
@@ -834,17 +819,7 @@
               "preferences": []
             },
             {
-              "item": "AAZ Sweet n' Spicy Glazed Pork",
-              "dietary_preferences": [
-                "Pork"
-              ],
-              "allergens": [
-                "pork"
-              ],
-              "preferences": []
-            },
-            {
-              "item": "AAZ Sauteed Rainbow Chard",
+              "item": "AAZ Sauteed Mushrooms",
               "dietary_preferences": [
                 "Halal Ingredients",
                 "Vegan"
@@ -856,7 +831,7 @@
               ]
             },
             {
-              "item": "AAZ Roasted Sweet Potatoes",
+              "item": "AAZ Steamed Brown Rice",
               "dietary_preferences": [
                 "Halal Ingredients",
                 "Vegan"
@@ -865,6 +840,16 @@
               "preferences": [
                 "halal-ingredients",
                 "vegan"
+              ]
+            },
+            {
+              "item": "AAZ Roasted Chicken",
+              "dietary_preferences": [
+                "Halal Ingredients"
+              ],
+              "allergens": [],
+              "preferences": [
+                "halal-ingredients"
               ]
             }
           ]
@@ -1010,7 +995,7 @@
               ]
             },
             {
-              "item": "Garlic and Herb Roasted Chicken",
+              "item": "Peri Peri Chicken",
               "dietary_preferences": [
                 "Halal Ingredients"
               ],
@@ -1042,16 +1027,14 @@
               ]
             },
             {
-              "item": "Braised Collard Greens",
+              "item": "Braised Kale",
               "dietary_preferences": [
-                "Halal Ingredients",
-                "Vegan"
+                "Food Not Analyzed for Allergens"
               ],
-              "allergens": [],
-              "preferences": [
-                "halal-ingredients",
-                "vegan"
-              ]
+              "allergens": [
+                "not-analyzed"
+              ],
+              "preferences": []
             },
             {
               "item": "Creamed Spinach",
@@ -1196,39 +1179,24 @@
               "preferences": []
             },
             {
-              "item": "Pepperoni Pizza",
+              "item": "Steak and Chimichurri Pizza",
               "dietary_preferences": [
-                "Dairy",
-                "Pork",
-                "Soy",
-                "Wheat / Gluten"
+                "Food Not Analyzed for Allergens"
               ],
               "allergens": [
-                "dairy",
-                "pork",
-                "soy",
-                "gluten"
+                "not-analyzed"
               ],
               "preferences": []
             },
             {
-              "item": "Cheese Pizza",
+              "item": "Mushroom and Truffle Pizza",
               "dietary_preferences": [
-                "Dairy",
-                "Soy",
-                "Wheat / Gluten",
-                "Halal Ingredients",
-                "Vegetarian"
+                "Food Not Analyzed for Allergens"
               ],
               "allergens": [
-                "dairy",
-                "soy",
-                "gluten"
+                "not-analyzed"
               ],
-              "preferences": [
-                "halal-ingredients",
-                "vegetarian"
-              ]
+              "preferences": []
             }
           ]
         }

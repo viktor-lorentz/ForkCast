@@ -1,6 +1,7 @@
 import { unstable_cache } from "next/cache";
 import { enrichDishes, type EnrichedDish } from "./enrich";
 import type { DayMenus, HallId } from "./types";
+import { getSwitches } from "./switches";
 import { getDayMenus } from "./usc";
 
 export interface EnrichedHall {
@@ -43,6 +44,8 @@ const cachedDay = unstable_cache(
 );
 
 export async function getEnrichedDay(date: string): Promise<EnrichedDay> {
+  // With the useSavedMenus switch on, skip the cache (it may hold a live copy) and read the snapshot.
+  if ((await getSwitches()).useSavedMenus) return buildDay(date);
   try {
     return await cachedDay(date);
   } catch (err) {

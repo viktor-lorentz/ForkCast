@@ -560,7 +560,7 @@
               ]
             },
             {
-              "item": "Roasted Curry Spiced Sweet Potatoes",
+              "item": "Steamed Basmati Rice",
               "dietary_preferences": [
                 "Halal Ingredients",
                 "Vegan"
@@ -572,7 +572,7 @@
               ]
             },
             {
-              "item": "Steamed Brown Basmati Rice",
+              "item": "Roasted Curry Spiced Sweet Potatoes",
               "dietary_preferences": [
                 "Halal Ingredients",
                 "Vegan"
@@ -678,7 +678,7 @@
               ]
             },
             {
-              "item": "Balsamic Roasted Portabello Mushrooms",
+              "item": "Balsamic Marinated Roasted Mushrooms",
               "dietary_preferences": [
                 "Vegan"
               ],
@@ -752,6 +752,33 @@
               ],
               "allergens": [],
               "preferences": [
+                "vegan"
+              ]
+            },
+            {
+              "item": "Sweet Relish",
+              "dietary_preferences": [
+                "Vegan"
+              ],
+              "allergens": [],
+              "preferences": [
+                "vegan"
+              ]
+            },
+            {
+              "item": "Homestyle Mac Salad",
+              "dietary_preferences": [
+                "Soy",
+                "Wheat / Gluten",
+                "Halal Ingredients",
+                "Vegan"
+              ],
+              "allergens": [
+                "soy",
+                "gluten"
+              ],
+              "preferences": [
+                "halal-ingredients",
                 "vegan"
               ]
             }
