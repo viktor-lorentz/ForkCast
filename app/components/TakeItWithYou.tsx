@@ -8,7 +8,7 @@ import { shareUrl } from "@/lib/share";
 type EmailStatus = { enabled: boolean; daily: boolean };
 type SendState = { kind: "idle" } | { kind: "sending" } | { kind: "sent"; daily: boolean } | { kind: "error"; text: string };
 
-/** Open your profile on another device (link + QR), and get your picks by email. */
+/** Get your picks by email, and open your profile on another device (link + QR). Lives in the header sheet. */
 export function TakeItWithYou({ profile }: { profile: Profile }) {
   const t = useT();
   const link = shareUrl(window.location.origin, profile);
@@ -69,40 +69,10 @@ export function TakeItWithYou({ profile }: { profile: Profile }) {
 
   return (
     <section className="rounded-2xl bg-card p-4 shadow-sm ring-1 ring-stone-200">
-      <h2 className="font-semibold">{t("Take it with you")}</h2>
-
-      <div className="mt-3">
-        <p className="text-sm text-stone-600">{t("Open your profile and ratings on another device. No account needed.")}</p>
-        <div className="mt-2 flex gap-2">
-          <button
-            type="button"
-            onClick={() => setShowQr(!showQr)}
-            aria-expanded={showQr}
-            className="flex-1 rounded-xl border border-stone-300 bg-card py-2.5 text-sm font-semibold transition active:scale-95"
-          >
-            {showQr ? t("Hide QR code") : t("Show QR code")}
-          </button>
-          <button type="button" onClick={copy} className="flex-1 rounded-xl bg-ink py-2.5 text-sm font-semibold text-ink-fg transition active:scale-95">
-            {copied ? `${t("Copied")} ✓` : t("Share link")}
-          </button>
-        </div>
-        {showQr && (
-          <div className="rise mt-3 flex flex-col items-center">
-            {qr?.link === link && qr.src ? (
-              // eslint-disable-next-line @next/next/no-img-element -- a generated data: URL, nothing to optimize
-              <img src={qr.src} alt={t("QR code. Scan it with another phone to open your ForkCast profile there.")} width={220} height={220} className="rounded-xl ring-1 ring-stone-200" />
-            ) : qr?.link === link ? (
-              <p className="text-sm text-stone-500">{t("Too much to fit in a QR code. Use Share link instead.")}</p>
-            ) : (
-              <div className="h-[220px] w-[220px] animate-pulse rounded-xl bg-stone-100" />
-            )}
-            <p className="mt-2 text-xs text-stone-400">{t("Scan with your other phone's camera. Anyone with this link sees your profile.")}</p>
-          </div>
-        )}
-      </div>
+      <h2 className="font-semibold">{t("Email & share")}</h2>
 
       {status?.enabled && (
-        <div className="mt-5 border-t border-stone-100 pt-4">
+        <div className="mt-3">
           <p className="text-sm text-stone-600">{t("Get today's picks for every meal by email.")}</p>
           {send.kind === "sent" ? (
             <p className="rise mt-2 rounded-xl bg-emerald-50 p-3 text-sm text-emerald-900">
@@ -144,6 +114,36 @@ export function TakeItWithYou({ profile }: { profile: Profile }) {
           )}
         </div>
       )}
+      <div className={status?.enabled ? "mt-5 border-t border-stone-100 pt-4" : "mt-3"}>
+        <p className="text-sm text-stone-600">{t("Open your profile and ratings on another device. No account needed.")}</p>
+        <div className="mt-2 flex gap-2">
+          <button
+            type="button"
+            onClick={() => setShowQr(!showQr)}
+            aria-expanded={showQr}
+            className="flex-1 rounded-xl border border-stone-300 bg-card py-2.5 text-sm font-semibold transition active:scale-95"
+          >
+            {showQr ? t("Hide QR code") : t("Show QR code")}
+          </button>
+          <button type="button" onClick={copy} className="flex-1 rounded-xl bg-ink py-2.5 text-sm font-semibold text-ink-fg transition active:scale-95">
+            {copied ? `${t("Copied")} ✓` : t("Share link")}
+          </button>
+        </div>
+        {showQr && (
+          <div className="rise mt-3 flex flex-col items-center">
+            {qr?.link === link && qr.src ? (
+              // eslint-disable-next-line @next/next/no-img-element -- a generated data: URL, nothing to optimize
+              <img src={qr.src} alt={t("QR code. Scan it with another phone to open your ForkCast profile there.")} width={220} height={220} className="rounded-xl ring-1 ring-stone-200" />
+            ) : qr?.link === link ? (
+              <p className="text-sm text-stone-500">{t("Too much to fit in a QR code. Use Share link instead.")}</p>
+            ) : (
+              <div className="h-[220px] w-[220px] animate-pulse rounded-xl bg-stone-100" />
+            )}
+            <p className="mt-2 text-xs text-stone-400">{t("Scan with your other phone's camera. Anyone with this link sees your profile.")}</p>
+          </div>
+        )}
+      </div>
+
     </section>
   );
 }
