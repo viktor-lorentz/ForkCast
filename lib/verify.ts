@@ -2,6 +2,7 @@ import type { EnrichedDish } from "./enrich";
 import { hasPref, hideReason } from "./filter";
 import type { Profile } from "./profile";
 import { ratingOf } from "./taste";
+import { overstatesSafety, statedMinutes, statesMacroNumber } from "./lang";
 import { ALLERGENS, HALLS, LABEL_NAMES, PREFERENCES } from "./types";
 
 /** A claim the AI makes about a dish, checked against USC labels. "no:<allergen>" or a diet code. */
@@ -29,7 +30,6 @@ export interface Verification {
   checks: Check[];
 }
 
-const BANNED = /\b(safe|safely|guaranteed|allergen[- ]free)\b/i;
 
 function claimHolds(claim: Claim, dish: EnrichedDish): boolean {
   if (claim.startsWith("no:")) {
@@ -91,7 +91,7 @@ export function verify(
         add(false, `Claim "${describeClaim(c)}" about ${d.name} doesn't match USC labels`);
       }
     }
-    if (BANNED.test(p.why)) {
+    if (overstatesSafety(p.why)) {
       allClaimsHold = false;
       add(false, `Reason for ${d.name} overstates safety`);
     }
@@ -99,17 +99,17 @@ export function verify(
   if (allExist) add(true, "Every dish is on today's USC menu");
   if (allEligible) add(true, `No dish carries an allergen you avoid${profile.diet.length ? " or misses a diet label you need" : ""}`);
   if (allClaimsHold) add(true, "Every label claim matches USC's labels");
-  if (BANNED.test(rec.summary)) add(false, "Summary overstates safety");
+  if (overstatesSafety(rec.summary)) add(false, "Summary overstates safety");
 
   const text = [rec.summary, ...rec.picks.map((p) => p.why)].join(" ");
-  const stated = [...text.matchAll(/(\d+)[\s-]*min/gi)].map((m) => Number(m[1]));
+  const stated = statedMinutes(text);
   if (stated.length > 0) {
     const ok = stated.every((n) => walkMinutes.includes(n));
     add(ok, ok ? "Walking times match the map data" : "A walking time in the answer doesn't match the map data");
   }
 
   // Macro numbers are estimates added up by code and shown by the app; the AI isn't allowed to state its own.
-  if (/\b\d+\s*(g|grams?|k?cal|calories?)\b/i.test(text)) add(false, "The answer states a calorie or gram number; only the app's own totals are shown");
+  if (statesMacroNumber(text)) add(false, "The answer states a calorie or gram number; only the app's own totals are shown");
 
   return { passed: checks.every((c) => c.ok), checks };
 }
