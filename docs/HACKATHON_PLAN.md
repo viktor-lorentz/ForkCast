@@ -3,7 +3,7 @@
 As of 2026-11-13 · Viktor Lorentz
 Live, commentable version: https://claude.ai/artifact/7KrMXiUWrCNptRfiFVCLz1
 
-We're building a mobile web app that tells each USC student which dining hall has food they can actually eat today, and proves it with USC's own allergen labels. This is the shared plan for the AI@USC Hackathon (Nov 14–15, 2026). Team: Viktor, Andrew and Hailey. Comment or open a PR; Viktor makes the final call.
+We're building a mobile web app that tells each USC student which dining hall has food they can actually eat today, and proves it with USC's own allergen labels. This is the shared plan for the AI@USC Hackathon (Nov 14–15, 2026). Team: Viktor and Andrew. Comment or open a PR; Viktor makes the final call.
 
 ## Contents
 
@@ -34,7 +34,6 @@ No code or design assets until Viktor types `GO — hackathon has started` on Sa
 | Claude Code plan | Viktor's Claude Pro: Opus for features, Sonnet for small fixes, Fable (free this weekend) for planning, hard bugs and the final review | Pro has tighter usage limits than Max, and a 13-hour build will hit them. Andrew's Pro is the overflow (see prompts section). |
 | API credits | **Yes, load $20 on the Anthropic Console** | Claude Pro subscriptions only cover chatting with Claude and Claude Code. The deployed app calls Claude by itself every day, and that needs an API key with credits. Expected spend is a few dollars for the weekend (approximate). Ask AWS/Google at check-in about credits as a backup. |
 | Domain + email | **No domain. The web app is the product; email is a stretch goal** | Judges score the app they open on their phone. Resend can only email your own address without a verified domain. If we have time, send the daily email from a new team Gmail (an app password works without a domain). Otherwise pitch it as a next step. |
-| Team | Hailey (Cinema) joins as video and visual lead | The demo video and pitch visuals are a big part of the 20% UX score and the final pitch. |
 | Competitors | Two apps already exist. We still need a clear answer for how we're different | See [The idea](#the-idea). |
 
 ## The idea
@@ -93,29 +92,28 @@ The USC page also offers Brunch, so weekend meal names differ. Meal periods are 
 | --- | --- | --- |
 | Viktor (ECE) | Runs Claude Code, architecture, merges every PR (deploys are automatic) | Everything |
 | Andrew (Business) | Scope calls, Devpost page, deck content, video script and narration, test profiles with expected picks, competitor check, judge Q&A, overflow Claude | `docs/`, `data/test-profiles/` |
-| Hailey (Cinema) | Student interviews and live user testing (filmed, so they double as video footage), demo video (storyboard, filming, editing), deck design, "before vs after" visuals | `docs/` (video and interview notes) |
 
-Viktor also takes over the accuracy checks: the automated verifier plus a spot check of the demo profiles against the real menu. Claude drafts the test profiles from Hailey's interview notes, and Andrew checks the expected picks.
+Viktor also takes over the accuracy checks: the automated verifier plus a spot check of the demo profiles against the real menu. Claude drafts the test profiles from our interview notes, and Andrew checks the expected picks.
 
-Andrew and Hailey open PRs from the GitHub website and only touch their folders. Everything else is a GitHub Issue for Viktor.
+Andrew opens PRs from the GitHub website and only touches his folders. Everything else is a GitHub Issue for Viktor.
 
 ## Schedule
 
 Revised Sat 1:40 PM. Event times from the AI@USC kickoff info: Ginsburg Hall closes **10 PM Sat** and reopens **8 AM Sun**; Devpost deadline **11:00 AM Sun** (our target 10:30); judging round 1 **11 AM–2 PM**; finalists pitch **3:00–4:30 PM**.
-Assumption: Hailey is back at **10:30 PM tonight**, after the building closes, so the video is edited remotely or in a dorm. Footage that needs the dining halls has to be shot before they close, so Andrew and Viktor shoot it at dinner.
+Footage that needs the dining halls has to be shot before they close, so Andrew and Viktor shoot it at dinner.
 
-| Time | Viktor (+ Claude) | Andrew | Hailey |
-| --- | --- | --- | --- |
-| Sat 1:45–5:00 | Turn on Vercel Analytics; pick ideas from the `idea` issues and build them one at a time | Deck with his Claude (docs/ANDREW_DECK_PROMPT.md); write the testimonial questions; Devpost draft | Busy |
-| 5:00–7:30 (dinner rush) | With Andrew at EVK/Village: real-phone user testing (3–5 students), screen recordings of the app | Testimonials (5–8 students, with consent), b-roll of the halls for Hailey | Busy |
-| 7:30–9:00 | Fix what testing found; last small feature | Put real quotes and numbers into the deck; judge Q&A; video script final | Busy |
-| **9:00 PM** | **Feature freeze**: tag `demo-ready`, final check on phones | Deck v2 done; script ready for Hailey | |
-| 9:00–10:00 | Only fixes; send Hailey the screen recordings | Narration draft; pack up before the building closes at 10 | |
-| 10:30 PM–late | Help with app shots for the video | Record narration with Hailey | **Video**: rough cut from script, b-roll, recordings, testimonials |
-| Sun 8:00–9:00 | Critical fixes only. **Code freeze 9:00** | Devpost text final; deck link published and tested | Final cut under 3:00 |
-| 9:00–10:30 | Open /api/warm; practice the pitch | **Submit on Devpost by 10:30**; practice the pitch x3 | Upload the video by 9:30 |
-| 11:00–2:00 | Round 1 judging: warm the site at 10:50; demo on a phone | Pitch + Q&A | Run the video and slides |
-| 3:00–4:30 | Finalist pitch: warm the site at 2:50 | Pitch | Video |
+| Time | Viktor (+ Claude) | Andrew |
+| --- | --- | --- |
+| Sat 1:45–5:00 | Turn on Vercel Analytics; pick ideas from the `idea` issues and build them one at a time | Deck with his Claude (docs/ANDREW_DECK_PROMPT.md); write the testimonial questions; Devpost draft |
+| 5:00–7:30 (dinner rush) | With Andrew at EVK/Village: real-phone user testing (3–5 students), screen recordings of the app | Testimonials (5–8 students, with consent), b-roll of the halls |
+| 7:30–9:00 | Fix what testing found; last small feature | Put real quotes and numbers into the deck; judge Q&A; video script final |
+| **9:00 PM** | **Feature freeze**: tag `demo-ready`, final check on phones | Deck v2 done; script ready |
+| 9:00–10:00 | Only fixes; make the screen recordings | Narration draft; pack up before the building closes at 10 |
+| 10:30 PM–late | Help with app shots for the video | Record narration |
+| Sun 8:00–9:00 | Critical fixes only. **Code freeze 9:00** | Devpost text final; deck link published and tested |
+| 9:00–10:30 | Open /api/warm; practice the pitch | **Submit on Devpost by 10:30**; practice the pitch x3 |
+| 11:00–2:00 | Round 1 judging: warm the site at 10:50; demo on a phone | Pitch + Q&A |
+| 3:00–4:30 | Finalist pitch: warm the site at 2:50 | Pitch |
 
 Tasks for each row are GitHub Issues (pinned: #33). App ideas for Viktor are the issues labeled `idea`, each with a prompt to send Claude.
 
@@ -123,18 +121,18 @@ Tasks for each row are GitHub Issues (pinned: #33). App ideas for Viktor are the
 
 The goal: a live phone link by 17:00 Saturday, feature freeze at 21:00, submission by 10:30 Sunday (30 minutes before the deadline).
 
-| Time | Viktor + Claude | Andrew | Hailey |
-| --- | --- | --- | --- |
-| Sat 9:00–10:30 | Check-in, opening; ask sponsors about credits | Same | Same |
-| 10:30–11:00 (GO) | CLAUDE.md, PRD, Issues, branch protection, empty app live on Vercel; save copies of the menu data | Devpost skeleton, deck outline; check Trojan Dining and DineOn | Storyboard v1, interview guide |
-| 11:00–13:00 | Menu scraper, Haiku normalizer, database, saved snapshot | Problem story, stats, competitor answer | Interview and film 5–10 students with dietary needs (with consent); b-roll at the halls |
-| 13:00–15:00 | Filter, Sonnet ranking, verifier; Claude drafts 6–8 test profiles from interview notes | Check the test profiles' expected picks against the real menu; deck draft | Interview notes into `docs/`; record the "before" footage of the cluttered USC site |
-| 15:00–17:00 | Phone UI: onboarding, today's card, Why? panel. **Live by 17:00** | Video script v1 with Hailey | Deck design; first filmed phone tests with 2–3 students at 17:00 |
-| 17:00–19:00 | Demo mode; email if ahead | Screenshots, deck v2; log Issues from user testing | Filmed user testing with students; screen-record the app flow |
-| 19:00–21:00 | Fix what testing found, polish, Fable final review | Judge Q&A doc | Rough cut |
-| 21:00–22:00 | **Feature freeze.** Tag `main` as demo-ready; final accuracy check on the demo profiles | Narration recording | Edit with narration |
-| Sun 8:00–9:00 | Critical fixes only; re-test the live link. **Code freeze 9:00** | Devpost text final | Final cut, under 3:00 |
-| Sun 9:00–10:30 | Check the deploy, practice the 3-min pitch | **Submit on Devpost by 10:30**; practice the pitch | Upload video |
+| Time | Viktor + Claude | Andrew |
+| --- | --- | --- |
+| Sat 9:00–10:30 | Check-in, opening; ask sponsors about credits | Same |
+| 10:30–11:00 (GO) | CLAUDE.md, PRD, Issues, branch protection, empty app live on Vercel; save copies of the menu data | Devpost skeleton, deck outline; check Trojan Dining and DineOn |
+| 11:00–13:00 | Menu scraper, Haiku normalizer, database, saved snapshot | Problem story, stats, competitor answer |
+| 13:00–15:00 | Filter, Sonnet ranking, verifier; Claude drafts 6–8 test profiles from interview notes | Check the test profiles' expected picks against the real menu; deck draft |
+| 15:00–17:00 | Phone UI: onboarding, today's card, Why? panel. **Live by 17:00** | Video script v1 |
+| 17:00–19:00 | Demo mode; email if ahead | Screenshots, deck v2; log Issues from user testing |
+| 19:00–21:00 | Fix what testing found, polish, Fable final review | Judge Q&A doc |
+| 21:00–22:00 | **Feature freeze.** Tag `main` as demo-ready; final accuracy check on the demo profiles | Narration recording |
+| Sun 8:00–9:00 | Critical fixes only; re-test the live link. **Code freeze 9:00** | Devpost text final |
+| Sun 9:00–10:30 | Check the deploy, practice the 3-min pitch | **Submit on Devpost by 10:30**; practice the pitch |
 
 </details>
 
@@ -146,7 +144,7 @@ Run these in claude.ai **after GO**. Paste the relevant sections of this doc int
 2. **Deck outline.** "Draft a 7-slide pitch deck for a 3-minute pitch to judges and later USC Student Government: problem, who it hurts (with a stat), demo, how the AI works and checks itself, why it's safe and feasible, the path to campus adoption, team. For each slide give a title, at most 3 short bullets, and a speaker note of 2 sentences."
 3. **Video script.** "Write a 2:45 demo video script with columns for time, what's on screen, and narration. Open with the cluttered USC menu site as the 'before', show the 90-second demo flow, end with the pitch line. Narration should sound like a student, not an ad."
 4. **Judge Q&A.** "List the 12 hardest questions judges might ask this team (liability for allergens, accuracy, existing apps like Trojan Dining, cost per student, what happens if USC changes its site, privacy, how USG would adopt it) and draft a 2-sentence answer to each."
-5. **Interview guide (for Hailey).** "Write a 5-minute interview guide for USC students with dietary restrictions: 6 open questions about how they decide where to eat, time spent checking menus, bad experiences, and what would make them trust an app. Include a one-line consent script for filming."
+5. **Interview guide.** "Write a 5-minute interview guide for USC students with dietary restrictions: 6 open questions about how they decide where to eat, time spent checking menus, bad experiences, and what would make them trust an app. Include a one-line consent script for filming."
 
 **Coding overflow (only if Viktor runs out of Claude Code usage):** Andrew installs Claude Code with his Pro account, clones the repo, and works on one Issue on its own branch, for example `feat/email-template`. Start prompt: "Read CLAUDE.md and docs/PRD.md. Work only on Issue #N on this branch, touch only the files it names, and open a PR when tests pass." Viktor still reviews and merges.
 
@@ -175,13 +173,11 @@ Run these in claude.ai **after GO**. Paste the relevant sections of this doc int
 ## Before Saturday
 
 - [ ] Viktor: load $20 on the Anthropic Console; never commit the key to the repo
-- [ ] Viktor: make sure Andrew and Hailey have accepted their GitHub invites
+- [ ] Viktor: make sure Andrew has accepted his GitHub invite
 - [x] Viktor: Vercel connected, API key added
 - [ ] Viktor: open the USC menu page in Chrome, then DevTools → Network → reload, and screenshot the request that returns the dishes
-- [ ] Hailey: line up 5–10 students with dietary needs for Saturday interviews
 - [ ] Andrew: find a stat on how many students have food allergies or dietary restrictions
 - [ ] Andrew: read this doc, comment on the pitch line and the demo flow, and check Trojan Dining and DineOn
-- [ ] Hailey: think about the video's story arc (no filming or editing until GO)
 
 ## Sources
 

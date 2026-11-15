@@ -8,7 +8,7 @@ The hardest questions judges might ask, each with a two-sentence answer you can 
 2. If you don't know, say so and say what you'd check. Judges punish bluffing more than gaps.
 3. Lead with the one line: **AI understands the food. Code enforces the allergens.**
 
-**Who takes what:** Viktor takes questions 2, 5, 6, 12, 13, 16, 22. Andrew takes 1, 3, 8, 9, 10, 11, 24, 25. Hailey takes 7, 10, 15, 17 and anything about interviews.
+**Who takes what:** Viktor takes questions 2, 5, 6, 12, 13, 16, 22. Andrew takes 1, 3, 8, 9, 10, 11, 24, 25. Both take 7, 10, 15, 17 and anything about interviews.
 
 ---
 
@@ -42,7 +42,7 @@ There are no accounts: your profile lives in your own browser and moves between 
 It needs no integration to start: it is a web link that reads the menus USC already publishes, so USG could promote it tomorrow. The next steps are NetID login, an official menu feed, and a report for Hospitality showing which diets each hall underserves at each meal.
 
 ### 10. Did students actually ask for this?
-We surveyed 33 USC students today and 20 of them reported a dietary restriction or allergy (18 of 30 if you leave out our own three teammates), so about 6 in 10 either way. `[Hailey: number of interviews, one result, one real quote.]`
+We surveyed 50 USC students on Nov 14, and 27 of them listed a dietary restriction, more than half. They range from lactose intolerance and vegetarian to halal, kosher and life-threatening allergies. The raw data (names removed) is in our repo at `docs/survey/responses.csv`. Two students told us on camera: "It can be very tricky to find food that matches my dietary restrictions at the dining halls," and "It's so difficult finding the perfect food."
 
 ### 11. Isn't this only useful for a small group of students?
 In our survey the "special case" was the majority, and the app also works for students with no restrictions through taste, walking time, hours and fitness goals. Restrictions are simply where the pain is sharpest and where a wrong answer matters most.
@@ -110,5 +110,5 @@ Because the explanation is checked too: every label claim in it has to match USC
 - **AI rate limit (Viktor):** `/api/recommend` and `/api/parse-profile` have no per-visitor rate limit. Either add one before code freeze or be ready to answer question 16 with caching plus the prepaid budget.
 - **Cost number (Viktor):** fill in question 8 from the Anthropic Console.
 - **Competitors (Andrew):** open Trojan Dining and DineOn once and note what they do today.
-- **Interviews (Hailey):** fill in question 10.
+- **Interviews:** fill in question 10.
 - **Test count (Viktor):** fill in question 23.

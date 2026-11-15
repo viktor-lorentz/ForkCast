@@ -6,7 +6,7 @@ Copy everything in the box below (GitHub shows a copy button in its top-right co
 New goal: build the pitch deck that wins this hackathon. You already have the background on our project. Here's what has changed and what I want.
 
 ## Updates to the background
-- The app is now called **ForkCast**. Our team name is **Overcooked**. Team: Viktor (tech lead), Andrew (me: product and pitch), Hailey (cinema: video, interviews, design help).
+- The app is now called **ForkCast**. Our team name is **Overcooked**. Team: Viktor (tech lead), Andrew (me: product and pitch).
 - Live app: https://forkcast-usc.vercel.app (use this exact URL on slides and in the QR code). Code: https://github.com/viktor-lorentz/ForkCast
 - New live features since your background info:
   - 👍/👎 on any dish, remembered in the browser. A thumbs-down dish is never recommended again, and code enforces that.
@@ -16,7 +16,7 @@ New goal: build the pitch deck that wins this hackathon. You already have the ba
   - "Take it with you": a QR code or link moves your profile to another device with no account.
   - Email: today's picks to your @usc.edu address, and an optional daily 7 AM email (being set up today).
   - The day's other meals load in the background, so switching Brunch → Dinner is instant.
-- True numbers you may use: 3 dining halls; about 250 menu items checked per day; USC's 10 allergen labels; walking times for 23 residences; 54 automated tests; an AI pick in about 3–7 seconds for a new profile and about 0.2 seconds when cached; every AI answer checked by code before it's shown. Don't invent other numbers. Use visible placeholders like [Hailey: # students interviewed] and [quote] for things only we know.
+- True numbers you may use: 3 dining halls; about 250 menu items checked per day; USC's 10 allergen labels; walking times for 23 residences; 54 automated tests; an AI pick in about 3–7 seconds for a new profile and about 0.2 seconds when cached; every AI answer checked by code before it's shown. Don't invent other numbers. Use visible placeholders like [# students interviewed] and [quote] for things only we know.
 
 ## The bar
 Judges see a dozen decks in a row. Ours should feel like an Apple keynote crossed with a weather report: confident, calm, very few words, every animation telling part of the story. Rubric: Impact 30%, Technical & AI 25%, Feasibility 25%, UX 20%. Every slide should earn points on at least one of those. The pitch is about 3 minutes, so plan 8–10 slides at roughly 15–25 seconds each.
@@ -40,12 +40,12 @@ You're the expert, so pick whatever produces the best result. I'm not a coder. I
 
 ## Story (improve it if you see a stronger arc)
 1. **Hook:** a forecast-style card. "Every student asks this three times a day: where should I eat?"
-2. **Problem:** three halls, three menus, tiny allergen icons. For a student with a sesame allergy who eats halal, that's ten minutes of squinting, every meal. Leave a placeholder for a real student quote from Hailey.
+2. **Problem:** three halls, three menus, tiny allergen icons. For a student with a sesame allergy who eats halal, that's ten minutes of squinting, every meal. Leave a placeholder for a real student quote.
 3. **Meet ForkCast:** the phone, one answer, "Go to USC Village", in about three seconds.
 4. **How it decides:** the funnel and pipeline animation. The key line: "AI understands the food. Code enforces the allergens."
 5. **Trust:** the verification checks, the hidden dishes shown with USC's own label as the reason, and "never says safe, always says confirm with staff." This is where we win Technical & AI and Feasibility.
 6. **It learns you:** 👍/👎, fitness-goal plates, walking time from your dorm, open/closed hours.
-7. **Live demo or video beat:** one slide that hands off to the demo or Hailey's video. Also a backup: a short screen recording embedded in the slide, so it works without Wi-Fi.
+7. **Live demo or video beat:** one slide that hands off to the demo or our video. Also a backup: a short screen recording embedded in the slide, so it works without Wi-Fi.
 8. **Impact:** who it helps (students with allergies and dietary needs, international students, athletes) and why now. Use placeholders for interview results.
 9. **What's next:** USC NetID login with student government, a report for USC Hospitality on which diets each hall underserves, and weekly alerts for favorite dishes.
 10. **Close:** "ForkCast. Know before you go." (or something better), team Overcooked, and a big QR code to the live app that judges can scan from their seats.
@@ -55,7 +55,7 @@ Write speaker notes for every slide: what I say, in plain spoken sentences, time
 1. First reply: your tool choice (with one line on why), a one-paragraph visual concept, and the slide list. Wait for my OK before building.
 2. Build the design system first (colors, type, the phone frame, the forecast card, label chips) and show me one finished slide, so we agree on the look before building the rest.
 3. Then build two or three slides at a time. After each batch, export PNGs of the slides, look at them yourself, and fix spacing, alignment, overflow and contrast before showing me. Also check each slide at 1920×1080 and at a projector-like 1280×720.
-4. Ask me for screenshots and Hailey's real quotes and numbers when you need them. Never fake them.
+4. Ask me for screenshots and our real quotes and numbers when you need them. Never fake them.
 
 ## Done means
 - The deck runs full screen with presenter notes, and every animation plays on click without stutter.

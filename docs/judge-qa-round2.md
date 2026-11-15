@@ -12,7 +12,7 @@ Anything in `[brackets]` is for the team to fill in. Never say "safe"; say "no f
 Yes. Omar is a USC freshman from Philadelphia who lives in Cardinal Gardens, and he agreed to be in our video and deck. The result on the slide is his real ForkCast pick for dinner on Sunday, November 15.
 
 ### 1. Your survey is 50 students. Why should we believe 54%?
-We don't claim it's all of USC: it's 27 of the 50 students we could reach in one day, mostly freshmen on meal plans, who are exactly the people who eat in these halls. The point is that dietary needs are common enough to be the normal case, and Hailey's interviews say the same thing. `[Hailey: one interview result]`
+We don't claim it's all of USC: it's 27 of the 50 students we could reach in one day, mostly freshmen on meal plans, who are exactly the people who eat in these halls. The point is that dietary needs are common enough to be the normal case. The students we filmed said the same thing: "It can be very tricky to find food that matches my dietary restrictions at the dining halls."
 
 ### 2. Who did you survey, and could it be biased?
 It was a Google Form shared with students around us on Saturday, and our own three answers are in the count. It is a convenience sample, so we show the raw count on the slide and would rerun it through USG for a campus-wide number.
@@ -96,7 +96,7 @@ The fitness labels and the weekly view. The core is one thing: read three menus,
 Trust: one wrong allergen answer would end it. That's why allergens never touch the AI, every answer is verified, and we tell students to confirm with dining staff every time.
 
 ### 25. What did each of you actually do?
-Viktor (ECE) built the app and the verification pipeline; Andrew (BUAD) owned the product decisions, the pitch and this deck; Hailey (BCA) ran the survey and interviews and made the demo video. `[Each of you: one specific thing you're proud of.]`
+Viktor (ECE) built the app and the verification pipeline; Andrew (BUAD) owned the product decisions, the pitch and this deck. Together we ran the survey and interviews and made the demo video. `[Each of you: one specific thing you're proud of.]`
 
 ---
 

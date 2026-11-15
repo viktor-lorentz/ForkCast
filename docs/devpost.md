@@ -8,7 +8,7 @@ Copy each section into the matching Devpost field. Anything in `[brackets]` stil
 
 **Try it:** https://forkcast-usc.vercel.app (sample student: https://forkcast-usc.vercel.app/?demo=halal-sesame)
 
-**Slide deck:** `[Netlify link]` · **Video:** `[Hailey: video link]` · **Code:** https://github.com/viktor-lorentz/ForkCast
+**Slide deck:** `[Netlify link]` · **Video:** `[video link]` · **Code:** https://github.com/viktor-lorentz/ForkCast
 
 ---
 
@@ -73,7 +73,6 @@ We never call food "safe." We say "no flagged allergens per USC labels" and tell
 - Students with dietary needs don't want more information. They want one answer and the proof behind it.
 - **Andrew:** a UX that feels effortless is much harder to produce than I expected.
 - **Viktor:** every new feature brings new bugs. Debugging is harder than coming up with ideas or generating code.
-- **Hailey:** `[Hailey: one line]`
 
 ## What's next for ForkCast
 
@@ -88,4 +87,4 @@ We never call food "safe." We say "no flagged allergens per USC labels" and tell
 
 ## Team Overcooked
 
-Viktor (ECE), tech lead · Andrew (BUAD), product and pitch · Hailey (BCA), video and interviews
+Viktor (ECE), tech lead · Andrew (BUAD), product and pitch
