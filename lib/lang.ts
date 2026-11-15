@@ -2,12 +2,13 @@
  * Languages for the main card. Sonnet writes the summary and dish reasons in the chosen language;
  * dish names, hall names and label claims stay exactly as USC writes them. Other UI stays English.
  */
-export const LANG_IDS = ["en", "es", "zh", "ko", "hi", "vi"] as const;
+export const LANG_IDS = ["en", "es", "fr", "zh", "ko", "hi", "vi"] as const;
 export type LangId = (typeof LANG_IDS)[number];
 
 export const LANGS: { id: LangId; name: string; english: string }[] = [
   { id: "en", name: "English", english: "English" },
   { id: "es", name: "Español", english: "Spanish" },
+  { id: "fr", name: "Français", english: "French" },
   { id: "zh", name: "中文", english: "Simplified Chinese" },
   { id: "ko", name: "한국어", english: "Korean" },
   { id: "hi", name: "हिन्दी", english: "Hindi" },
@@ -19,7 +20,7 @@ export const isLang = (x: unknown): x is LangId => (LANG_IDS as readonly unknown
 
 /** Words that overstate safety, in every language we write in. Checked by code on every answer. */
 const BANNED_LATIN =
-  /(?<![\p{L}])(safe|safely|guaranteed|allergen[- ]free|segur[oa]s?|garantizad[oa]s?|libre de alérgenos|sin alérgenos|an toàn|đảm bảo|không (có )?chất gây dị ứng|không gây dị ứng)(?![\p{L}])/iu;
+  /(?<![\p{L}])(safe|safely|guaranteed|allergen[- ]free|segur[oa]s?|garantizad[oa]s?|libre de alérgenos|sin alérgenos|sûrs?|sûres?|sans danger|sans allergènes?|garanti(e|s|es)?|an toàn|đảm bảo|không (có )?chất gây dị ứng|không gây dị ứng)(?![\p{L}])/iu;
 const BANNED_OTHER = /(安全|无过敏原|不含过敏原|保证|안전|알레르기 ?(유발 ?물질 ?)?없는|알레르겐 ?없는|보장|सुरक्षित|एलर्जी[- ]?मुक्त|एलर्जन[- ]?मुक्त|गारंटी)/u;
 
 export function overstatesSafety(text: string): boolean {
@@ -34,7 +35,7 @@ export function statedMinutes(text: string): number[] {
 /** A calorie or gram number in any of our languages. */
 export function statesMacroNumber(text: string): boolean {
   return (
-    /\b\d+\s*(g|grams?|gramos?|k?cal|calories?|calorías?|calo|gam)\b/iu.test(text) ||
+    /\b\d+\s*(g|grams?|gramos?|grammes?|k?cal|calories?|calorías?|calo|gam)\b/iu.test(text) ||
     /\d+\s*(克|千卡|大卡|卡路里|그램|칼로리|ग्राम|कैलोरी)/u.test(text)
   );
 }
@@ -81,6 +82,20 @@ export const CARD: Record<LangId, Card> = {
       `${h} es tu mejor opción${w === null ? "" : `, a ${w} min a pie`}: ${m} platos principales y ${s} acompañamientos van con tu perfil.`,
     perLabels: (t) => `${t}, según las etiquetas de USC.`,
     fits: "Va con tu perfil.",
+  },
+  fr: {
+    goTo: "va à",
+    headsUp: "attention",
+    comparing: "Comparaison des restos...",
+    checked: "Vérifié avec les étiquettes USC",
+    noMatch: "Aucun resto ne correspond",
+    closesAt: (t) => `Ferme à ${t}`,
+    walk: (n, from) => `${n} min à pied depuis ${from}`,
+    meal: { Breakfast: "Petit-déjeuner", Brunch: "Brunch", Lunch: "Déjeuner", Dinner: "Dîner" },
+    rulesSummary: (h, w, m, s) =>
+      `${h} est ton meilleur choix${w === null ? "" : `, à ${w} min à pied`} : ${m} plats principaux et ${s} accompagnements correspondent à ton profil.`,
+    perLabels: (t) => `${t}, selon les étiquettes USC.`,
+    fits: "Correspond à ton profil.",
   },
   zh: {
     goTo: "去",

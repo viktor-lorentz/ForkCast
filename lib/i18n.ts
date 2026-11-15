@@ -1,4 +1,5 @@
 import es from "./i18n/es.json";
+import fr from "./i18n/fr.json";
 import hi from "./i18n/hi.json";
 import ko from "./i18n/ko.json";
 import vi from "./i18n/vi.json";
@@ -14,7 +15,7 @@ import type { LangId } from "./lang";
 export type Vars = Record<string, string | number>;
 export type T = (en: string, vars?: Vars) => string;
 
-export const DICTS: Record<Exclude<LangId, "en">, Record<string, string>> = { es, zh, ko, hi, vi };
+export const DICTS: Record<Exclude<LangId, "en">, Record<string, string>> = { es, fr, zh, ko, hi, vi };
 
 const fill = (s: string, vars?: Vars) => (vars ? s.replace(/\{(\w+)\}/g, (m, k: string) => (k in vars ? String(vars[k]) : m)) : s);
 

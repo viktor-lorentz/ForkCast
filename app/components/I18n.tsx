@@ -21,9 +21,9 @@ export function useT(): T {
   return useMemo(() => makeT(lang), [lang]);
 }
 
-const SHORT: Record<LangId, string> = { en: "EN", es: "ES", zh: "中", ko: "한", hi: "हि", vi: "VI" };
+const SHORT: Record<LangId, string> = { en: "EN", es: "ES", fr: "FR", zh: "中", ko: "한", hi: "हि", vi: "VI" };
 
-/** Small globe button for the header; opens a list of the six languages. */
+/** Small globe button for the header; opens the language list. */
 export function LangButton() {
   const { lang, setLang } = useLang();
   const t = useT();

@@ -78,6 +78,13 @@ describe.each([
   });
 });
 
+it("the theme switch's dark block matches the phone-setting dark block", () => {
+  const media = css.slice(darkStart, css.indexOf(':root[data-theme="dark"]'));
+  const forced = css.slice(css.indexOf(':root[data-theme="dark"]'), css.indexOf("@theme inline"));
+  expect(vars(forced)).toEqual(vars(media));
+  expect(Object.keys(vars(forced)).length).toBeGreaterThan(20);
+});
+
 it("dark mode actually changes the page colors", () => {
   expect(dark.background).not.toBe(light.background);
   expect(dark.card).not.toBe(light.card);

@@ -13,6 +13,7 @@ import { dishEmoji } from "@/lib/emoji";
 import { Chip, Tile } from "./Chip";
 import { Logo } from "./Logo";
 import { TasteQuiz } from "./TasteQuiz";
+import { ThemeToggle } from "./Theme";
 import { LangButton, useT } from "./I18n";
 import { LIKE_IDEAS, NEVER_IDEAS } from "@/lib/i18n-dynamic";
 
@@ -160,7 +161,10 @@ export function Onboarding({
               </h1>
             )}
           </div>
-          <LangButton />
+          <div className="flex shrink-0 gap-2">
+            <ThemeToggle />
+            <LangButton />
+          </div>
         </div>
         <p className="mt-1 text-stone-600">
           {onCancel

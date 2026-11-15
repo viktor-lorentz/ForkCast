@@ -16,10 +16,19 @@ function dayLabel(date: string, i: number, t: T, lang: string): string {
 }
 
 /** Collapsed by default: the next 7 days at a glance, from code scoring only. Tap a day to open it above. */
-export function ThisWeek({ profile, onOpenDay }: { profile: Profile; onOpenDay: (offset: number, meal: string | null) => void }) {
+export function ThisWeek({
+  profile,
+  onOpenDay,
+  embedded,
+}: {
+  profile: Profile;
+  onOpenDay: (offset: number, meal: string | null) => void;
+  /** Shown in place of the day view (from the "This week" chip): always open, no header button. */
+  embedded?: boolean;
+}) {
   const t = useT();
   const { lang } = useLang();
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(Boolean(embedded));
   const [data, setData] = useState<{ key: string; days: WeekDay[] | null; error: boolean } | null>(null);
   // Language and "I ate this" don't change the week's picks.
   const key = profileKey({ ...profile, ate: undefined, lang: undefined });
@@ -40,7 +49,12 @@ export function ThisWeek({ profile, onOpenDay }: { profile: Profile; onOpenDay: 
   const failed = data?.key === key && data.error;
 
   return (
-    <section className="rounded-2xl bg-card shadow-sm ring-1 ring-stone-200">
+    <section className={embedded ? "rise rounded-2xl bg-card shadow-sm ring-1 ring-stone-200" : "rounded-2xl bg-card shadow-sm ring-1 ring-stone-200"}>
+      {embedded ? (
+        <div className="p-4 pb-0">
+          <h2 className="font-semibold">{t("Best hall for each meal, the next 7 days")}</h2>
+        </div>
+      ) : (
       <button type="button" aria-expanded={open} onClick={() => setOpen(!open)} className="flex w-full items-center justify-between p-4 text-left">
         <span>
           <span className="block font-semibold">{t("This week")}</span>
@@ -48,8 +62,9 @@ export function ThisWeek({ profile, onOpenDay }: { profile: Profile; onOpenDay: 
         </span>
         <span className="text-stone-400">{open ? "−" : "+"}</span>
       </button>
+      )}
       {open && (
-        <div className="rise border-t border-stone-100 p-4 pt-3">
+        <div className={embedded ? "p-4 pt-3" : "rise border-t border-stone-100 p-4 pt-3"}>
           {failed && <p className="text-sm text-stone-500">{t("Couldn't load the week right now. Try again in a minute.")}</p>}
           {!days && !failed && (
             <div className="flex flex-col gap-2" aria-label={t("Loading the week")}>
