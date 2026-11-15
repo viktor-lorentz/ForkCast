@@ -8,7 +8,7 @@ import type { EnrichedDay } from "@/lib/menus";
 import { currentMeal } from "@/lib/score";
 import { HALLS } from "@/lib/types";
 import { Logo } from "./Logo";
-import { ScoreBadge, ScorePicker, useScores } from "./Ratings";
+import { Collapse, ScoreBadge, ScorePicker, useScores } from "./Ratings";
 import { LangButton, StoredLangProvider, useT } from "./I18n";
 
 const todayLA = () => new Date().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
@@ -87,18 +87,18 @@ function RatePage() {
             )}
           </span>
         </button>
-        {isOpen && (
-          <div className="rise px-3 pb-3">
+        <Collapse open={isOpen}>
+          <div className="px-3 pb-3">
             <ScorePicker
               value={mine}
               label={d.name}
               onPick={(v) => {
                 ratings.submit(d.name, v);
-                setTimeout(() => setOpen((o) => (o === d.id ? null : o)), 450);
+                setTimeout(() => setOpen((o) => (o === d.id ? null : o)), 900);
               }}
             />
           </div>
-        )}
+        </Collapse>
       </li>
     );
   };

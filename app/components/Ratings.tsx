@@ -180,7 +180,7 @@ export function ScorePicker({
           const on = value === v;
           return (
             <button
-              key={on ? `${v}-on` : v}
+              key={v}
               type="button"
               role="radio"
               aria-checked={on}
@@ -388,6 +388,19 @@ export function RateMealPrompt({
 }
 
 /** A quiet row under a dish: today's score, and one tap to give yours. */
+/** Opens and closes smoothly (height and fade) instead of popping in and out. */
+export function Collapse({ open, children }: { open: boolean; children: React.ReactNode }) {
+  return (
+    <div
+      className={`grid transition-[grid-template-rows,opacity] duration-300 ease-out motion-reduce:transition-none ${open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}
+      aria-hidden={!open}
+      inert={!open}
+    >
+      <div className="min-h-0 overflow-hidden">{children}</div>
+    </div>
+  );
+}
+
 /** "I ate this" state for one dish today: shown next to the rating button. */
 export interface AteToggle {
   eaten: boolean;
@@ -399,6 +412,9 @@ export interface AteToggle {
 export function RateInline({ name, ratings, ate }: { name: string; ratings: Ratings; ate?: AteToggle }) {
   const t = useT();
   const [open, setOpen] = useState(false);
+  const [justRated, setJustRated] = useState(false);
+  const closer = useRef<ReturnType<typeof setTimeout>>(undefined);
+  useEffect(() => () => clearTimeout(closer.current), []);
   const mine = ratings.mineOf(name);
   const score = ratings.scoreOf(name);
   return (
@@ -439,21 +455,29 @@ export function RateInline({ name, ratings, ate }: { name: string; ratings: Rati
         )}
         </span>
       </div>
-      {open && (
-        <div className="rise mt-2.5">
-          {mine === null && <p className="mb-1.5 text-sm font-semibold">{t("How was it?")}</p>}
+      <Collapse open={open}>
+        <div className="pt-2.5">
+          {/* One line that changes text but never height, so nothing jumps when you tap a score. */}
+          <p className={`mb-1.5 text-sm font-semibold transition-colors ${justRated ? "text-emerald-700" : ""}`}>
+            {justRated ? `✓ ${t("Saved. Thanks!")}` : t("How was it?")}
+          </p>
           <ScorePicker
             value={mine}
             label={name}
             onPick={(v) => {
               ratings.submit(name, v);
               // Rating a dish today means you ate it.
-              if (ate && !ate.eaten && v !== null) ate.onToggle();
-              setTimeout(() => setOpen(false), 600);
+              if (ate && !ate.eaten) ate.onToggle();
+              setJustRated(true);
+              clearTimeout(closer.current);
+              closer.current = setTimeout(() => {
+                setOpen(false);
+                setTimeout(() => setJustRated(false), 320);
+              }, 1100);
             }}
           />
         </div>
-      )}
+      </Collapse>
     </div>
   );
 }
