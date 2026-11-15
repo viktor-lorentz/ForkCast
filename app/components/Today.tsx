@@ -16,7 +16,7 @@ import { findDorm } from "@/lib/walking";
 import { LabelTag } from "./Chip";
 import { TakeItWithYou } from "./TakeItWithYou";
 import { FoodTags, PlateCard, Thumbs } from "./Taste";
-import { logMealVisit, pendingVisit, RateMealPrompt, ScoreBadge, useScores, type Ratings } from "./Ratings";
+import { logMealVisit, pendingVisit, RateInline, RateMealPrompt, ScoreBadge, useScores, type Ratings } from "./Ratings";
 
 const keyNoTaste = (p: Profile) => profileKey({ ...p, taste: undefined });
 const hallName = (id: string) => HALLS.find((h) => h.id === id)?.name ?? id;
@@ -296,7 +296,7 @@ export function Today({
     () => [...(day?.halls ?? []).flatMap((h) => h.dishes).filter((d) => d.kind === "main" || d.kind === "side" || d.kind === "dessert").map((d) => d.name), ...(visit?.dishes ?? []), ...(askVisit?.dishes ?? [])],
     [day, visit, askVisit],
   );
-  const ratings = useScores(dishNames);
+  const ratings = useScores(dishNames, date);
   // The logo takes you home: today, the meal that's on now, everything closed, back at the top.
   const goHome = () => {
     setDayOffset(initialDayOffset());
@@ -338,13 +338,24 @@ export function Today({
             <ProfileLine profile={profile} />
           )}
         </div>
-        <button
-          type="button"
-          onClick={onEdit}
-          className="shrink-0 rounded-full border border-stone-300 bg-white px-3.5 py-1.5 text-sm font-medium transition active:scale-95"
-        >
-          Edit
-        </button>
+        <div className="flex shrink-0 gap-2">
+          <a
+            href={`/rate?date=${date}${meal ? `&meal=${encodeURIComponent(meal)}` : ""}${pickHall ? `&hall=${pickHall}` : ""}`}
+            className="flex items-center gap-1 rounded-full bg-stone-900 px-3.5 py-1.5 text-sm font-semibold text-white transition active:scale-95"
+          >
+            <svg viewBox="0 0 20 20" className="h-3.5 w-3.5 fill-gold" aria-hidden>
+              <path d="M10 1.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.5 7.7l5.9-.9z" />
+            </svg>
+            Rate
+          </a>
+          <button
+            type="button"
+            onClick={onEdit}
+            className="rounded-full border border-stone-300 bg-white px-3.5 py-1.5 text-sm font-medium transition active:scale-95"
+          >
+            Edit
+          </button>
+        </div>
       </header>
 
       <div className="flex gap-2">
@@ -532,10 +543,7 @@ export function Today({
                     <div className="flex items-start justify-between gap-2">
                       <div className="min-w-0">
                         <h3 className="font-semibold leading-snug">{p.name}</h3>
-                        <p className="flex min-w-0 items-center gap-1.5 text-xs text-stone-400">
-                          <span className="truncate">{shortStation(p.station)}</span>
-                          <ScoreBadge score={ratings.scoreOf(p.name)} />
-                        </p>
+                        <p className="truncate text-xs text-stone-400">{shortStation(p.station)}</p>
                       </div>
                       {byId.get(p.id) && <Thumbs dish={byId.get(p.id)!} taste={profile.taste} onRate={ratePick(p.id)} />}
                     </div>
@@ -547,6 +555,7 @@ export function Today({
                       ))}
                       {others.length > 0 && <LabelTag tone="stone" text={`Contains ${others.map((a) => LABEL_NAMES[a] ?? a).join(", ")}`} />}
                     </div>
+                    <RateInline name={p.name} ratings={ratings} />
                   </article>
                   </div>
                 );
