@@ -8,6 +8,30 @@ Everything you need to shoot is in this file: each row of the script names its s
 
 ---
 
+## Footage status (Sat 8:45 PM)
+**Have** (in `~/Desktop/ForkCast-video/public/footage/`, renamed by ID):
+| ID | File | What | Used at |
+|---|---|---|---|
+| B01 | `B01-food-stations.mp4` | Food stations, close | 0:00 under the title |
+| B01B | `B01B-dining-room.mp4` | Dining room, wide, students eating | 1:52 |
+| B02 | `B02-walk-to-parkside.mp4` | Walking up to Parkside's doors | 0:05 |
+| B03 | `B03-usc-menu-hand.mp4` | Hands scrolling USC's menu site | 0:20 |
+| B04 | `B04-over-shoulder-app.mov` | Over the shoulder, using ForkCast | 0:58 |
+| B04A | `B04A-over-shoulder-short.mov` | Same, 2.6 s (spare) | — |
+| B04B | `B04B-walk-to-hall.mov` | Looks at phone, walks across the courtyard to the hall | 2:35, ending |
+| T1 | `T1-jaden-take1.mp4` | Jaden, take 1 | 0:08 |
+| T2 | `T2-jaden-take2.mp4` | Jaden, take 2 (**not used**, see below) | — |
+| T3 | `T3-courtyard-student.mov` | Student who doesn't eat beef or pork | 0:14 |
+
+**Dropped (not shot):** B05 (plate + rating) → the wide dining-room shot covers it. B06 (team) → the end card runs longer. T2 "reaction after trying the app" → replaced by B04B with "Live now. Try it tonight."
+
+**Still to record:** screen clips R01–R12 (OBS, [`OBS_RECORDING.md`](OBS_RECORDING.md)), narration VO-01…VO-11, one music track.
+
+**Testimonial lines used** (Claude transcribed the clips locally):
+- **T1, Jaden, 46.9–53.3 s:** "It's so difficult finding like the perfect food. You walk into McCarthy dining hall, you're thinking: what will I eat today?" Lower third: *Jaden · Freshman, USC*.
+- **T3, 16.0–21.2 s:** "Yes, it can be very tricky to find food that matches my dietary restrictions at the dining halls." Lower third: *USC freshman · Doesn't eat beef or pork*. **Needs her name** (and Jaden's spelling) and her OK to show it.
+- **Not used: Jaden's take 2.** In take 1 he says his restriction is avoiding too many carbs and that finding food is "not that hard". In take 2 he says he's allergic to eggs. Only use take 2 if the egg allergy is true. A made-up allergy in front of judges would be a real problem.
+
 ## How it all comes together (start here)
 1. **B-roll:** rename Andrew's files by shot ID (`B01-hall-wide.mp4` …) and put them in `~/Desktop/ForkCast-video/public/footage/`.
 2. **Screen clips R01–R12:** record them with OBS on the Mac, following [`OBS_RECORDING.md`](OBS_RECORDING.md). They go in the same folder.
@@ -107,20 +131,20 @@ Rules for the words (spoken and on screen): never say "safe" or "allergen-free";
 
 | Time | Narration (voice-over) | Picture | On-screen text |
 |---|---|---|---|
-| 0:00–0:08 | *(no narration, music in)* | **B01** (5 s) → **B02** (3 s) | — |
-| 0:08–0:16 | *(student speaks)* | **T1** (or the no-testimonial version) | Name, year (if they agree) |
+| 0:00–0:08 | *(no narration, music in)* | **B01** food stations with the **G01** title (5 s) → **B02** walking up to Parkside (3 s) | **Where should I eat?** → ForkCast logo |
+| 0:08–0:20 | *(students speak)* | **T1** Jaden (6.4 s) → **T3** courtyard student (5.2 s) | Lower thirds |
 | 0:16–0:32 | "Three times a day, every USC student asks the same question: where should I eat? If you're halal with a sesame allergy, that means opening three menus and decoding tiny icons on every dish." | **B03** (4 s) → **R01** in phone frame: scroll, zoom on icons, switch hall tabs | **3 halls · ~250 dishes · every meal** |
 | 0:32–0:40 | "We built ForkCast. Tell it once how you eat..." | **R02, start:** welcome screen, typing in "Describe how you eat" | **ForkCast** (logo) |
 | 0:40–0:55 | "...in your own words. AI fills in your profile from USC's own labels: allergies, diet, what you love, where you live. Then swipe through a few real dishes from today's menus so it learns your taste." | **R02, middle:** *Fill in for me* → chips light up → dorm → Continue → taste cards | **Set up in 30 seconds** |
-| 0:55–1:10 | "And in seconds: your dining hall for this meal, how far you walk, and the dishes to get." | **R02, end** (the pick appears) → **R03:** hold on the red card, scroll *Your plate* | **Your hall. Your plate.** |
+| 0:55–1:10 | "And in seconds: your dining hall for this meal, how far you walk, and the dishes to get." | **B04** over the shoulder (3 s) → **R02, end** (the pick appears) → **R03:** hold on the red card, scroll *Your plate* | **Your hall. Your plate.** |
 | 1:10–1:20 | "It compares all three halls, and shows how much of each menu actually fits you." | **R03, end:** hall bars, **★ Our pick**, tap a hall open | **All 3 halls compared** |
 | 1:20–1:42 | "Here's the important part. AI understands the food, but it never makes an allergen decision. Code removes anything USC labels with your allergens before the AI sees the menu, then checks every answer: real hall, real dishes, no flagged allergens, every label claim true. And it shows you what it hid, and why." | **R04:** *How we checked* → green checks → hidden list | **AI understands the food. Code enforces the allergens.** then **0 allergen decisions made by AI** |
 | 1:42–1:52 | "A different student gets a different answer." | **R05:** switch the sample student → the hall changes | **Every student, their own pick** |
-| 1:52–2:10 | "It learns as you go. Thumbs up or down on any dish. Ate it? Tap *I ate this*, rate it from one to ten, and the next student sees today's scores. It even avoids serving you the same thing all week." | **B05** (3 s) → **R06:** 👍, 👎 slides away, *I ate this* → 8 → *Saved* (optional cutaway **R07**) | **Students rate. Everyone benefits.** |
+| 1:52–2:10 | "It learns as you go. Thumbs up or down on any dish. Ate it? Tap *I ate this*, rate it from one to ten, and the next student sees today's scores. It even avoids serving you the same thing all week." | **B01B** dining room (3 s) → **R06:** 👍, 👎 slides away, *I ate this* → 8 → *Saved* (optional cutaway **R07**) | **Students rate. Everyone benefits.** |
 | 2:10–2:22 | "Plan ahead with the whole week, and it won't send you to a hall that's about to close." | **R08:** This week → open a day → **R09:** *Closes in N min* or *Closes at 10:00PM* | **7 days ahead · closing-time aware** |
 | 2:22–2:34 | "It speaks seven languages, has a dark mode, and can email you the day's picks every morning." | **R10:** Español → 中文 → dark mode → **R11:** envelope → email arrives | **English · Español · Français · 中文 · 한국어 · हिन्दी · Tiếng Việt** |
-| 2:34–2:40 | *(student speaks)* | **T2** (or **B04** + text) | — |
-| 2:40–2:47 | "ForkCast. Know before you go." | **B06** (2 s) → end card: logo, URL, QR code | **forkcast-usc.vercel.app** · *Team Overcooked · AI@USC Hackathon 2026* |
+| 2:34–2:40 | *(music only)* | **B04B**: she looks at her phone and walks across the courtyard to the hall | **Live now. Try it tonight.** |
+| 2:40–2:48 | "ForkCast. Know before you go." | **G10** end card: logo, URL, QR code (8 s) | **forkcast-usc.vercel.app** · *Team Overcooked · AI@USC Hackathon 2026* |
 
 **If it runs long:** cut 1:42–1:52 (R05) first, then shorten the 2:22 line to "It speaks seven languages and emails you the day's picks."
 **If R09 is missing:** end the 2:10 line at "...with the whole week."
@@ -183,7 +207,7 @@ Each one is rendered at 3840×2160, 30 fps, as **MP4** (full-screen pieces) and 
 | 0:55–1:20 | The pick appears: **hold 1.5 s, no zoom** (let it land), then push in on the red card. R03 scroll at 1.3×. Zoom on the ★ OUR PICK pill. |
 | 1:20–1:42 | **G04** full screen (slow down here: this is the "why we're different" moment), then R04 with each checkmark highlighted in time with the words "real hall, real dishes, no flagged allergens..." End on **G05**. |
 | 1:42–1:52 | **G06** split screen, or R05 if G06 isn't ready. |
-| 1:52–2:10 | B05 (3 s) → R06, zoom on 👍, then on "I ate this", **G07** meter. Quick. |
+| 1:52–2:10 | B01B (3 s) → R06, zoom on 👍, then on "I ate this", **G07** meter. Quick. |
 | 2:10–2:22 | **G08** → R08 at 1.3× → R09 zoomed on "Closes in N min". |
 | 2:22–2:34 | **G09** → R10 language switch (zoom on the globe menu) → a 1 s dark-mode flash → R11 email arriving. Fastest section: cut on every beat. |
 | 2:34–2:40 | T2, music lifts. |
