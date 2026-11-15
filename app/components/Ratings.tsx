@@ -49,7 +49,10 @@ export interface Ratings {
 }
 
 /** Students' average scores for these dishes, plus this browser's own scores. */
-export function useScores(names: string[]): Ratings {
+const todayLA = () => new Date().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
+
+/** `date` is the menu day the scores belong to (defaults to today), so badges can show today's ratings. */
+export function useScores(names: string[], date: string = todayLA()): Ratings {
   const [scores, setScores] = useState<Record<string, Score>>({});
   const [mine, setMine] = useState<Record<string, number>>(() =>
     read(MINE_KEY, {}),
@@ -66,7 +69,7 @@ export function useScores(names: string[]): Ratings {
     fetch("/api/ratings/lookup", {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify({ names: keyList.split("\n"), rater: raterId() }),
+      body: JSON.stringify({ names: keyList.split("\n"), rater: raterId(), date }),
     })
       .then((r) => (r.ok ? r.json() : Promise.reject()))
       .then(
@@ -77,7 +80,7 @@ export function useScores(names: string[]): Ratings {
     return () => {
       live = false;
     };
-  }, [keyList]);
+  }, [keyList, date]);
 
   const submit = (name: string, score: number) => {
     const k = dishKey(name);
@@ -88,11 +91,13 @@ export function useScores(names: string[]): Ratings {
     setMine(nextMine);
     write(MINE_KEY, nextMine);
     const guess = applyScore(before, prev, score);
-    setScores((s) => (guess ? { ...s, [k]: guess } : s));
+    // Today's average moves too (a first score today, or a changed one).
+    const todayGuess = applyScore(before?.today ?? null, before?.today ? prev : null, score);
+    setScores((s) => (guess ? { ...s, [k]: { ...guess, ...(todayGuess ? { today: todayGuess } : {}) } } : s));
     fetch("/api/ratings", {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify({ dish: name, score, rater: raterId() }),
+      body: JSON.stringify({ dish: name, score, rater: raterId(), date }),
     })
       .then((r) => (r.ok ? r.json() : Promise.reject()))
       .then(
@@ -118,7 +123,7 @@ const Star = () => (
 
 /** "★ 8.2 · 3": what students think, out of 10. Nothing shows until someone rates it. */
 export function ScoreBadge({
-  score,
+  score: all,
   long,
   className = "",
 }: {
@@ -126,19 +131,23 @@ export function ScoreBadge({
   long?: boolean;
   className?: string;
 }) {
-  if (!score) return null;
-  const n = `${score.n} student${score.n === 1 ? "" : "s"}`;
+  if (!all) return null;
+  // Prefer what students said about today's menu.
+  const score = all.today ?? all;
+  const when = all.today ? " today" : "";
+  const n = `${score.n} student${score.n === 1 ? "" : "s"}${when}`;
   return (
     <span
       className={`inline-flex shrink-0 items-center gap-1 rounded-full bg-stone-900 px-2 py-0.5 text-xs font-semibold text-white ${className}`}
       title={`Students rate it ${formatAvg(score.avg)} out of 10 (${n})`}
+      aria-label={`Students rate it ${formatAvg(score.avg)} out of 10, ${n}`}
     >
       <span className="text-gold">
         <Star />
       </span>
       <span className="tabular-nums">{formatAvg(score.avg)}</span>
       <span className="font-normal text-white/60">
-        {long ? `/10 · ${n}` : `· ${score.n}`}
+        {long ? `/10 · ${n}` : `· ${score.n}${when}`}
       </span>
     </span>
   );
@@ -222,7 +231,7 @@ const MEAL_START: Record<string, number> = {
   Lunch: 11,
   Dinner: 16.5,
 };
-const WAIT_MS = 45 * 60 * 1000;
+const WAIT_MS = 20 * 60 * 1000;
 
 export function logMealVisit(v: Omit<MealVisit, "at" | "done">) {
   const visits = read<MealVisit[]>(VISITS_KEY, []);
@@ -251,7 +260,7 @@ export function pendingVisit(
     nowMs - v.at > WAIT_MS &&
     nowMs - v.at < 36 * 3600 * 1000 &&
     (v.date < today ||
-      (v.date === today && nowHour >= (MEAL_START[v.meal] ?? 0) + 0.75));
+      (v.date === today && nowHour >= (MEAL_START[v.meal] ?? 0) + 0.5));
   return [...visits].reverse().find(over) ?? null;
 }
 
@@ -370,5 +379,42 @@ export function RateMealPrompt({
         </div>
       </div>
     </section>
+  );
+}
+
+/** A quiet row under a dish: today's score, and one tap to give yours. */
+export function RateInline({ name, ratings }: { name: string; ratings: Ratings }) {
+  const [open, setOpen] = useState(false);
+  const mine = ratings.mineOf(name);
+  const score = ratings.scoreOf(name);
+  return (
+    <div className="mt-3 border-t border-stone-100 pt-2.5">
+      <div className="flex items-center justify-between gap-2">
+        {score ? <ScoreBadge score={score} long /> : <span className="text-xs text-stone-500">No ratings yet today</span>}
+        <button
+          type="button"
+          onClick={() => setOpen((o) => !o)}
+          aria-expanded={open}
+          className={`flex shrink-0 items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold transition active:scale-95 ${
+            mine !== null ? "bg-cardinal/10 text-cardinal" : "bg-stone-100 text-stone-700"
+          }`}
+        >
+          <Star />
+          {mine !== null ? `You: ${mine}` : "Ate it? Rate it"}
+        </button>
+      </div>
+      {open && (
+        <div className="rise mt-2.5">
+          <ScorePicker
+            value={mine}
+            label={name}
+            onPick={(v) => {
+              ratings.submit(name, v);
+              setTimeout(() => setOpen(false), 600);
+            }}
+          />
+        </div>
+      )}
+    </div>
   );
 }

@@ -52,7 +52,7 @@ export default function RatePage() {
       .filter((d) => !seen.has(d.name.toLowerCase()) && seen.add(d.name.toLowerCase()));
   }, [day, hall, shownMeal]);
   const names = useMemo(() => dishes.map((d) => d.name), [dishes]);
-  const ratings = useScores(names);
+  const ratings = useScores(names, start.date);
 
   const row = (d: EnrichedDish) => {
     const mine = ratings.mineOf(d.name);

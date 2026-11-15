@@ -1,10 +1,10 @@
-import { isScore, validRater } from "@/lib/ratings";
+import { isDate, isScore, validRater } from "@/lib/ratings";
 import { ratingsEnabled, saveScore, underRateLimit } from "@/lib/ratings-store";
 
 /** POST { dish, score (1–10, or null to clear), rater } → the dish's new average. */
 export async function POST(request: Request) {
   if (!ratingsEnabled()) return Response.json({ error: "Ratings aren't set up" }, { status: 503 });
-  let body: { dish?: unknown; score?: unknown; rater?: unknown };
+  let body: { dish?: unknown; score?: unknown; rater?: unknown; date?: unknown };
   try {
     body = await request.json();
   } catch {
@@ -17,7 +17,7 @@ export async function POST(request: Request) {
   const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "local";
   if (!(await underRateLimit(ip))) return Response.json({ error: "Too many ratings, try again later" }, { status: 429 });
   try {
-    return Response.json({ score: await saveScore(dish, body.rater, body.score as number | null) });
+    return Response.json({ score: await saveScore(dish, body.rater, body.score as number | null, isDate(body.date) ? body.date : undefined) });
   } catch (err) {
     console.error("rating failed:", err);
     return Response.json({ error: "Couldn't save that rating" }, { status: 502 });

@@ -8,6 +8,8 @@ export interface Score {
   avg: number;
   /** How many students rated it. */
   n: number;
+  /** Just the scores given for that day's menu, so students see what people think today. */
+  today?: { avg: number; n: number };
 }
 
 /** Dishes repeat across days and halls under the same name, so ratings follow the name. */
@@ -41,5 +43,7 @@ export const formatAvg = (avg: number) => (Math.round(avg * 10) / 10).toFixed(1)
 export function scoreWord(v: number): string {
   return v >= 9 ? "Get it again" : v >= 7 ? "Pretty good" : v >= 5 ? "It's fine" : v >= 3 ? "Not great" : "Skip it";
 }
+
+export const isDate = (v: unknown): v is string => typeof v === "string" && /^\d{4}-\d{2}-\d{2}$/.test(v);
 
 export const validRater = (v: unknown): v is string => typeof v === "string" && /^[\w-]{8,64}$/.test(v);
