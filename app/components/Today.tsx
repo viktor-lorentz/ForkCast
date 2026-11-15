@@ -13,7 +13,7 @@ import { STYLES } from "@/lib/styles";
 import { rate, ratingOf, type Rated } from "@/lib/taste";
 import { findDorm } from "@/lib/walking";
 import { LabelTag } from "./Chip";
-import { TakeItWithYou } from "./TakeItWithYou";
+import { GetPicks } from "./GetPicks";
 import { Logo } from "./Logo";
 import { ThisWeek } from "./ThisWeek";
 import { ThemeToggle } from "./Theme";
@@ -414,6 +414,7 @@ export function Today({
           )}
         </div>
         <div className="flex shrink-0 gap-2">
+          <GetPicks profile={profile} />
           <ThemeToggle />
           <LangButton />
           <button
@@ -766,8 +767,6 @@ export function Today({
         </>
       )}
 
-
-      <TakeItWithYou profile={profile} />
 
       {hours && (
         <section className="rounded-2xl bg-card shadow-sm ring-1 ring-stone-200">
