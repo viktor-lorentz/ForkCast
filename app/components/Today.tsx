@@ -142,11 +142,14 @@ function HallRow({
 
 export function Today({
   profile,
+  starter,
   onEdit,
   onSwitch,
   onChange,
 }: {
   profile: Profile;
+  /** Set right after a one-tap starter, e.g. "Halal". */
+  starter?: string | null;
   onEdit: () => void;
   onSwitch: (p: Profile) => void;
   /** Saves a small change (a rating) without leaving the screen. */
@@ -324,7 +327,16 @@ export function Today({
               </span>
             </button>
           </h1>
-          <ProfileLine profile={profile} />
+          {starter ? (
+            <p className="text-sm text-stone-500">
+              Quick start: {starter} ·{" "}
+              <button type="button" onClick={onEdit} className="font-semibold text-cardinal underline-offset-2 active:underline">
+                Adjust
+              </button>
+            </p>
+          ) : (
+            <ProfileLine profile={profile} />
+          )}
         </div>
         <button
           type="button"

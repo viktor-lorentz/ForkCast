@@ -46,6 +46,8 @@ function initialProfile(): Profile | null {
 export default function App() {
   const [profile, setProfile] = useState<Profile | null>(initialProfile);
   const [editing, setEditing] = useState(false);
+  // Which one-tap starter they used, so the main screen can offer "Adjust" until they edit.
+  const [starter, setStarter] = useState<string | null>(null);
 
   const showOnboarding = editing || !profile;
   return (
@@ -55,16 +57,24 @@ export default function App() {
         <Onboarding
           initial={profile ?? EMPTY_PROFILE}
           onCancel={profile ? () => setEditing(false) : undefined}
+          onStarter={(s) => {
+            save(s.profile);
+            setProfile(s.profile);
+            setStarter(s.label);
+            window.scrollTo(0, 0);
+          }}
           onDone={(p) => {
             save(p);
             setProfile(p);
             setEditing(false);
+            setStarter(null);
             window.scrollTo(0, 0);
           }}
         />
       ) : (
         <Today
           profile={profile}
+          starter={starter}
           onEdit={() => {
             setEditing(true);
             window.scrollTo(0, 0);
