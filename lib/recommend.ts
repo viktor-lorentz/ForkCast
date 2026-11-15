@@ -17,6 +17,14 @@ import { historyNote } from "./history";
 import { isClosing, type Closing, type ClosingMap } from "./closing";
 import { verify, type AiRecommendation, type Pick, type Verification } from "./verify";
 
+/** The prompt names halls by id ("evk", "university-village"); the model sometimes copies those ids into its text. */
+export function hallNames(text: string): string {
+  return text
+    .replace(/\buniversity-village\b/gi, "USC Village")
+    .replace(/\bevk\b/g, "EVK")
+    .replace(/\bparkside\b/g, "Parkside");
+}
+
 export interface HallSummary {
   hall: string;
   open: boolean;
@@ -277,12 +285,13 @@ export async function recommend(
   }
 
   const chosen = scores.find((s) => s.hall === rec.hall) ?? scores[0];
+  const tidy = (text: string) => (rec.picks.length ? hallNames(text) : text);
   const byId = new Map(dishes.map((d) => [d.id, d]));
   return {
     date: day.date,
     meal,
     hall: chosen.hall,
-    summary: anyEligible ? rec.summary : `No ${meal.toLowerCase()} dishes at any hall match your profile on USC's labels today.`,
+    summary: anyEligible ? tidy(rec.summary) : `No ${meal.toLowerCase()} dishes at any hall match your profile on USC's labels today.`,
     picks: [...rec.picks]
       .sort((a, b) => kindRank(byId.get(a.dishId)?.kind) - kindRank(byId.get(b.dishId)?.kind))
       .map((p) => {
@@ -294,7 +303,7 @@ export async function recommend(
           kind: d.kind,
           allergens: d.allergens,
           prefs: d.prefs,
-          why: p.why,
+          why: tidy(p.why),
           claims: p.claims,
           macros: d.macros ?? null,
         };

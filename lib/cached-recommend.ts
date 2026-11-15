@@ -59,7 +59,7 @@ export async function getRecommendation(day: EnrichedDay, profile: Profile, meal
       if (rec.source !== "ai") throw Object.assign(new Error("rules fallback"), { rec });
       return rec;
     },
-    ["recommend-v8", day.date, meal, profileKey(profile), ratingsKey(ratings), closingKey(closing)],
+    ["recommend-v9", day.date, meal, profileKey(profile), ratingsKey(ratings), closingKey(closing)],
     { revalidate: 3 * 3600 },
   );
   try {

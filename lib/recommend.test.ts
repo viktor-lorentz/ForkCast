@@ -244,3 +244,12 @@ describe("closing soon", () => {
     expect(rec.verification.passed).toBe(true);
   });
 });
+
+describe("hallNames", () => {
+  it("turns hall ids the model copied from the prompt into names", async () => {
+    const { hallNames } = await import("./recommend");
+    expect(hallNames("evk가 1분 거리라")).toBe("EVK가 1분 거리라");
+    expect(hallNames("Go to university-village or parkside.")).toBe("Go to USC Village or Parkside.");
+    expect(hallNames("EVK and Parkside stay as they are")).toBe("EVK and Parkside stay as they are");
+  });
+});
