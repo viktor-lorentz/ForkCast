@@ -8,7 +8,7 @@ Copy each section into the matching Devpost field. Anything in `[brackets]` stil
 
 **Try it:** https://forkcast-usc.vercel.app (sample student: https://forkcast-usc.vercel.app/?demo=halal-sesame)
 
-**Slide deck:** `[Netlify link]` · **Video:** `[video link]` · **Code:** https://github.com/viktor-lorentz/ForkCast
+**Slide deck:** https://forkcast-usc.vercel.app/forkcast-deck.html · **Video:** `[video link]` · **Code:** https://github.com/viktor-lorentz/ForkCast
 
 ---
 
