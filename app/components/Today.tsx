@@ -311,9 +311,14 @@ export function Today({
               type="button"
               onClick={goHome}
               aria-label="ForkCast: back to today's pick"
-              className="select-none text-xl font-bold tracking-tight text-cardinal transition active:scale-95 active:opacity-70"
+              className="flex select-none items-center gap-1.5 text-xl font-bold tracking-tight transition active:scale-95 active:opacity-70"
             >
-              ForkCast
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/logo-mark.png" alt="" width={30} height={30} className="h-[30px] w-[30px]" />
+              <span>
+                <span className="text-stone-900">Fork</span>
+                <span className="text-cardinal">Cast</span>
+              </span>
             </button>
           </h1>
           <ProfileLine profile={profile} />
