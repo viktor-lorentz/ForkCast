@@ -66,7 +66,7 @@ export function TakeItWithYou({ profile }: { profile: Profile }) {
   const validEmail = /^[^\s@]+@usc\.edu$/i.test(email.trim());
 
   return (
-    <section className="rounded-2xl bg-white p-4 shadow-sm ring-1 ring-stone-200">
+    <section className="rounded-2xl bg-card p-4 shadow-sm ring-1 ring-stone-200">
       <h2 className="font-semibold">Take it with you</h2>
 
       <div className="mt-3">
@@ -76,11 +76,11 @@ export function TakeItWithYou({ profile }: { profile: Profile }) {
             type="button"
             onClick={() => setShowQr(!showQr)}
             aria-expanded={showQr}
-            className="flex-1 rounded-xl border border-stone-300 bg-white py-2.5 text-sm font-semibold transition active:scale-95"
+            className="flex-1 rounded-xl border border-stone-300 bg-card py-2.5 text-sm font-semibold transition active:scale-95"
           >
             {showQr ? "Hide QR code" : "Show QR code"}
           </button>
-          <button type="button" onClick={copy} className="flex-1 rounded-xl bg-stone-900 py-2.5 text-sm font-semibold text-white transition active:scale-95">
+          <button type="button" onClick={copy} className="flex-1 rounded-xl bg-ink py-2.5 text-sm font-semibold text-ink-fg transition active:scale-95">
             {copied ? "Copied ✓" : "Share link"}
           </button>
         </div>
@@ -88,7 +88,7 @@ export function TakeItWithYou({ profile }: { profile: Profile }) {
           <div className="rise mt-3 flex flex-col items-center">
             {qr?.link === link && qr.src ? (
               // eslint-disable-next-line @next/next/no-img-element -- a generated data: URL, nothing to optimize
-              <img src={qr.src} alt="QR code that opens your profile" width={220} height={220} className="rounded-xl ring-1 ring-stone-200" />
+              <img src={qr.src} alt="QR code. Scan it with another phone to open your ForkCast profile there." width={220} height={220} className="rounded-xl ring-1 ring-stone-200" />
             ) : qr?.link === link ? (
               <p className="text-sm text-stone-500">Too much to fit in a QR code. Use Share link instead.</p>
             ) : (
@@ -118,13 +118,13 @@ export function TakeItWithYou({ profile }: { profile: Profile }) {
                   onKeyDown={(e) => e.key === "Enter" && validEmail && sendEmail()}
                   placeholder="you@usc.edu"
                   aria-label="Your USC email"
-                  className="min-w-0 flex-1 rounded-xl border border-stone-300 bg-white px-3 py-2 text-base outline-none focus:border-cardinal"
+                  className="min-w-0 flex-1 rounded-xl border border-stone-300 bg-card px-3 py-2 text-base outline-none focus:border-cardinal"
                 />
                 <button
                   type="button"
                   onClick={sendEmail}
                   disabled={!validEmail || send.kind === "sending"}
-                  className="rounded-xl bg-cardinal px-4 text-sm font-semibold text-white transition active:scale-95 disabled:opacity-40"
+                  className="rounded-xl bg-brand px-4 text-sm font-semibold text-white transition active:scale-95 disabled:opacity-40"
                 >
                   {send.kind === "sending" ? "Sending..." : "Email me"}
                 </button>
