@@ -1,6 +1,7 @@
 import { getRecommendation } from "@/lib/cached-recommend";
 import { getEnrichedDay } from "@/lib/menus";
 import { cleanProfile, type Profile } from "@/lib/profile";
+import { rateLimit } from "@/lib/rate-limit";
 import { currentMeal } from "@/lib/score";
 import { addDays, isValidDate, todayLA } from "@/lib/usc";
 
@@ -9,6 +10,8 @@ export const maxDuration = 60;
 const BOOT = Date.now();
 
 export async function POST(request: Request) {
+  const limited = await rateLimit(request, "recommend");
+  if (limited) return limited;
   let body: { profile?: unknown; date?: string; meal?: string };
   try {
     body = await request.json();

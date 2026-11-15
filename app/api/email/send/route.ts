@@ -2,6 +2,7 @@ import { buildDigest } from "@/lib/email/digest";
 import { cleanUscEmail, emailEnabled, sendEmail } from "@/lib/email/send";
 import { addPending, allowSend } from "@/lib/email/store";
 import { cleanProfile } from "@/lib/profile";
+import { rateLimit } from "@/lib/rate-limit";
 import { todayLA } from "@/lib/usc";
 
 export const maxDuration = 60;
@@ -9,6 +10,8 @@ export const maxDuration = 60;
 /** POST {email, profile, daily?} → sends today's picks now; with daily, the email also carries a confirm link. */
 export async function POST(request: Request) {
   if (!emailEnabled()) return Response.json({ error: "Email isn't set up yet" }, { status: 503 });
+  const limited = await rateLimit(request, "email-send");
+  if (limited) return limited;
   let body: { email?: unknown; profile?: unknown; daily?: unknown };
   try {
     body = await request.json();
