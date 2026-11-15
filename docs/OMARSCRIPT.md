@@ -126,6 +126,7 @@ One file per line, named exactly by its ID (`O-01.m4a`). Record in the quietest 
 **Keys:** `→`/`Space` next · `←` back · `R` replay · `A` autoplay · `N` notes (which line each slide goes with; turn them off before recording) · `F` fullscreen.
 
 ## ✂️ Putting it together in Descript
+The full prompt to paste and the upload checklist are in [DESCRIPT_PROMPT.md](DESCRIPT_PROMPT.md).
 1. New project. Drag in the voice files in order: O-01, O-02, O-03, O-04, O-05, A-01, O-06, A-02…A-07, O-07, A-08. Descript transcribes them, so the script becomes the timeline. Delete flubs by deleting words.
 2. Drag in `DECK-graphics.mp4` and **Split** it into slides. Place each slide on its line using the **Deck slide** column above.
 3. Put the filmed shots (A1–A9), app recordings (R02, R03) and existing footage (B02, B03, T1, T3) on their lines.
