@@ -2,36 +2,21 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useT } from "./I18n";
+import { pickCards } from "@/lib/taste-cards";
 import type { EnrichedDish } from "@/lib/enrich";
-import { hideReason } from "@/lib/filter";
 import type { EnrichedDay } from "@/lib/menus";
 import type { Profile } from "@/lib/profile";
-import { ratingOf, type Rated } from "@/lib/taste";
+import type { Rated } from "@/lib/taste";
 import { dishEmoji } from "@/lib/emoji";
 import { HALLS } from "@/lib/types";
 import { FoodTags } from "./Taste";
 import { ScoreBadge, useScores } from "./Ratings";
 
 const COUNT = 10;
-const STEP_COUNT = 5;
+const STEP_COUNT = 8;
 const NO_NAMES: string[] = [];
 const todayLA = () => new Date().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
 const hallShort = (id: string) => HALLS.find((h) => h.id === id)?.short ?? id;
-
-/** Up to COUNT varied mains the student can eat, one per cuisine/protein combo first. */
-function pickCards(day: EnrichedDay, profile: Profile, count: number): EnrichedDish[] {
-  const seen = new Set<string>();
-  const pool = day.halls
-    .flatMap((h) => h.dishes)
-    .filter((d) => d.kind === "main" && !hideReason(d, profile) && ratingOf(profile.taste, d.name) === 0)
-    .filter((d) => !seen.has(d.name.toLowerCase()) && seen.add(d.name.toLowerCase()));
-  const combos = new Set<string>();
-  const varied = pool.filter((d) => {
-    const k = `${d.cuisine}|${d.protein}`;
-    return !combos.has(k) && combos.add(k);
-  });
-  return [...varied, ...pool.filter((d) => !varied.includes(d))].slice(0, count);
-}
 
 /**
  * Optional setup step: swipe through real dishes from today's menus (right = yes, left = no)
@@ -44,7 +29,7 @@ export function TasteQuiz({
 }: {
   profile: Profile;
   onRate: (dish: Rated, value: 1 | -1) => void;
-  /** Set when this is a setup step (not the optional card): starts open, 5 cards, and calls this when done. */
+  /** Set when this is a setup step (not the optional card): starts open, 8 cards, and calls this when done. */
   onFinish?: () => void;
 }) {
   const step = Boolean(onFinish);

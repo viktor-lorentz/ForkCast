@@ -126,7 +126,7 @@ export function Onboarding({
           </button>
           <p className="text-xs font-bold uppercase tracking-widest text-cardinal">{t("Last step")}</p>
           <h1 className="mt-1 text-3xl font-bold tracking-tight">{t("What looks good?")}</h1>
-          <p className="mt-1 text-stone-500">{t("Swipe right on what you'd eat. Five dishes from today's menus.")}</p>
+          <p className="mt-1 text-stone-500">{t("Swipe right on what you'd eat. Eight different kinds of food from today's menus.")}</p>
         </header>
         <TasteQuiz profile={p} onRate={(dish, v) => setP((cur) => ({ ...cur, taste: rate(cur.taste, dish, v) }))} onFinish={finish} />
         <div className="fixed inset-x-0 bottom-0 px-4 pt-3 pb-[max(1rem,env(safe-area-inset-bottom))]">

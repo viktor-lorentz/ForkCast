@@ -74,7 +74,6 @@ function HallRow({
   s,
   meal,
   isPick,
-  max,
   open,
   onToggle,
   rateProps,
@@ -93,11 +92,12 @@ function HallRow({
   s: HallScore;
   meal: string;
   isPick: boolean;
-  max: number;
   open: boolean;
   onToggle: () => void;
 }) {
   const n = s.mains.length + s.sides.length;
+  // The bar is the share of this hall's mains and sides that fit the student (not a ranking).
+  const total = n + s.hidden.filter((h) => h.dish.kind === "main" || h.dish.kind === "side").length;
   return (
     <li>
       <button
@@ -108,7 +108,8 @@ function HallRow({
           hallShort(s.hall),
           isPick ? t("our pick") : null,
           s.walk !== null ? t("{n} minute walk", { n: s.walk }) : null,
-          s.open ? t("{mains} mains and {sides} sides you can eat", { mains: s.mains.length, sides: s.sides.length }) : t("not serving {meal}", { meal: t(meal) }),
+          s.open ? t("{n} of {total} dishes fit you", { n, total }) : t("not serving {meal}", { meal: t(meal) }),
+          s.open ? t("{mains} mains and {sides} sides you can eat", { mains: s.mains.length, sides: s.sides.length }) : null,
           hoursText?.text ?? null,
         ]
           .filter(Boolean)
@@ -116,13 +117,19 @@ function HallRow({
         className="block w-full rounded-lg text-left"
       >
         <div className="flex items-baseline justify-between gap-2 text-sm">
-          <span className={`font-semibold transition-colors ${isPick ? "text-cardinal" : ""}`}>
+          <span className="flex min-w-0 flex-wrap items-baseline gap-x-2 font-semibold">
             {hallShort(s.hall)}
-            {isPick && <span aria-label={t("our pick")}> ★</span>}
-            {s.walk !== null && <span className="ml-2 font-normal text-stone-400">{t("{n} min walk", { n: s.walk })}</span>}
+            {isPick && <span className="rounded-full bg-brand px-2 py-px text-[0.6875rem] font-bold uppercase tracking-wide text-white">★ {t("Our pick")}</span>}
+            {s.walk !== null && <span className="font-normal text-stone-400">{t("{n} min walk", { n: s.walk })}</span>}
           </span>
-          <span className="shrink-0 text-stone-500">
-            {s.open ? t("{mains} mains · {sides} sides", { mains: s.mains.length, sides: s.sides.length }) : t("Not serving {meal}", { meal: t(meal) })}
+          <span className="shrink-0 text-stone-600">
+            {s.open ? (
+              <>
+                <span className="font-semibold text-stone-900">{n}</span> {t("of {total} fit you", { total })}
+              </>
+            ) : (
+              t("Not serving {meal}", { meal: t(meal) })
+            )}
             <span className="ml-1.5 inline-block w-2 text-stone-400">{open ? "−" : "+"}</span>
           </span>
         </div>
@@ -145,9 +152,10 @@ function HallRow({
         <div aria-hidden className="mt-1.5 h-2.5 overflow-hidden rounded-full bg-stone-100">
           <div
             className={`h-full rounded-full transition-all duration-500 ease-out ${isPick ? "bg-cardinal" : "bg-stone-400"}`}
-            style={{ width: `${(n / max) * 100}%` }}
+            style={{ width: `${total ? (n / total) * 100 : 0}%` }}
           />
         </div>
+        {s.open && n > 0 && <p className="mt-1 text-xs text-stone-500">{t("{mains} mains · {sides} sides", { mains: s.mains.length, sides: s.sides.length })}</p>}
       </button>
       {open && (
         <div className="rise mt-3 rounded-xl bg-stone-50 p-3 text-sm">
@@ -304,7 +312,6 @@ export function Today({
   const pickClose = pickHall ? closing[pickHall as keyof typeof closing] : undefined;
   // The main card shows the closing time when the pick closes within 45 minutes.
   const pickClosing = pickClose && pickClose.minutesLeft !== null && pickClose.minutesLeft <= HERO_WINDOW ? pickClose.closesAt : null;
-  const maxCount = Math.max(1, ...scores.map((s) => s.mains.length + s.sides.length));
   const nothing = scores.length > 0 && scores.every((s) => s.mains.length + s.sides.length === 0);
   const totalDishes = day ? day.halls.reduce((n, h) => n + h.dishes.filter((d) => d.meal === meal && d.kind !== "notice").length, 0) : 0;
   const totalHidden = scores.reduce((n, s) => n + s.hidden.length, 0);
@@ -563,15 +570,16 @@ export function Today({
           </section>
 
           <section className="rounded-2xl bg-card p-4 shadow-sm ring-1 ring-stone-200">
-            <h2 className="mb-3 text-sm font-semibold text-stone-500">{t("Dishes that fit you, by hall")}</h2>
+            <h2 className="text-sm font-semibold text-stone-500">{t("Dishes that fit you, by hall")}</h2>
+            <p className="mb-3 text-xs text-stone-500">{t("Each bar shows how much of that hall's menu fits your profile.")}</p>
             <ul className="flex flex-col gap-3.5">
-              {scores.map((s) => (
+              {/* Our pick first, then the rest in score order. */}
+              {[...scores].sort((a, b) => Number(b.hall === pickHall) - Number(a.hall === pickHall)).map((s) => (
                 <HallRow
                   key={s.hall}
                   s={s}
                   meal={meal}
                   isPick={s.hall === pickHall && !nothing}
-                  max={maxCount}
                   rateProps={rateProps}
                   ratings={ratings}
                   ate={profile.ate}
