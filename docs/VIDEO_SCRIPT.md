@@ -19,18 +19,17 @@ Everything you need to shoot is in this file: each row of the script names its s
 | B04 | `B04-over-shoulder-app.mov` | Over the shoulder, using ForkCast | 0:58 |
 | B04A | `B04A-over-shoulder-short.mov` | Same, 2.6 s (spare) | — |
 | B04B | `B04B-walk-to-hall.mov` | Looks at phone, walks across the courtyard to the hall | 2:35, ending |
-| T1 | `T1-jaden-take1.mp4` | Jaden, take 1 | 0:08 |
-| T2 | `T2-jaden-take2.mp4` | Jaden, take 2 (**not used**, see below) | — |
-| T3 | `T3-courtyard-student.mov` | Student who doesn't eat beef or pork | 0:14 |
+| T1 | `T1-jaden-take1.mp4` | Jayden | 0:08 |
+| T3 | `T3-courtyard-student.mov` | Samikshya | 0:14 |
 
 **Dropped (not shot):** B05 (plate + rating) → the wide dining-room shot covers it. B06 (team) → the end card runs longer. T2 "reaction after trying the app" → replaced by B04B with "Live now. Try it tonight."
 
 **Still to record:** screen clips R01–R12 (OBS, [`OBS_RECORDING.md`](OBS_RECORDING.md)), narration VO-01…VO-11, one music track.
 
 **Testimonial lines used** (Claude transcribed the clips locally):
-- **T1, Jaden, 46.9–53.3 s:** "It's so difficult finding like the perfect food. You walk into McCarthy dining hall, you're thinking: what will I eat today?" Lower third: *Jaden · Freshman, USC*.
-- **T3, 16.0–21.2 s:** "Yes, it can be very tricky to find food that matches my dietary restrictions at the dining halls." Lower third: *USC freshman · Doesn't eat beef or pork*. **Needs her name** (and Jaden's spelling) and her OK to show it.
-- **Not used: Jaden's take 2.** In take 1 he says his restriction is avoiding too many carbs and that finding food is "not that hard". In take 2 he says he's allergic to eggs. Only use take 2 if the egg allergy is true. A made-up allergy in front of judges would be a real problem.
+- **T1, Jayden, 46.9–53.3 s:** "It's so difficult finding like the perfect food. You walk into McCarthy dining hall, you're thinking: what will I eat today?" Lower third: *Jayden · Freshman, USC*.
+- **T3, 16.0–21.2 s:** "Yes, it can be very tricky to find food that matches my dietary restrictions at the dining halls." Lower third: *Samikshya · Freshman, USC*.
+- **Jayden's take 2 is not used** (the file is renamed `X-do-not-use-take2.mp4`).
 
 ## How it all comes together (start here)
 1. **B-roll:** rename Andrew's files by shot ID (`B01-hall-wide.mp4` …) and put them in `~/Desktop/ForkCast-video/public/footage/`.
@@ -132,7 +131,7 @@ Rules for the words (spoken and on screen): never say "safe" or "allergen-free";
 | Time | Narration (voice-over) | Picture | On-screen text |
 |---|---|---|---|
 | 0:00–0:08 | *(no narration, music in)* | **B01** food stations with the **G01** title (5 s) → **B02** walking up to Parkside (3 s) | **Where should I eat?** → ForkCast logo |
-| 0:08–0:20 | *(students speak)* | **T1** Jaden (6.4 s) → **T3** courtyard student (5.2 s) | Lower thirds |
+| 0:08–0:20 | *(students speak)* | **T1** Jayden (6.4 s) → **T3** Samikshya (5.2 s) | Lower thirds |
 | 0:16–0:32 | "Three times a day, every USC student asks the same question: where should I eat? If you're halal with a sesame allergy, that means opening three menus and decoding tiny icons on every dish." | **B03** (4 s) → **R01** in phone frame: scroll, zoom on icons, switch hall tabs | **3 halls · ~250 dishes · every meal** |
 | 0:32–0:40 | "We built ForkCast. Tell it once how you eat..." | **R02, start:** welcome screen, typing in "Describe how you eat" | **ForkCast** (logo) |
 | 0:40–0:55 | "...in your own words. AI fills in your profile from USC's own labels: allergies, diet, what you love, where you live. Then swipe through a few real dishes from today's menus so it learns your taste." | **R02, middle:** *Fill in for me* → chips light up → dorm → Continue → taste cards | **Set up in 30 seconds** |
