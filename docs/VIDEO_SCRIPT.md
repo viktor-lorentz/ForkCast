@@ -1,3 +1,5 @@
+> **Superseded:** the current script is [OMARSCRIPT.md](OMARSCRIPT.md). This Maya version is kept for reference.
+
 # ForkCast demo video: script (v2, "Maya")
 
 **Length:** about 2:26. **Format:** 16:9 landscape, 4K.
