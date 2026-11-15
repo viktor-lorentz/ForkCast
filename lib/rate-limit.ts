@@ -9,6 +9,7 @@ export const LIMITS = {
   recommend: 30,
   "parse-profile": 10,
   "email-send": 5,
+  week: 20,
 } as const;
 export type LimitedRoute = keyof typeof LIMITS;
 

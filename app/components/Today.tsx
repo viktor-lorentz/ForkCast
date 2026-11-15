@@ -16,6 +16,7 @@ import { findDorm } from "@/lib/walking";
 import { LabelTag } from "./Chip";
 import { TakeItWithYou } from "./TakeItWithYou";
 import { Logo } from "./Logo";
+import { ThisWeek } from "./ThisWeek";
 import { card, mealName } from "@/lib/lang";
 import { ateNote, ateOn, logAte, pruneHistory, type Ate } from "@/lib/history";
 import { closingMap, closingText, HERO_WINDOW, laMinutes } from "@/lib/closing";
@@ -415,8 +416,17 @@ export function Today({
         </div>
       </header>
 
-      <div className="flex gap-2">
-        {["Today", "Tomorrow"].map((label, i) => (
+      <div className="flex flex-wrap gap-2">
+        {[
+          "Today",
+          "Tomorrow",
+          // A later day opened from "This week" gets its own chip.
+          ...(dayOffset >= 2
+            ? [new Date(`${date}T12:00:00Z`).toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric", timeZone: "UTC" })]
+            : []),
+        ].map((label, idx) => {
+          const i = idx === 2 ? dayOffset : idx;
+          return (
           <button
             key={label}
             type="button"
@@ -432,7 +442,8 @@ export function Today({
           >
             {label}
           </button>
-        ))}
+          );
+        })}
       </div>
 
       {shownVisit && (
@@ -703,6 +714,16 @@ export function Today({
           )}
         </>
       )}
+
+      <ThisWeek
+        profile={profile}
+        onOpenDay={(offset, m) => {
+          setDayOffset(offset);
+          setChosenMeal(m);
+          setOpenHall(null);
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }}
+      />
 
       <TakeItWithYou profile={profile} />
 
