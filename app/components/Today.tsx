@@ -16,6 +16,7 @@ import { LabelTag } from "./Chip";
 import { TakeItWithYou } from "./TakeItWithYou";
 import { Logo } from "./Logo";
 import { ThisWeek } from "./ThisWeek";
+import { ThemeToggle } from "./Theme";
 import { LangButton, useLang, useT } from "./I18n";
 import { trClaim, trServer } from "@/lib/i18n-patterns";
 import type { T } from "@/lib/i18n";
@@ -207,6 +208,8 @@ export function Today({
   onChange: (p: Profile) => void;
 }) {
   const [dayOffset, setDayOffset] = useState(initialDayOffset);
+  // "This week" chip: swaps the day view for the 7-day overview.
+  const [week, setWeek] = useState(false);
   const date = laDate(dayOffset);
   const [chosenMeal, setChosenMeal] = useState<string | null>(null);
   // Results are kept by key, so going back to a day, meal or profile you've already seen is instant.
@@ -380,6 +383,7 @@ export function Today({
     setOpenHall(null);
     setWhyOpenFor(null);
     setShowWeek(false);
+    setWeek(false);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
   const plateHall = scores.find((s) => s.hall === (pickHall ?? scores[0]?.hall));
@@ -410,6 +414,7 @@ export function Today({
           )}
         </div>
         <div className="flex shrink-0 gap-2">
+          <ThemeToggle />
           <LangButton />
           <button
             type="button"
@@ -435,22 +440,54 @@ export function Today({
           <button
             key={label}
             type="button"
-            aria-pressed={dayOffset === i}
+            aria-pressed={!week && dayOffset === i}
             onClick={() => {
+              setWeek(false);
               setDayOffset(i);
               setChosenMeal(null);
               setOpenHall(null);
             }}
             className={`rounded-full px-4 py-1.5 text-sm font-semibold transition active:scale-95 ${
-              dayOffset === i ? "bg-ink text-ink-fg" : "bg-card text-stone-600 ring-1 ring-stone-300"
+              !week && dayOffset === i ? "bg-ink text-ink-fg" : "bg-card text-stone-600 ring-1 ring-stone-300"
             }`}
           >
             {label}
           </button>
           );
         })}
+        <button
+          type="button"
+          aria-pressed={week}
+          onClick={() => {
+            setWeek(true);
+            setOpenHall(null);
+          }}
+          className={`flex items-center gap-1.5 rounded-full px-4 py-1.5 text-sm font-semibold transition active:scale-95 ${
+            week ? "bg-ink text-ink-fg" : "bg-card text-stone-600 ring-1 ring-stone-300"
+          }`}
+        >
+          <svg viewBox="0 0 20 20" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden>
+            <rect x="3" y="4.5" width="14" height="12.5" rx="2.5" />
+            <path d="M3 8.5h14M7 2.5v3.5M13 2.5v3.5" strokeLinecap="round" />
+          </svg>
+          {t("This week")}
+        </button>
       </div>
 
+      {week ? (
+        <ThisWeek
+          embedded
+          profile={profile}
+          onOpenDay={(offset, m) => {
+            setWeek(false);
+            setDayOffset(offset);
+            setChosenMeal(m);
+            setOpenHall(null);
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }}
+        />
+      ) : (
+        <>
       {shownVisit && (
         <RateMealPrompt
           key={`${shownVisit.date}|${shownVisit.meal}`}
@@ -726,16 +763,9 @@ export function Today({
           )}
         </>
       )}
+        </>
+      )}
 
-      <ThisWeek
-        profile={profile}
-        onOpenDay={(offset, m) => {
-          setDayOffset(offset);
-          setChosenMeal(m);
-          setOpenHall(null);
-          window.scrollTo({ top: 0, behavior: "smooth" });
-        }}
-      />
 
       <TakeItWithYou profile={profile} />
 

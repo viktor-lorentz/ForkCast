@@ -8,6 +8,7 @@ import type { EnrichedDay } from "@/lib/menus";
 import { currentMeal } from "@/lib/score";
 import { HALLS } from "@/lib/types";
 import { Logo } from "./Logo";
+import { ThemeToggle } from "./Theme";
 import { Collapse, ScoreBadge, ScorePicker, useScores } from "./Ratings";
 import { LangButton, StoredLangProvider, useT } from "./I18n";
 
@@ -109,7 +110,10 @@ function RatePage() {
         <Link href="/" className="text-base" aria-label={t("ForkCast home")}>
           <Logo />
         </Link>
-        <LangButton />
+        <div className="flex shrink-0 gap-2">
+          <ThemeToggle />
+          <LangButton />
+        </div>
       </div>
       <h1 className="mt-2 text-2xl font-bold tracking-tight">{t("Rate the food")}</h1>
       <p className="mt-1 text-sm text-stone-500">

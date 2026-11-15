@@ -8,6 +8,9 @@ describe("overstatesSafety", () => {
     "This is safe for you",
     "Es un plato seguro",
     "Comida libre de alérgenos",
+    "Ce plat est sans danger",
+    "Un choix sûr pour toi",
+    "Repas sans allergènes",
     "这道菜很安全",
     "无过敏原的选择",
     "이 메뉴는 안전해요",
@@ -19,6 +22,7 @@ describe("overstatesSafety", () => {
   it.each([
     "No sesame per USC labels.",
     "Sin sésamo, según las etiquetas de USC.",
+    "Sans sésame, selon les étiquettes USC.",
     "根据 USC 标签：不含芝麻。",
     "USC 라벨 기준: 참깨 없음.",
     "USC लेबल के अनुसार: तिल नहीं।",
