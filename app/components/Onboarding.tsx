@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { GOALS } from "@/lib/plate";
 import type { Profile } from "@/lib/profile";
+import { STARTERS, type Starter } from "@/lib/starters";
 import { STYLES } from "@/lib/styles";
 import { rate, tasteSummary } from "@/lib/taste";
 import { ALLERGENS, LABEL_NAMES, PREFERENCES, type Allergen, type Preference } from "@/lib/types";
@@ -28,9 +29,12 @@ export function Onboarding({
   initial,
   onDone,
   onCancel,
+  onStarter,
 }: {
   initial: Profile;
   onDone: (p: Profile) => void;
+  /** First run only: a one-tap starting profile that goes straight to recommendations. */
+  onStarter?: (s: Starter) => void;
   /** Set when editing an existing profile, so there is something to go back to. */
   onCancel?: () => void;
 }) {
@@ -158,6 +162,35 @@ export function Onboarding({
         )}
         <p className="mt-1 text-stone-600">{onCancel ? "Tell us what you can't eat and what you love." : "Your forecast for USC dining: tell us what you can't eat and what you love, and we check all three halls for you."}</p>
       </header>
+
+      {!onCancel && onStarter && (
+        <section aria-labelledby="quick-start">
+          <h2 id="quick-start" className="font-semibold">
+            Quick start
+          </h2>
+          <p className="mb-3 text-sm text-stone-500">One tap and you&apos;ll see today&apos;s pick. You can adjust it anytime.</p>
+          <div className="grid grid-cols-2 gap-2">
+            {STARTERS.map((s) => (
+              <button
+                key={s.id}
+                type="button"
+                onClick={() => onStarter(s)}
+                className="flex min-h-14 items-center gap-2.5 rounded-2xl bg-white px-3 py-2 text-left text-[15px] font-semibold leading-tight shadow-sm ring-1 ring-stone-200 transition active:scale-[0.98] active:bg-stone-50"
+              >
+                <span className="w-6 shrink-0 text-center text-xl" aria-hidden>
+                  {s.icon}
+                </span>
+                <span className="min-w-0">{s.label}</span>
+              </button>
+            ))}
+          </div>
+          <div className="mt-6 flex items-center gap-3 text-xs font-semibold uppercase tracking-wider text-stone-400">
+            <span className="h-px flex-1 bg-stone-200" />
+            Or set it up your way
+            <span className="h-px flex-1 bg-stone-200" />
+          </div>
+        </section>
+      )}
 
       <section className="rounded-2xl bg-white p-4 shadow-sm ring-1 ring-stone-200">
         <label htmlFor="about" className="text-sm font-semibold">Describe how you eat</label>
