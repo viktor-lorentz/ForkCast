@@ -23,7 +23,8 @@ const ALLERGEN_ICON: Record<Allergen, string> = {
 const NEVER_ICON: Record<string, string> = { beef: "🥩", chicken: "🍗", lamb: "🐑", mushroom: "🍄", turkey: "🦃", duck: "🦆", onion: "🧅", garlic: "🧄", tomato: "🍅", avocado: "🥑", corn: "🌽", coconut: "🥥", pepper: "🫑", meat: "🍖", "red meat": "🥩" };
 const DIET_NAMES: Record<Preference, string> = { "halal-ingredients": "Halal", vegan: "Vegan", vegetarian: "Vegetarian" };
 
-const STEPS = ["welcome", "describe", "allergies", "diet", "goal", "loves", "dorm", "taste"] as const;
+// Tap-to-answer questions first; the free-text box comes last, for complicated or niche diets.
+const STEPS = ["welcome", "allergies", "diet", "goal", "loves", "dorm", "describe", "taste"] as const;
 
 function toggle<T>(xs: T[], x: T): T[] {
   return xs.includes(x) ? xs.filter((y) => y !== x) : [...xs, x];
@@ -56,7 +57,9 @@ export function Onboarding({
   const wizard = !onCancel;
   const [step, setStep] = useState(0);
   const [dir, setDir] = useState<1 | -1>(1);
-  const [filled, setFilled] = useState(false);
+  const [added, setAdded] = useState<string[] | null>(null);
+  // Set when someone jumps to the text box from an earlier step, so Next brings them back.
+  const [returnTo, setReturnTo] = useState<number | null>(null);
   const [more, setMore] = useState<Record<string, boolean>>({});
   const go = (to: number) => {
     setDir(to > step ? 1 : -1);
@@ -95,8 +98,18 @@ export function Onboarding({
         styles: [...new Set([...(cur.styles ?? []), ...(parsed.styles ?? [])])],
         goal: parsed.goal ?? cur.goal,
       }));
-      setParseNote(t("Got it. Check the selections below and fix anything we got wrong."));
-      setFilled(true);
+      setParseNote(wizard ? null : t("Got it. Check the selections below and fix anything we got wrong."));
+      const cur = latest.current;
+      const fresh = (xs: string[] | undefined, have: string[] | undefined) => (xs ?? []).filter((x) => !(have ?? []).includes(x));
+      setAdded([
+        ...fresh(parsed.avoid, cur.avoid).map((a) => t(LABEL_NAMES[a as Allergen] ?? a)),
+        ...fresh(parsed.diet, cur.diet).map((d) => t(DIET_NAMES[d as Preference] ?? d)),
+        ...fresh(parsed.styles, cur.styles).map((id) => t(STYLES.find((x) => x.id === id)?.name ?? id)),
+        ...(parsed.goal && parsed.goal !== cur.goal ? [t(GOALS.find((g) => g.id === parsed.goal)?.name ?? parsed.goal)] : []),
+        ...fresh(parsed.likes, cur.likes).map((w) => t(w)),
+        ...fresh(parsed.exclude, cur.exclude).map((w) => `${t("No")} ${t(w)}`),
+        ...fresh(parsed.dislikes, cur.dislikes).map((w) => `${t("Not")} ${t(w)}`),
+      ]);
       return true;
     } catch {
       setParseNote(t("Couldn't read that right now. Tap the options below instead."));
@@ -132,6 +145,24 @@ export function Onboarding({
     setDislike("");
   }
 
+  // One answer only, so setup moves on by itself after a beat.
+  const pickGoal = (id: Profile["goal"]) => {
+    setP({ ...p, goal: id });
+    if (wizard) setTimeout(() => go(STEPS.indexOf("goal") + 1), 350);
+  };
+  const typeInstead = (
+    <button
+      type="button"
+      onClick={() => {
+        setReturnTo(step);
+        go(STEPS.indexOf("describe"));
+      }}
+      className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl border border-dashed border-stone-300 py-3 text-sm font-medium text-stone-500 transition active:scale-[0.98]"
+    >
+      <span aria-hidden>✍️</span> {t("Complicated diet? Type it instead")}
+    </button>
+  );
+
   const rateDish = (dish: Parameters<typeof rate>[1], v: 1 | -1) => setP((cur) => ({ ...cur, taste: rate(cur.taste, dish, v) }));
 
   /** Extra options stay folded away during setup so each screen asks one thing; editing shows them all. */
@@ -154,7 +185,10 @@ export function Onboarding({
       <textarea
         id="about"
         value={text}
-        onChange={(e) => setText(e.target.value)}
+        onChange={(e) => {
+          setText(e.target.value);
+          setAdded(null);
+        }}
         rows={wizard ? 4 : 2}
         maxLength={500}
         aria-label={t("Describe how you eat")}
@@ -261,9 +295,9 @@ export function Onboarding({
       {!wizard && <h2 className="font-semibold">{t("Fitness goal")}</h2>}
       <p className="mb-2 text-sm text-stone-500">{t("We'll rank dishes and build a plate that suits it.")}</p>
       <div className="grid grid-cols-2 gap-2">
-        <Tile label={t("No goal")} selected={!p.goal} onClick={() => setP({ ...p, goal: undefined })} />
+        <Tile label={t("No goal")} selected={!p.goal} onClick={() => pickGoal(undefined)} />
         {GOALS.map((g) => (
-          <Tile key={g.id} label={t(g.name)} selected={p.goal === g.id} onClick={() => setP({ ...p, goal: g.id })} />
+          <Tile key={g.id} label={t(g.name)} selected={p.goal === g.id} onClick={() => pickGoal(g.id)} />
         ))}
       </div>
       {p.goal && <p className="mt-2 text-xs text-stone-500">{t("{goal}, using AI estimates from dish names.", { goal: t(GOALS.find((g) => g.id === p.goal)!.blurb) })}</p>}
@@ -350,9 +384,28 @@ export function Onboarding({
   if (wizard) {
     const name = STEPS[step];
     const QUESTIONS: Record<string, { title: string; sub?: string; body: React.ReactNode }> = {
-      describe: { title: t("Describe how you eat"), sub: t("In your own words. AI fills in the next steps for you, and you can fix anything."), body: describe },
-      allergies: { title: t("Any allergies?"), body: allergies },
-      diet: { title: t("Do you follow a diet?"), body: diet },
+      describe: {
+        title: t("Anything else?"),
+        sub: t("Got a complicated or niche diet? Describe it in your own words and AI adds it to your answers. Or skip."),
+        body: (
+          <>
+            {describe}
+            {added && (
+              <div className="rise mt-3 rounded-xl bg-emerald-50 p-3 text-sm text-emerald-900 ring-1 ring-emerald-200">
+                {added.length ? (
+                  <>
+                    <span className="font-semibold">{t("Added:")}</span> {added.join(", ")}
+                  </>
+                ) : (
+                  t("Nothing new to add. Your answers already cover it.")
+                )}
+              </div>
+            )}
+          </>
+        ),
+      },
+      allergies: { title: t("Any allergies?"), body: <>{allergies}{typeInstead}</> },
+      diet: { title: t("Do you follow a diet?"), body: <>{diet}{typeInstead}</> },
       goal: { title: t("Any fitness goal?"), body: goal },
       loves: { title: t("What do you love?"), sub: t("Pick a few. We'll put these first."), body: loves },
       dorm: { title: t("Where do you live?"), body: dorm },
@@ -412,14 +465,37 @@ export function Onboarding({
 
     const q = QUESTIONS[name];
     const last = name === "taste";
+    const unread = name === "describe" && text.trim() && !added;
     const next = async () => {
-      if (name === "describe" && text.trim()) {
-        if (await readText()) go(step + 1);
+      if (unread) {
+        await readText();
+        return;
+      }
+      if (name === "describe" && returnTo !== null) {
+        go(returnTo);
+        setReturnTo(null);
         return;
       }
       go(step + 1);
     };
-    const nextLabel = name === "describe" ? (parsing ? t("Reading...") : text.trim() ? t("Fill in for me") : t("Skip")) : t("Next");
+    const empty =
+      (name === "allergies" && p.avoid.length === 0 && !(p.exclude ?? []).length) ||
+      (name === "diet" && p.diet.length === 0 && !(p.styles ?? []).length) ||
+      (name === "loves" && p.likes.length === 0);
+    const nextLabel =
+      name === "describe"
+        ? parsing
+          ? t("Reading...")
+          : unread
+            ? t("Add this")
+            : text.trim()
+              ? t("Next")
+              : t("Skip")
+        : name === "dorm" && !p.dorm
+          ? t("Skip")
+          : empty
+            ? t("None of these")
+            : t("Next");
 
     return (
       <div className="flex flex-col pb-32">
@@ -442,9 +518,6 @@ export function Onboarding({
           ))}
         </div>
         <div key={name} className={`${anim} mt-7`}>
-          {filled && name !== "describe" && !last && (
-            <p className="mb-3 inline-block rounded-full bg-gold/25 px-3 py-1 text-xs font-semibold text-stone-700">✨ {t("Filled in from what you wrote")}</p>
-          )}
           <h1 className="text-3xl font-extrabold tracking-tight">{q.title}</h1>
           {q.sub && <p className="mt-1.5 text-stone-500">{q.sub}</p>}
           <div className="mt-5">
