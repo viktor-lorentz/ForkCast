@@ -125,9 +125,48 @@ One file per line, named exactly as below, in a quiet small room, phone voice re
 
 If you film on another day, tell me and I'll re-pull that day's menus and recommendation so every number matches.
 
-## How it comes together
-1. Film K1–F2, record R02–R03, record O-01…O-07 and A-01…A-08, and pick one music track (YouTube Audio Library: "emotional piano" for Part 1 is ideal; something lighter kicks in at the turn).
-2. Name each file by its ID (`D1-desk.mov`, `R03-pick.mp4`, `O-04.m4a`) and put video in `~/Desktop/ForkCast-video/public/footage/`, voice in `public/vo/`, music in `public/music/`.
-3. Tell me. I trim, time, and render the 4K final (`npx remotion render Omar out/omar-final.mp4 --scale=2`).
+## The graphics: slide deck to screen-record
+All the graphics are in **[docs/video-deck/index.html](video-deck/index.html)**, one slide per graphic, in script order. Double-click to open it in Chrome. It's a single file and works offline (the font needs internet; it falls back to the system font without it).
 
-**Plan B** (only if the animation ever looks choppy): the same graphics can be exported as a click-through slide deck to screen-record. So far the Remotion render is frame-perfect, so it shouldn't be needed.
+**Keys:** `→`/`Space` next · `←` back · `R` replay this slide · `A` autoplay with script timing · `N` notes (which line goes with each slide; turn them off before recording) · `F` fullscreen. The mouse pointer hides by itself.
+
+Each slide plays its own animation as soon as it appears, timed to its voice line. Just wait for it to finish, then press `→`.
+
+**How to record it (OBS, same setup as the app recordings):**
+1. Open the deck and press `F` for fullscreen. You're on slide 0, which is blank.
+2. OBS: Display Capture, 1920×1080, 60 fps, then **Start Recording**.
+3. Press `A` to autoplay every slide with the script's timing (about 2 minutes, hands-free). You can also step through with `→`, holding each slide a beat after its animation ends.
+4. Stop and save the recording as `DECK-graphics.mp4`.
+
+| Slide | Graphic | Script time | Goes with |
+|---|---|---|---|
+| G01 | Home · Philadelphia | 0:00 (after K1) | O-01 (optional, you can use Descript text over K1 instead) |
+| G02 | Meet Omar Musazai | 0:08 (after D1) | O-02 |
+| G03 | Three menus, 264 dishes / 617 icons | 0:17 | end of O-03 |
+| G04 | Group chat: "go ahead, I'll catch up" | 0:23 | O-04 |
+| G05 | Same week, rice & salad | 0:40 | end of O-05 |
+| G06 | Survey, 51 students, about 6 in 10 | 0:50 | A-01 |
+| G07 / G08 | Samikshya and Jayden quotes | 0:56 / 1:01 | their clips (T3, T1) |
+| G09 | Group chat: "EVK in 10?" | 1:05 | O-06 |
+| G10 | EVK: yes. | 1:08 | with or after R03 |
+| G11 | "omw 🏃 save me a seat" + 10 s | 1:12 | music |
+| G12 | Quick questions (4 taps) | 1:19 | A-02, then R02 |
+| G13 | How it picks (4 phases, 16 s) | 1:27 | A-03 |
+| G14 | Every hall, compared | 1:42 | A-04 |
+| G15 | Plate | 1:48 | A-05 |
+| G16 | Features | 1:56 | A-06 |
+| G17 | Numbers | 2:04 | A-07 |
+| G18 | Text to Mom | 2:15 (with F2) | O-07 |
+| G19 | End card + QR | 2:21 | A-08 |
+
+## Putting it together in Descript
+1. New project. Drag in the voice files (`O-01`…`A-08`) in script order. Descript transcribes them, so the script is now your timeline. Delete flubs by deleting words.
+2. Drag `DECK-graphics.mp4` in. Use **Split** to cut it into the slides, then drag each slide onto its line (the table above).
+3. Drop the filmed shots (K1…F2) and app recordings (R02, R03) onto their lines using the shot-by-shot table. **Don't use B01B or the end of B04B** (people's faces without consent).
+4. For the mom call (D4), keep the clip's own sound. For T1/T3, keep the students' own audio.
+5. Music on its own track: duck it under the voice (Descript: *Ducking*), and let it swell at 1:16 (W1) and 2:11 (F1).
+6. Captions: *Captions → Add* (Descript makes them from the transcript). Fix any misheard words, like *qabuli palaw*.
+7. *Studio Sound* on the voice tracks if they were recorded in a noisy room.
+8. Export 1080p or 4K, 16:9.
+
+If you film on a day other than Sun Nov 15, tell me before recording the deck. I'll re-pull that day's menus so the numbers, dishes and pick match.
