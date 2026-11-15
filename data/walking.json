@@ -141,15 +141,6 @@
       }
     },
     {
-      "id": "fluor-tower",
-      "name": "Fluor Tower",
-      "minutes": {
-        "evk": 9,
-        "parkside": 10,
-        "university-village": 4
-      }
-    },
-    {
       "id": "cardinal-gardens",
       "name": "Cardinal Gardens",
       "minutes": {

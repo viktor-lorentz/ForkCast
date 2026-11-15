@@ -25,7 +25,6 @@ const DORMS = [
   ["nemirovsky-bohnett", "Nemirovsky & Bohnett (Village)", 34.02472, -118.28422],
   ["mcmorrow", "McMorrow (Village)", 34.02442, -118.28467],
   ["webb-tower", "Webb Tower", 34.02463, -118.28772],
-  ["fluor-tower", "Fluor Tower", 34.02492, -118.28831],
   ["cardinal-gardens", "Cardinal Gardens", 34.0261, -118.28704],
   ["century", "Century Apartments", 34.02625, -118.28951],
   ["la-sorbonne", "La Sorbonne", 34.0262, -118.28857],
