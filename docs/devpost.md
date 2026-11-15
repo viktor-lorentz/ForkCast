@@ -14,9 +14,9 @@ Copy each section into the matching Devpost field. Anything in `[brackets]` stil
 
 ## Inspiration
 
-Three times a day, every USC student asks the same question: where should I eat? For most of us it's a coin flip. For a student who is halal, vegan, celiac or allergic to sesame, it's homework. USC's menu site shows one dining hall at a time, and every dish is followed by a row of tiny icons you have to decode. Do that for three halls, before every meal, and you end up settling for whichever hall is closest.
+Three times a day, many USC students ask the same question: where should I eat? For most of us, it's just whatever's closest. For a student who is halal, vegan, celiac, or has allergies, it's homework. USC's dining menu site shows one dining hall at a time, and every dish is followed by a row of tiny icons you have to decode by hand. Do that for three halls, before every meal, and you end up settling for whichever one is closest.
 
-We asked around. Of the 42 students we surveyed on Saturday, 24 (57%) have a dietary restriction or allergy. The "special case" is the normal case.
+We asked around. Of the 42 students we surveyed on Saturday, 24 (57%) have some form of dietary restriction or allergy. The "special" case is the normal case.
 
 ## What it does
 
@@ -57,7 +57,8 @@ We never call food "safe." We say "no flagged allergens per USC labels" and tell
 - **Making the AI trustworthy.** Early on we decided the model would never judge an allergen. Building the verifier that checks every AI sentence against USC's labels took longer than the AI itself.
 - **No nutrition data.** USC publishes none, so fitness goals use AI estimates from dish names. We show only plain labels like "High protein," never calorie numbers.
 - **Speed.** A fresh AI pick takes 3 to 7 seconds, so the hall comparison is computed by code and appears first, and repeat answers are cached at about 0.2 seconds.
-- `[Team: one honest thing that went wrong and how you fixed it.]`
+- **AI doesn't know our campus.** One of our sample students "lived" in Fluor Tower, a residence hall that was demolished years ago, and the mistake made it all the way onto our title slide before a teammate who actually walks the campus caught it. Everything AI helped us write got a human check against what we know firsthand.
+- **Usage limits.** We ran into Claude's five-hour usage limits mid-build, more than once. It forced us to plan before prompting and to batch changes instead of fixing one thing at a time.
 
 ## Accomplishments that we're proud of
 
@@ -70,7 +71,9 @@ We never call food "safe." We say "no flagged allergens per USC labels" and tell
 
 - The hard part of an AI product isn't the AI; it's deciding what the AI is not allowed to do.
 - Students with dietary needs don't want more information. They want one answer and the proof behind it.
-- `[Each teammate: one line.]`
+- **Andrew:** a UX that feels effortless is much harder to produce than I expected.
+- **Viktor:** every new feature brings new bugs. Debugging is harder than coming up with ideas or generating code.
+- **Hailey:** `[Hailey: one line]`
 
 ## What's next for ForkCast
 
