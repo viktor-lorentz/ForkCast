@@ -423,6 +423,8 @@ export function RateInline({ name, ratings, ate }: { name: string; ratings: Rati
             {ate.eaten ? `✓ ${t("Ate it")}` : t("I ate this")}
           </button>
         )}
+        {/* With "I ate this" the score comes second: eat, then rate. */}
+        {(!ate || ate.eaten || mine !== null) && (
         <button
           type="button"
           onClick={() => setOpen((o) => !o)}
@@ -434,10 +436,12 @@ export function RateInline({ name, ratings, ate }: { name: string; ratings: Rati
           <Star />
           {mine !== null ? t("You: {n}", { n: mine }) : ate ? t("Rate it") : t("Ate it? Rate it")}
         </button>
+        )}
         </span>
       </div>
       {open && (
         <div className="rise mt-2.5">
+          {mine === null && <p className="mb-1.5 text-sm font-semibold">{t("How was it?")}</p>}
           <ScorePicker
             value={mine}
             label={name}

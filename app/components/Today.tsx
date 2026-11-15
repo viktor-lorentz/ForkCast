@@ -404,15 +404,6 @@ export function Today({
         </div>
         <div className="flex shrink-0 gap-2">
           <LangButton />
-          <a
-            href={`/rate?date=${date}${meal ? `&meal=${encodeURIComponent(meal)}` : ""}${pickHall ? `&hall=${pickHall}` : ""}`}
-            className="flex items-center gap-1 rounded-full bg-[#1c1917] px-3.5 py-1.5 text-sm font-semibold text-white ring-1 ring-white/15 transition active:scale-95"
-          >
-            <svg viewBox="0 0 20 20" className="h-3.5 w-3.5 fill-gold" aria-hidden>
-              <path d="M10 1.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.5 7.7l5.9-.9z" />
-            </svg>
-            {t("Rate")}
-          </a>
           <button
             type="button"
             onClick={onEdit}
@@ -595,7 +586,7 @@ export function Today({
             <p className="mt-3 text-xs text-stone-400">
               {t("Tap a hall to see everything you can eat there. Thumbs up or down any dish to teach ForkCast your taste.")}{" "}
               <a href={`/rate?date=${date}&meal=${encodeURIComponent(meal)}${pickHall ? `&hall=${pickHall}` : ""}`} className="font-medium text-cardinal">
-                {t("Rate what you ate")} →
+                {t("Ate something else? Rate a dish")} →
               </a>
             </p>
           </section>
@@ -611,6 +602,9 @@ export function Today({
                 )}
               </h2>
               {!rec && [0, 1, 2].map((i) => <div key={i} className="h-[5.5rem] animate-pulse rounded-2xl bg-card ring-1 ring-stone-200" />)}
+              {rec && shownPicks.length > 0 && dayOffset === 0 && (
+                <p className="px-1 text-xs text-stone-500">{t("Went and ate one? Tap “I ate this” and say how it was. Other students see today's scores.")}</p>
+              )}
               {rec && shownPicks.length === 0 && (
                 <p className="rise rounded-2xl bg-card p-4 text-sm text-stone-500 ring-1 ring-stone-200">{t("You passed on all of these. Tap Refresh picks for new ones.")}</p>
               )}
