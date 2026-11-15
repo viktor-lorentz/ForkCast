@@ -44,19 +44,24 @@ export function ThemeToggle() {
       aria-checked={dark}
       aria-label={t("Dark mode")}
       onClick={flip}
-      className="relative flex h-8 w-[3.75rem] shrink-0 items-center rounded-full bg-card px-1 ring-1 ring-stone-300 transition active:scale-95"
+      className="relative h-8 w-[3.75rem] shrink-0 rounded-full bg-card ring-1 ring-stone-300 transition active:scale-95"
     >
+      {/* The knob and both icons share the same two 24px slots (left 4px and left 32px), so each icon sits dead center in the knob. */}
       <span
         aria-hidden
-        className={`absolute top-1 left-1 h-6 w-6 rounded-full bg-ink shadow transition-transform duration-200 ease-out ${dark ? "translate-x-[1.75rem]" : ""}`}
+        className={`absolute top-1 left-1 h-6 w-6 rounded-full bg-ink shadow transition-transform duration-200 ease-out ${dark ? "translate-x-7" : ""}`}
       />
-      <svg viewBox="0 0 20 20" className={`relative h-4 w-4 transition-colors ${dark ? "text-stone-400" : "text-gold"}`} fill="currentColor" aria-hidden>
-        <circle cx="10" cy="10" r="3.6" />
-        <path d="M10 1.8v2.4M10 15.8v2.4M1.8 10h2.4M15.8 10h2.4M4.2 4.2l1.7 1.7M14.1 14.1l1.7 1.7M4.2 15.8l1.7-1.7M14.1 5.9l1.7-1.7" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-      </svg>
-      <svg viewBox="0 0 20 20" className={`relative ml-auto h-4 w-4 transition-colors ${dark ? "text-ink-fg" : "text-stone-400"}`} fill="currentColor" aria-hidden>
-        <path d="M15.5 12.6A6.5 6.5 0 0 1 7.4 4.5a6.5 6.5 0 1 0 8.1 8.1z" />
-      </svg>
+      <span aria-hidden className="absolute top-1 left-1 flex h-6 w-6 items-center justify-center">
+        <svg viewBox="0 0 24 24" className={`h-4 w-4 transition-colors ${dark ? "text-stone-400" : "text-gold"}`} fill="none" stroke="currentColor" strokeWidth={2.2} strokeLinecap="round">
+          <circle cx="12" cy="12" r="4" fill="currentColor" stroke="none" />
+          <path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4" />
+        </svg>
+      </span>
+      <span aria-hidden className="absolute top-1 left-8 flex h-6 w-6 items-center justify-center">
+        <svg viewBox="0 0 24 24" className={`h-4 w-4 transition-colors ${dark ? "text-ink-fg" : "text-stone-400"}`} fill="currentColor">
+          <path d="M20.5 14.1A8.5 8.5 0 0 1 9.9 3.5 8.5 8.5 0 1 0 20.5 14.1z" />
+        </svg>
+      </span>
     </button>
   );
 }
