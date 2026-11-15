@@ -54,6 +54,8 @@ export function verify(
   profile: Profile,
   /** Walking minutes per hall, when known. Any "N min" the AI writes must be one of these. */
   walkMinutes: number[] = [],
+  /** Halls closing soon or closed for this meal, and whether some other hall has dishes for the student. */
+  closing: { halls: string[]; otherHasFood: boolean } = { halls: [], otherHasFood: false },
 ): Verification {
   const checks: Check[] = [];
   const add = (ok: boolean, text: string) => checks.push({ ok, text });
@@ -62,6 +64,7 @@ export function verify(
   const hall = HALLS.find((h) => h.id === rec.hall);
   add(Boolean(hall), hall ? `${hall.name} is a real dining hall` : `Unknown hall "${rec.hall}"`);
   add(rec.picks.length > 0, `${rec.picks.length} dishes picked`);
+  if (closing.halls.includes(rec.hall) && closing.otherHasFood) add(false, `${hall?.name ?? rec.hall} is closing soon and another hall has food for you`);
 
   const ids = rec.picks.map((p) => p.dishId);
   if (new Set(ids).size !== ids.length) add(false, "The same dish was picked twice");

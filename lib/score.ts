@@ -7,6 +7,7 @@ import { ratingOf, tasteScore } from "./taste";
 import type { HallId } from "./types";
 import { findDorm, WALK_PENALTY } from "./walking";
 import { recentPenalty } from "./history";
+import { isClosing, type Closing, type ClosingMap } from "./closing";
 
 export interface HallScore {
   hall: HallId;
@@ -20,6 +21,8 @@ export interface HallScore {
   walk: number | null;
   /** Best plate for the student's fitness goal (empty without a goal or without macro estimates). */
   plate: EnrichedDish[];
+  /** Today's current meal only: closing soon or closed (ranked below halls with time to eat). */
+  closing: Closing | null;
 }
 
 function haystack(d: EnrichedDish): string {
@@ -41,8 +44,15 @@ export function dishScore(d: EnrichedDish, profile: Profile, today?: string): nu
 
 const byScore = (profile: Profile, today: string) => (a: EnrichedDish, b: EnrichedDish) => dishScore(b, profile, today) - dishScore(a, profile, today);
 
+/** Serving with food and time to eat, then closing soon (only wins when it's the only option), then no food, then not serving. */
+function tier(s: { open: boolean; score: number; closing: Closing | null }): number {
+  if (!s.open) return 3;
+  if (s.score <= 0) return 2;
+  return isClosing(s.closing) ? 1 : 0;
+}
+
 /** Code-only ranking of the three halls for one meal. Instant, deterministic, and the fallback for the AI. */
-export function scoreHalls(day: EnrichedDay, meal: string, profile: Profile): HallScore[] {
+export function scoreHalls(day: EnrichedDay, meal: string, profile: Profile, closing: ClosingMap = {}): HallScore[] {
   const dorm = findDorm(profile.dorm);
   const goal = findGoal(profile.goal);
   return day.halls
@@ -66,9 +76,9 @@ export function scoreHalls(day: EnrichedDay, meal: string, profile: Profile): Ha
       const plate = goal ? bestPlate(mains.filter(notDown), sides.filter(notDown), goal) : [];
       const fit = goal && plate.length > 0 ? 10 * Math.max(0, 1 - plateCost(sumMacros(plate), goal)) : 0;
       const score = food > 0 ? food + fit - (walk ?? 0) * WALK_PENALTY : 0;
-      return { hall: h.hall, open: h.meals.includes(meal), score, mains, sides, desserts, hidden, walk, plate };
+      return { hall: h.hall, open: h.meals.includes(meal), score, mains, sides, desserts, hidden, walk, plate, closing: closing[h.hall] ?? null };
     })
-    .sort((a, b) => Number(b.open) - Number(a.open) || b.score - a.score);
+    .sort((a, b) => tier(a) - tier(b) || b.score - a.score);
 }
 
 /** Meal to show right now, given what's served today (LA time). */

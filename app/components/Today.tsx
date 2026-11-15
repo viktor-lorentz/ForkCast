@@ -18,6 +18,7 @@ import { TakeItWithYou } from "./TakeItWithYou";
 import { Logo } from "./Logo";
 import { card, mealName } from "@/lib/lang";
 import { ateNote, ateOn, logAte, pruneHistory, type Ate } from "@/lib/history";
+import { closingMap, closingText, HERO_WINDOW, laMinutes } from "@/lib/closing";
 import { FoodTags, PlateCard, Thumbs } from "./Taste";
 import { logMealVisit, pendingVisit, RateInline, RateMealPrompt, ScoreBadge, useScores, type Ratings } from "./Ratings";
 
@@ -83,7 +84,7 @@ function HallRow({
   today: string;
   ratings: Ratings;
   rateProps: Omit<Parameters<typeof Thumbs>[0], "dish" | "small">;
-  hoursText: { text: string; open: boolean | null } | null;
+  hoursText: { text: string; open: boolean | null; warn: boolean } | null;
   s: HallScore;
   meal: string;
   isPick: boolean;
@@ -121,7 +122,20 @@ function HallRow({
           </span>
         </div>
         {hoursText && (
-          <p className={`text-xs ${hoursText.open === true ? "text-emerald-700" : hoursText.open === false ? "text-stone-400" : "text-stone-500"}`}>{hoursText.text}</p>
+          <p
+            className={`text-xs ${
+              hoursText.warn
+                ? "font-semibold text-red-700"
+                : hoursText.open === true
+                  ? "text-emerald-700"
+                  : hoursText.open === false
+                    ? "text-stone-400"
+                    : "text-stone-500"
+            }`}
+          >
+            {hoursText.warn && "⏱ "}
+            {hoursText.text}
+          </p>
         )}
         <div aria-hidden className="mt-1.5 h-2.5 overflow-hidden rounded-full bg-stone-100">
           <div
@@ -230,7 +244,20 @@ export function Today({
   );
   const ratingsPending = profileKey({ ...viewProfile, ate: undefined }) !== profileKey({ ...profile, ate: undefined });
   const refreshPicks = () => setFrozen({ k: keyNoTaste(profile), taste: profile.taste });
-  const scores = useMemo(() => (day && meal ? scoreHalls(day, meal, viewProfile) : []), [day, meal, viewProfile]);
+  // Closing soon: only for today's meal that's on right now. Re-checked every minute.
+  const [nowMin, setNowMin] = useState(laMinutes);
+  useEffect(() => {
+    const id = setInterval(() => setNowMin(laMinutes()), 60_000);
+    return () => clearInterval(id);
+  }, []);
+  const closing = useMemo(
+    () =>
+      hours && dayOffset === 0 && meal && meal === currentMeal(meals)
+        ? closingMap(hours.halls, date, nowMin, findDorm(profile.dorm)?.minutes ?? {})
+        : {},
+    [hours, dayOffset, meal, meals, date, nowMin, profile.dorm],
+  );
+  const scores = useMemo(() => (day && meal ? scoreHalls(day, meal, viewProfile, closing) : []), [day, meal, viewProfile, closing]);
 
   const recKey = `${date}|${meal}|${profileKey(viewProfile)}`;
   const recEntry = recs[recKey];
@@ -269,6 +296,9 @@ export function Today({
   const showWhy = whyOpenFor === recKey;
   const pickHall = rec?.hall ?? null;
   const pickScore = scores.find((s) => s.hall === pickHall);
+  const pickClose = pickHall ? closing[pickHall as keyof typeof closing] : undefined;
+  // The main card shows the closing time when the pick closes within 45 minutes.
+  const pickClosing = pickClose && pickClose.minutesLeft !== null && pickClose.minutesLeft <= HERO_WINDOW ? pickClose.closesAt : null;
   const maxCount = Math.max(1, ...scores.map((s) => s.mains.length + s.sides.length));
   const nothing = scores.length > 0 && scores.every((s) => s.mains.length + s.sides.length === 0);
   const totalDishes = day ? day.halls.reduce((n, h) => n + h.dishes.filter((d) => d.meal === meal && d.kind !== "notice").length, 0) : 0;
@@ -310,16 +340,14 @@ export function Today({
     logMealVisit({ date, meal, hall: rec.hall, dishes: rec.picks.filter((p) => ratingOf(profile.taste, p.name) !== -1).map((p) => p.name) });
   }, [dayOffset, rec, meal, date, profile.taste]);
   const shownPicks = (rec?.picks ?? []).filter((p) => ratingOf(profile.taste, p.name) !== -1 || leaving.includes(p.id));
-  const nowMin = (() => {
-    const [h, m] = new Date().toLocaleTimeString("en-GB", { timeZone: "America/Los_Angeles", hour12: false }).split(":").map(Number);
-    return h * 60 + m;
-  })();
   const hoursFor = (hall: string) => {
     const h = hours?.halls.find((x) => x.hall === hall);
     if (!h) return null;
+    const soon = closingText(closing[hall as keyof typeof closing]);
+    if (soon) return { text: soon, open: null, warn: true };
     const { hours: range, label } = hoursOn(h, date);
     const status = dayOffset === 0 ? openStatus(range, nowMin) : null;
-    return { text: `${status ? status.text : range}${label ? ` · ${label}` : ""}`, open: status ? status.open : null };
+    return { text: `${status ? status.text : range}${label ? ` · ${label}` : ""}`, open: status ? status.open : null, warn: false };
   };
   const askVisit = useMemo(
     () => (askNow && rec && meal && rec.picks.length > 0 ? { date, meal, hall: rec.hall, dishes: rec.picks.map((p) => p.name), at: 0 } : null),
@@ -482,6 +510,9 @@ export function Today({
             <div className="mt-2 min-h-[4.5rem] text-[0.9375rem] leading-snug text-white/90">
               {rec ? (
                 <div key={rec.summary} className="rise">
+                  {pickClosing && !nothing && (
+                    <p className="mb-1 text-sm font-semibold text-gold">⏱ {t.closesAt(pickClosing)}</p>
+                  )}
                   {pickScore && pickScore.walk !== null && dorm && !nothing && (
                     <p className="mb-1 text-sm font-medium text-gold">
                       {t.walk(pickScore.walk, dorm.name)}

@@ -209,3 +209,38 @@ describe("I ate this", () => {
     expect(rec.verification.passed).toBe(true);
   });
 });
+
+describe("closing soon", () => {
+  it("ranks a closing hall below the others, tells the AI, and the verifier rejects picking it", async () => {
+    const [, day] = [...days.entries()][0];
+    const meal = day.halls[0].meals[0];
+    const profile = cleanProfile({ avoid: [], diet: [], likes: [], dislikes: [] });
+    const top = scoreHalls(day, meal, profile)[0];
+    const closing = { [top.hall]: { state: "closing" as const, minutesLeft: 12, closesAt: "8:00PM" } };
+    const scores = scoreHalls(day, meal, profile, closing);
+    const others = scores.filter((s) => s.hall !== top.hall && s.open && s.mains.length + s.sides.length > 0);
+    if (others.length === 0) return;
+    expect(scores[0].hall).not.toBe(top.hall);
+    expect(scores.find((s) => s.hall === top.hall)!.mains.length).toBe(top.mains.length);
+    const { buildPrompt } = await import("./recommend");
+    expect(buildPrompt(profile, meal, scores)).toContain("CLOSING SOON at 8:00PM");
+    const rec = await recommend(day, meal, profile, undefined, { rulesOnly: true, closing });
+    expect(rec.hall).not.toBe(top.hall);
+    expect(rec.verification.passed).toBe(true);
+    const bad = verify({ hall: top.hall, picks: [{ dishId: top.mains[0].id, why: "Good.", claims: [] }], summary: "Go." }, day.halls.flatMap((h) => h.dishes), meal, profile, [], {
+      halls: [top.hall],
+      otherHasFood: true,
+    });
+    expect(bad.passed).toBe(false);
+  });
+
+  it("still picks a closing hall when it's the only one with food", async () => {
+    const [, day] = [...days.entries()][0];
+    const meal = day.halls[0].meals[0];
+    const profile = cleanProfile({ avoid: [], diet: [], likes: [], dislikes: [] });
+    const closing = Object.fromEntries(day.halls.map((h) => [h.hall, { state: "closing" as const, minutesLeft: 10, closesAt: "8:00PM" }]));
+    const rec = await recommend(day, meal, profile, undefined, { rulesOnly: true, closing });
+    expect(rec.picks.length).toBeGreaterThan(0);
+    expect(rec.verification.passed).toBe(true);
+  });
+});

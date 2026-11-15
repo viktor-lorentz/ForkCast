@@ -14,6 +14,7 @@ import { HALLS, LABEL_NAMES } from "./types";
 import { findDorm } from "./walking";
 import { card, findLang } from "./lang";
 import { historyNote } from "./history";
+import { isClosing, type Closing, type ClosingMap } from "./closing";
 import { verify, type AiRecommendation, type Pick, type Verification } from "./verify";
 
 export interface HallSummary {
@@ -24,6 +25,8 @@ export interface HallSummary {
   hiddenForAllergens: number;
   /** Walking minutes from the student's residence, or null if they didn't set one. */
   walk: number | null;
+  /** Closing soon / closed now, for today's current meal only. */
+  closing: Closing | null;
 }
 
 export interface HiddenDish {
@@ -90,6 +93,7 @@ If the student has a fitness goal, favor dishes that help build a plate close to
 If the student rated dishes, lean toward what they liked and away from what they disliked.
 Some dishes show "students: X/10 (N)", the average score other USC students gave it. It tells you what's actually good: favor dishes students rate 7 or higher (a dish rated 8+ is worth suggesting even if it isn't on the student's likes), and avoid ones rated 4 or lower when there are alternatives. Weigh a score from 1-2 students lightly. Ratings never change which dishes are allowed. If you mention a score, use the exact number shown.
 When a language is given, write "summary" and every "why" in that language. Keep dish names and hall names exactly as listed (do not translate them), keep "claims" as the codes above, and write walking minutes as digits. The safety rule applies in every language: no word meaning "safe", "allergen-free" or "guaranteed".
+A hall marked "CLOSING SOON" or "CLOSED NOW" must not be your pick when another hall has dishes for the student. Never write how many minutes until a hall closes; you may give its closing time as shown.
 If an "Ate recently" line is given, gently favor variety (a different protein or cuisine) when the options are otherwise close. Recently eaten dishes are still allowed and can be picked if they are clearly the best; never treat them as excluded.
 Write like a helpful friend, briefly.`;
 
@@ -140,7 +144,13 @@ export function buildPrompt(profile: Profile, meal: string, scores: HallScore[],
       continue;
     }
     const walk = s.walk === null ? "" : `, ${s.walk} min walk`;
-    p.push(`## ${s.hall} (${name}): ${s.mains.length} mains, ${s.sides.length} sides for this student${walk}`);
+    const closing =
+      s.closing?.state === "closed"
+        ? " | CLOSED NOW"
+        : s.closing?.state === "closing"
+          ? ` | CLOSING SOON at ${s.closing.closesAt} (not enough time to walk there and eat)`
+          : "";
+    p.push(`## ${s.hall} (${name}): ${s.mains.length} mains, ${s.sides.length} sides for this student${walk}${closing}`);
     // A dish the student gave a thumbs down is never offered to the model again.
     const ok = (d: EnrichedDish) => ratingOf(profile.taste, d.name) !== -1;
     for (const d of [...s.mains.filter(ok), ...s.sides.filter(ok).slice(0, 15), ...s.desserts.filter(ok).slice(0, 4)]) p.push(dishLine(d, profile, ratings));
@@ -209,10 +219,13 @@ export async function recommend(
   meal: string,
   profile: Profile,
   ratings?: RatingMap,
-  opts: { rulesOnly?: boolean } = {},
+  opts: { rulesOnly?: boolean; closing?: ClosingMap } = {},
 ): Promise<Recommendation> {
   const started = Date.now();
-  const scores = scoreHalls(day, meal, profile);
+  const scores = scoreHalls(day, meal, profile, opts.closing);
+  const hasFood = (s: HallScore) => s.open && s.mains.length + s.sides.length > 0;
+  const closingHalls = scores.filter((s) => isClosing(s.closing)).map((s) => s.hall);
+  const closingCheck = { halls: closingHalls, otherHasFood: scores.some((s) => hasFood(s) && !isClosing(s.closing)) };
   const dishes = day.halls.flatMap((h) => h.dishes);
   const walks = scores.flatMap((s) => (s.walk === null ? [] : [s.walk]));
   let attempts = 0;
@@ -229,7 +242,7 @@ export async function recommend(
       try {
         attempts++;
         const candidate = await askModel(prompt, note);
-        const v = verify(candidate, dishes, meal, profile, walks);
+        const v = verify(candidate, dishes, meal, profile, walks, closingCheck);
         if (v.passed) {
           rec = candidate;
           verification = v;
@@ -251,7 +264,7 @@ export async function recommend(
   if (!rec) {
     rec = anyEligible ? rulesRecommendation(scores, profile, ratings) : { hall: scores[0].hall, picks: [], summary: "" };
     verification = anyEligible
-      ? verify(rec, dishes, meal, profile, walks)
+      ? verify(rec, dishes, meal, profile, walks, closingCheck)
       : {
           passed: true,
           checks: [
@@ -293,6 +306,7 @@ export async function recommend(
       sides: s.sides.length,
       hiddenForAllergens: s.hidden.filter((h) => h.reason.type === "allergen" || h.reason.type === "not-analyzed").length,
       walk: s.walk,
+      closing: s.closing,
     })),
     hidden: chosen.hidden
       .filter((h) => (h.reason.type === "allergen" || h.reason.type === "not-analyzed") && h.dish.kind !== "condiment")
