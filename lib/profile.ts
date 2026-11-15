@@ -5,6 +5,7 @@ import { STYLE_IDS, type StyleId } from "./styles";
 import { MAX_RATINGS, type Taste } from "./taste";
 import { findDorm } from "./walking";
 import { cleanExclude } from "./exclude";
+import { LANG_IDS, type LangId } from "./lang";
 
 export interface Profile {
   /** USC allergen codes to avoid. */
@@ -25,6 +26,8 @@ export interface Profile {
   styles?: StyleId[];
   /** Fitness goal from lib/plate.ts; adds a macro target for each meal. */
   goal?: GoalId;
+  /** Language for the main card (summary and dish reasons). Missing means English. */
+  lang?: LangId;
 }
 
 export const EMPTY_PROFILE: Profile = { avoid: [], diet: [], likes: [], dislikes: [] };
@@ -42,6 +45,7 @@ export const ProfileSchema = z.object({
   taste: z.object({ up: z.array(RatedSchema).max(MAX_RATINGS), down: z.array(RatedSchema).max(MAX_RATINGS) }).optional(),
   goal: z.enum(GOAL_IDS).optional(),
   styles: z.array(z.enum(STYLE_IDS)).max(STYLE_IDS.length).optional(),
+  lang: z.enum(LANG_IDS).optional(),
 });
 
 export function cleanProfile(input: unknown): Profile {
@@ -58,6 +62,7 @@ export function cleanProfile(input: unknown): Profile {
   const exclude = [...new Set((p.exclude ?? []).map(cleanExclude).filter(Boolean))];
   if (exclude.length) out.exclude = exclude.sort();
   if (p.goal) out.goal = p.goal;
+  if (p.lang && p.lang !== "en") out.lang = p.lang;
   if (p.styles?.length) out.styles = [...new Set(p.styles)].sort();
   if (p.taste && p.taste.up.length + p.taste.down.length > 0) {
     // One rating per dish: a thumbs up wins over an older thumbs down of the same name.
@@ -85,5 +90,6 @@ export function profileKey(p: Profile): string {
     [...(p.styles ?? [])].sort(),
     names(p.taste?.up),
     names(p.taste?.down),
+    p.lang ?? "en",
   ]);
 }

@@ -12,6 +12,7 @@ import { STYLES } from "./styles";
 import { ratingOf, tasteSummary } from "./taste";
 import { HALLS, LABEL_NAMES } from "./types";
 import { findDorm } from "./walking";
+import { card, findLang } from "./lang";
 import { verify, type AiRecommendation, type Pick, type Verification } from "./verify";
 
 export interface HallSummary {
@@ -87,6 +88,7 @@ Never call food "safe" or "allergen-free". Speak about USC's labels, e.g. "no se
 If the student has a fitness goal, favor dishes that help build a plate close to it (a suggested plate is given per hall). Never write calorie or gram numbers: the app shows its own estimated totals.
 If the student rated dishes, lean toward what they liked and away from what they disliked.
 Some dishes show "students: X/10 (N)", the average score other USC students gave it. It tells you what's actually good: favor dishes students rate 7 or higher (a dish rated 8+ is worth suggesting even if it isn't on the student's likes), and avoid ones rated 4 or lower when there are alternatives. Weigh a score from 1-2 students lightly. Ratings never change which dishes are allowed. If you mention a score, use the exact number shown.
+When a language is given, write "summary" and every "why" in that language. Keep dish names and hall names exactly as listed (do not translate them), keep "claims" as the codes above, and write walking minutes as digits. The safety rule applies in every language: no word meaning "safe", "allergen-free" or "guaranteed".
 Write like a helpful friend, briefly.`;
 
 function labelsOf(d: EnrichedDish, profile: Profile): string {
@@ -112,6 +114,9 @@ export function buildPrompt(profile: Profile, meal: string, scores: HallScore[],
   const taste = tasteSummary(profile.taste);
   const p = [
     `Meal: ${meal}`,
+    ...(profile.lang && profile.lang !== "en"
+      ? [`Language: write "summary" and every "why" in ${findLang(profile.lang).english}. Dish names stay exactly as listed.`]
+      : []),
     `Avoids (allergens): ${profile.avoid.join(", ") || "none"}`,
     `Requires (diet labels): ${profile.diet.join(", ") || "none"}`,
     `Likes: ${profile.likes.join(", ") || "anything"}`,
@@ -154,18 +159,18 @@ function rulesRecommendation(scores: HallScore[], profile: Profile, ratings?: Ra
       ...profile.avoid.filter((a) => !d.allergens.includes(a)).map((a) => `no:${a}`),
     ];
     const labelText = claims.map((c) => (c.startsWith("no:") ? `no ${LABEL_NAMES[c.slice(3)]}` : LABEL_NAMES[c])).join(", ");
+    const t = card(profile.lang);
     return {
       dishId: d.id,
-      why: labelText ? `${labelText} per USC labels.` : `A ${d.kind} that fits your profile.`,
+      why: labelText ? t.perLabels(labelText) : profile.lang && profile.lang !== "en" ? t.fits : `A ${d.kind} that fits your profile.`,
       claims,
     };
   });
   const name = HALLS.find((h) => h.id === top.hall)!.name;
-  const walk = top.walk === null ? "" : `, a ${top.walk} min walk`;
   return {
     hall: top.hall,
     picks,
-    summary: `${name} is your best match${walk}: ${top.mains.length} mains and ${top.sides.length} sides fit your profile.`,
+    summary: card(profile.lang).rulesSummary(name, top.walk, top.mains.length, top.sides.length),
   };
 }
 

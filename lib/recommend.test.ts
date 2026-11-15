@@ -162,3 +162,30 @@ describe("rulesOnly switch", () => {
     expect(rec.verification.passed).toBe(true);
   });
 });
+
+describe("language", () => {
+  it.each(["es", "zh", "ko", "hi", "vi"] as const)("asks for %s, keeps dish names, and the fallback still verifies", async (lang) => {
+    const [, day] = [...days.entries()][0];
+    const profile = cleanProfile({ avoid: ["sesame"], diet: [], likes: [], dislikes: [], dorm: "new-north", lang });
+    const meal = day.halls[0].meals[0];
+    const { buildPrompt } = await import("./recommend");
+    const scores = scoreHalls(day, meal, profile);
+    const prompt = buildPrompt(profile, meal, scores);
+    expect(prompt).toMatch(/^Language: write "summary"/m);
+    // Dish names go to the model untouched.
+    const first = scores.find((s) => s.mains.length)!.mains[0];
+    expect(prompt).toContain(`| ${first.name} |`);
+    const rec = await recommend(day, meal, profile, undefined, { rulesOnly: true });
+    expect(rec.verification.passed).toBe(true);
+    expect(rec.summary).not.toMatch(/is your best match/);
+  });
+
+  it("English profiles get no language line", async () => {
+    const [, day] = [...days.entries()][0];
+    const meal = day.halls[0].meals[0];
+    const profile = cleanProfile({ avoid: [], diet: [], likes: [], dislikes: [], lang: "en" });
+    expect(profile.lang).toBeUndefined();
+    const { buildPrompt } = await import("./recommend");
+    expect(buildPrompt(profile, meal, scoreHalls(day, meal, profile))).not.toContain("Language:");
+  });
+});

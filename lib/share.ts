@@ -1,5 +1,6 @@
 import { cleanProfile, type Profile } from "./profile";
 import type { Rated } from "./taste";
+import { isLang } from "./lang";
 
 /**
  * A profile packed into a URL fragment ("#p=..."), for opening the app on another device.
@@ -17,6 +18,7 @@ type Packed = {
   s?: string[];
   u?: [string, string, string][];
   w?: [string, string, string][];
+  n?: string;
 };
 
 const toTuples = (xs: Rated[] = []) => xs.map((r) => [r.name, r.cuisine, r.protein] as [string, string, string]);
@@ -47,6 +49,7 @@ export function packProfile(p: Profile): string {
   if (p.styles?.length) o.s = p.styles;
   if (p.taste?.up.length) o.u = toTuples(p.taste.up);
   if (p.taste?.down.length) o.w = toTuples(p.taste.down);
+  if (p.lang && p.lang !== "en") o.n = p.lang;
   return b64urlEncode(JSON.stringify(o));
 }
 
@@ -66,6 +69,7 @@ export function unpackProfile(hash: string): Profile | null {
       dorm: o.r,
       goal: o.g,
       styles: o.s,
+      lang: isLang(o.n) ? o.n : undefined,
       taste: o.u || o.w ? { up: fromTuples(o.u), down: fromTuples(o.w) } : undefined,
     });
   } catch {

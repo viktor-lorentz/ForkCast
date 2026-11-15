@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { LANGS } from "@/lib/lang";
 import { GOALS } from "@/lib/plate";
 import type { Profile } from "@/lib/profile";
 import { STARTERS, type Starter } from "@/lib/starters";
@@ -376,6 +377,31 @@ export function Onboarding({
             </option>
           ))}
         </select>
+      </section>
+
+      <section>
+        <h2 className="font-semibold">Language for your pick</h2>
+        <p className="mb-2 text-sm text-stone-500">The summary and the reasons for each dish. Dish names stay as USC writes them.</p>
+        <div className="grid grid-cols-3 gap-2" role="radiogroup" aria-label="Language for your pick">
+          {LANGS.map((l) => {
+            const on = (p.lang ?? "en") === l.id;
+            return (
+              <button
+                key={l.id}
+                type="button"
+                role="radio"
+                aria-checked={on}
+                lang={l.id}
+                onClick={() => setP({ ...p, lang: l.id === "en" ? undefined : l.id })}
+                className={`h-11 rounded-xl text-sm font-semibold transition active:scale-95 ${
+                  on ? "bg-brand text-white" : "bg-card text-stone-700 ring-1 ring-stone-300"
+                }`}
+              >
+                {l.name}
+              </button>
+            );
+          })}
+        </div>
       </section>
 
       <div className="fixed inset-x-0 bottom-0 border-t border-stone-200 bg-background/95 px-4 pt-4 pb-[max(1rem,env(safe-area-inset-bottom))] backdrop-blur">

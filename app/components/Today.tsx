@@ -16,6 +16,7 @@ import { findDorm } from "@/lib/walking";
 import { LabelTag } from "./Chip";
 import { TakeItWithYou } from "./TakeItWithYou";
 import { Logo } from "./Logo";
+import { card, mealName } from "@/lib/lang";
 import { FoodTags, PlateCard, Thumbs } from "./Taste";
 import { logMealVisit, pendingVisit, RateInline, RateMealPrompt, ScoreBadge, useScores, type Ratings } from "./Ratings";
 
@@ -261,6 +262,7 @@ export function Today({
   const totalDishes = day ? day.halls.reduce((n, h) => n + h.dishes.filter((d) => d.meal === meal && d.kind !== "notice").length, 0) : 0;
   const totalHidden = scores.reduce((n, s) => n + s.hidden.length, 0);
   const dorm = findDorm(profile.dorm);
+  const t = card(profile.lang);
   const goal = findGoal(profile.goal);
   const byId = new Map((day?.halls ?? []).flatMap((h) => h.dishes).map((d) => [d.id, d]));
   const [leaving, setLeaving] = useState<string[]>([]);
@@ -444,12 +446,12 @@ export function Today({
 
       {day && meal && (
         <>
-          <section className="rounded-3xl bg-brand p-5 text-white shadow-lg" aria-live="polite">
+          <section className="rounded-3xl bg-brand p-5 text-white shadow-lg" aria-live="polite" lang={profile.lang ?? "en"}>
             <p className="text-sm font-medium uppercase tracking-wide text-gold">
-              {meal} · {nothing ? "heads up" : "go to"}
+              {mealName(meal, profile.lang)} · {nothing ? t.headsUp : t.goTo}
             </p>
             {nothing ? (
-              <p className="mt-1 text-3xl font-bold leading-tight">No hall has a match</p>
+              <p className="mt-1 text-3xl font-bold leading-tight">{t.noMatch}</p>
             ) : pickHall ? (
               <p key={`${date}|${meal}|${pickHall}`} className="rise mt-1 text-3xl font-bold leading-tight">
                 {hallName(pickHall)}
@@ -457,7 +459,7 @@ export function Today({
             ) : recFailed ? (
               <p className="mt-1 text-3xl font-bold leading-tight">Hmm, that didn&apos;t work</p>
             ) : (
-              <p className="mt-1 animate-pulse text-3xl font-bold leading-tight text-white/70">Comparing halls...</p>
+              <p className="mt-1 animate-pulse text-3xl font-bold leading-tight text-white/70">{t.comparing}</p>
             )}
 
             <div className="mt-2 min-h-[4.5rem] text-[0.9375rem] leading-snug text-white/90">
@@ -465,7 +467,7 @@ export function Today({
                 <div key={rec.summary} className="rise">
                   {pickScore && pickScore.walk !== null && dorm && !nothing && (
                     <p className="mb-1 text-sm font-medium text-gold">
-                      {pickScore.walk} min walk from {dorm.name}
+                      {t.walk(pickScore.walk, dorm.name)}
                     </p>
                   )}
                   <p>{rec.summary}</p>
@@ -496,7 +498,7 @@ export function Today({
                 onClick={() => setWhyOpenFor(recKey)}
                 className="rise mt-3 inline-flex items-center gap-1.5 rounded-full bg-white/15 px-3 py-1 text-xs font-semibold transition active:scale-95"
               >
-                <span className="text-gold">✓</span> Checked against USC labels
+                <span className="text-gold">✓</span> {t.checked}
               </button>
             )}
           </section>
@@ -557,7 +559,9 @@ export function Today({
                       </div>
                       {byId.get(p.id) && <Thumbs dish={byId.get(p.id)!} taste={profile.taste} onRate={ratePick(p.id)} />}
                     </div>
-                    <p className="mt-1 text-sm text-stone-600">{p.why}</p>
+                    <p className="mt-1 text-sm text-stone-600" lang={profile.lang ?? "en"}>
+                      {p.why}
+                    </p>
                     <FoodTags dish={p} className="mt-1.5" />
                     <div className="mt-2 flex flex-wrap gap-1">
                       {p.claims.map((c) => (
