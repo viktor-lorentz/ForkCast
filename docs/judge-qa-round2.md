@@ -29,7 +29,7 @@ A brand-new profile takes 3 to 7 seconds because the AI is writing a fresh pick;
 ### 6. You hid pepperoni pizza for a halal student. Isn't that obvious? Show me a hard one.
 The obvious ones prove the rule works; the hard ones are dishes like the ground beef soft taco, which has no pork but isn't labeled halal ingredients, and dishes USC marks "not analyzed," which we hide from anyone avoiding an allergen. A student skimming icons misses those; code doesn't.
 
-### 7. 206 tests on what, exactly?
+### 7. 209 tests on what, exactly?
 They run the same sample students judges can open against saved USC menus and check that no hidden dish ever reaches a pick, that the verifier catches bad AI answers, and that walking times and labels match the data. `[Viktor: one test you're proud of.]`
 
 ---
@@ -104,4 +104,4 @@ Viktor (ECE) built the app and the verification pipeline; Andrew (BUAD) owned th
 
 - **Question 10:** the survey is now 27 of 50 students (54%), not 18 of 30.
 - **Question 16:** per-visitor rate limits now exist on the AI and email endpoints, so drop the "as of Saturday afternoon it does not" note.
-- **Question 23:** the test count is now 206.
+- **Question 23:** the test count is now 209.

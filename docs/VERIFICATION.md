@@ -6,7 +6,7 @@ Everything below was run on **Sunday, Nov 15, 2026, between 6:10 and 7:00 AM PT*
 
 | Check | Command | Result |
 | --- | --- | --- |
-| Unit and scenario tests | `npm test` | **206 of 206 passed**, 16 files, 0.4 s, no network or API key |
+| Unit and scenario tests | `npm test` | **209 of 209 passed**, 17 files, 0.4 s, no network or API key |
 | Lint | `npm run lint` | **0 errors, 0 warnings** |
 | Type check and production build | `npm run build` | **Passed** (TypeScript strict mode, 21 routes) |
 | Shipped dependencies | `npm audit --omit=dev` | **0 vulnerabilities** |
