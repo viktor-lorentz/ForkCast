@@ -6,6 +6,7 @@ import type { Profile } from "./profile";
 import { ratingOf, tasteScore } from "./taste";
 import type { HallId } from "./types";
 import { findDorm, WALK_PENALTY } from "./walking";
+import { recentPenalty } from "./history";
 
 export interface HallScore {
   hall: HallId;
@@ -30,14 +31,15 @@ export function matches(d: EnrichedDish, word: string): boolean {
   return haystack(d).includes(word);
 }
 
-export function dishScore(d: EnrichedDish, profile: Profile): number {
+/** `today` (the menu's date) turns on the light variety nudge from "I ate this". */
+export function dishScore(d: EnrichedDish, profile: Profile, today?: string): number {
   let s = d.kind === "main" ? 3 : d.kind === "side" ? 1 : 0.5;
   for (const w of profile.likes) if (matches(d, w)) s += 2;
   for (const w of profile.dislikes) if (matches(d, w)) s -= 3;
-  return s + tasteScore(d, profile.taste);
+  return s + tasteScore(d, profile.taste) - (today ? recentPenalty(d, profile.ate, today) : 0);
 }
 
-const byScore = (profile: Profile) => (a: EnrichedDish, b: EnrichedDish) => dishScore(b, profile) - dishScore(a, profile);
+const byScore = (profile: Profile, today: string) => (a: EnrichedDish, b: EnrichedDish) => dishScore(b, profile, today) - dishScore(a, profile, today);
 
 /** Code-only ranking of the three halls for one meal. Instant, deterministic, and the fallback for the AI. */
 export function scoreHalls(day: EnrichedDay, meal: string, profile: Profile): HallScore[] {
@@ -49,15 +51,15 @@ export function scoreHalls(day: EnrichedDay, meal: string, profile: Profile): Ha
       const seen = new Set<string>();
       const unique = h.dishes.filter((d) => d.meal === meal && !seen.has(d.name.toLowerCase()) && seen.add(d.name.toLowerCase()));
       const { eligible, hidden } = filterDishes(unique, profile);
-      const sort = byScore(profile);
+      const sort = byScore(profile, day.date);
       const mains = eligible.filter((d) => d.kind === "main").sort(sort);
       const sides = eligible.filter((d) => d.kind === "side").sort(sort);
       const desserts = eligible.filter((d) => d.kind === "dessert").sort(sort);
       // Mains matter most; extra sides help less after the first several.
       const walk = dorm ? dorm.minutes[h.hall] : null;
       const food =
-        mains.reduce((n, d) => n + Math.max(0, dishScore(d, profile)), 0) +
-        sides.slice(0, 8).reduce((n, d) => n + Math.max(0, dishScore(d, profile)), 0) * 0.5;
+        mains.reduce((n, d) => n + Math.max(0, dishScore(d, profile, day.date)), 0) +
+        sides.slice(0, 8).reduce((n, d) => n + Math.max(0, dishScore(d, profile, day.date)), 0) * 0.5;
       // A hall with nothing to eat doesn't get better by being close.
       // With a fitness goal, a hall where you can build a plate close to it is worth up to 10 extra points.
       const notDown = (d: EnrichedDish) => ratingOf(profile.taste, d.name) !== -1;

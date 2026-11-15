@@ -6,6 +6,7 @@ import { MAX_RATINGS, type Taste } from "./taste";
 import { findDorm } from "./walking";
 import { cleanExclude } from "./exclude";
 import { LANG_IDS, type LangId } from "./lang";
+import { MAX_HISTORY, type Ate } from "./history";
 
 export interface Profile {
   /** USC allergen codes to avoid. */
@@ -28,6 +29,8 @@ export interface Profile {
   goal?: GoalId;
   /** Language for the main card (summary and dish reasons). Missing means English. */
   lang?: LangId;
+  /** "I ate this" for the last 7 days: nudges toward variety, never hides anything. */
+  ate?: Ate[];
 }
 
 export const EMPTY_PROFILE: Profile = { avoid: [], diet: [], likes: [], dislikes: [] };
@@ -46,6 +49,10 @@ export const ProfileSchema = z.object({
   goal: z.enum(GOAL_IDS).optional(),
   styles: z.array(z.enum(STYLE_IDS)).max(STYLE_IDS.length).optional(),
   lang: z.enum(LANG_IDS).optional(),
+  ate: z
+    .array(RatedSchema.extend({ date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/) }))
+    .max(MAX_HISTORY * 2)
+    .optional(),
 });
 
 export function cleanProfile(input: unknown): Profile {
@@ -63,6 +70,17 @@ export function cleanProfile(input: unknown): Profile {
   if (exclude.length) out.exclude = exclude.sort();
   if (p.goal) out.goal = p.goal;
   if (p.lang && p.lang !== "en") out.lang = p.lang;
+  if (p.ate?.length) {
+    const seen = new Set<string>();
+    const ate = [...p.ate]
+      .sort((a, b) => a.date.localeCompare(b.date))
+      .filter((h) => {
+        const k = `${h.date}|${h.name.toLowerCase()}`;
+        return !seen.has(k) && Boolean(seen.add(k));
+      })
+      .slice(-MAX_HISTORY);
+    if (ate.length) out.ate = ate;
+  }
   if (p.styles?.length) out.styles = [...new Set(p.styles)].sort();
   if (p.taste && p.taste.up.length + p.taste.down.length > 0) {
     // One rating per dish: a thumbs up wins over an older thumbs down of the same name.
@@ -91,5 +109,6 @@ export function profileKey(p: Profile): string {
     names(p.taste?.up),
     names(p.taste?.down),
     p.lang ?? "en",
+    (p.ate ?? []).map((h) => `${h.date}|${h.name.toLowerCase()}`),
   ]);
 }
