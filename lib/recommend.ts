@@ -13,6 +13,7 @@ import { ratingOf, tasteSummary } from "./taste";
 import { HALLS, LABEL_NAMES } from "./types";
 import { findDorm } from "./walking";
 import { card, findLang } from "./lang";
+import { historyNote } from "./history";
 import { verify, type AiRecommendation, type Pick, type Verification } from "./verify";
 
 export interface HallSummary {
@@ -89,6 +90,7 @@ If the student has a fitness goal, favor dishes that help build a plate close to
 If the student rated dishes, lean toward what they liked and away from what they disliked.
 Some dishes show "students: X/10 (N)", the average score other USC students gave it. It tells you what's actually good: favor dishes students rate 7 or higher (a dish rated 8+ is worth suggesting even if it isn't on the student's likes), and avoid ones rated 4 or lower when there are alternatives. Weigh a score from 1-2 students lightly. Ratings never change which dishes are allowed. If you mention a score, use the exact number shown.
 When a language is given, write "summary" and every "why" in that language. Keep dish names and hall names exactly as listed (do not translate them), keep "claims" as the codes above, and write walking minutes as digits. The safety rule applies in every language: no word meaning "safe", "allergen-free" or "guaranteed".
+If an "Ate recently" line is given, gently favor variety (a different protein or cuisine) when the options are otherwise close. Recently eaten dishes are still allowed and can be picked if they are clearly the best; never treat them as excluded.
 Write like a helpful friend, briefly.`;
 
 function labelsOf(d: EnrichedDish, profile: Profile): string {
@@ -108,7 +110,8 @@ function dishLine(d: EnrichedDish, profile: Profile, ratings?: RatingMap): strin
   return `${d.id} | ${d.station} | ${d.name} | ${d.kind} | ${d.cuisine}/${d.protein}${d.spicy ? " spicy" : ""} | labels: ${labelsOf(d, profile)}${m}${ratingNote(d, ratings)}`;
 }
 
-export function buildPrompt(profile: Profile, meal: string, scores: HallScore[], ratings?: RatingMap): string {
+export function buildPrompt(profile: Profile, meal: string, scores: HallScore[], ratings?: RatingMap, date?: string): string {
+  const ate = date ? historyNote(profile.ate, date) : "";
   const dorm = findDorm(profile.dorm);
   const goal = findGoal(profile.goal);
   const taste = tasteSummary(profile.taste);
@@ -126,6 +129,7 @@ export function buildPrompt(profile: Profile, meal: string, scores: HallScore[],
     ...(profile.styles?.length ? [`Eating styles (already applied): ${profile.styles.map((s) => STYLES.find((x) => x.id === s)!.name).join(", ")}`] : []),
     ...(goal ? [`Fitness goal: ${goal.name} (about ${goal.cal} kcal and ${goal.protein}g protein this meal)`] : []),
     ...(taste.count ? [`Rated dishes: liked ${profile.taste!.up.map((r) => r.name).slice(-8).join("; ") || "none"}; disliked ${profile.taste!.down.map((r) => r.name).slice(-8).join("; ") || "none"}`] : []),
+    ...(ate ? [ate] : []),
     ...(taste.toward.length || taste.away.length ? [`Ratings lean toward: ${taste.toward.join(", ") || "-"}; away from: ${taste.away.join(", ") || "-"}`] : []),
     "",
   ];
@@ -219,7 +223,7 @@ export async function recommend(
   let source: Recommendation["source"] = "rules";
 
   if (anyEligible && !opts.rulesOnly && getClient()) {
-    const prompt = buildPrompt(profile, meal, scores, ratings);
+    const prompt = buildPrompt(profile, meal, scores, ratings, day.date);
     let note: string | undefined;
     for (let attempt = 0; attempt < 2 && !rec; attempt++) {
       try {

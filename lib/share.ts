@@ -19,6 +19,7 @@ type Packed = {
   u?: [string, string, string][];
   w?: [string, string, string][];
   n?: string;
+  h?: [string, string, string, string][];
 };
 
 const toTuples = (xs: Rated[] = []) => xs.map((r) => [r.name, r.cuisine, r.protein] as [string, string, string]);
@@ -50,6 +51,7 @@ export function packProfile(p: Profile): string {
   if (p.taste?.up.length) o.u = toTuples(p.taste.up);
   if (p.taste?.down.length) o.w = toTuples(p.taste.down);
   if (p.lang && p.lang !== "en") o.n = p.lang;
+  if (p.ate?.length) o.h = p.ate.map((h) => [h.name, h.cuisine, h.protein, h.date]);
   return b64urlEncode(JSON.stringify(o));
 }
 
@@ -70,6 +72,7 @@ export function unpackProfile(hash: string): Profile | null {
       goal: o.g,
       styles: o.s,
       lang: isLang(o.n) ? o.n : undefined,
+      ate: o.h?.map(([name, cuisine, protein, date]) => ({ name, cuisine, protein, date })),
       taste: o.u || o.w ? { up: fromTuples(o.u), down: fromTuples(o.w) } : undefined,
     });
   } catch {

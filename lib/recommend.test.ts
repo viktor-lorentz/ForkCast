@@ -189,3 +189,23 @@ describe("language", () => {
     expect(buildPrompt(profile, meal, scoreHalls(day, meal, profile))).not.toContain("Language:");
   });
 });
+
+describe("I ate this", () => {
+  it("lowers a recently eaten dish without hiding it, and tells the AI", async () => {
+    const [date, day] = [...days.entries()][0];
+    const meal = day.halls[0].meals[0];
+    const base = cleanProfile({ avoid: [], diet: [], likes: [], dislikes: [] });
+    const top = scoreHalls(day, meal, base).find((s) => s.mains.length > 1)!;
+    const first = top.mains[0];
+    const yesterday = new Date(Date.parse(`${date}T12:00:00Z`) - 86_400_000).toISOString().slice(0, 10);
+    const profile = cleanProfile({ ...base, ate: [{ name: first.name, cuisine: first.cuisine, protein: first.protein, date: yesterday }] });
+    const after = scoreHalls(day, meal, profile).find((s) => s.hall === top.hall)!;
+    expect(after.mains.map((d) => d.id)).toContain(first.id);
+    expect(after.mains.findIndex((d) => d.id === first.id)).toBeGreaterThanOrEqual(0);
+    expect(after.score).toBeLessThan(top.score);
+    const { buildPrompt } = await import("./recommend");
+    expect(buildPrompt(profile, meal, scoreHalls(day, meal, profile), undefined, date)).toContain(`${first.name} (yesterday)`);
+    const rec = await recommend(day, meal, profile, undefined, { rulesOnly: true });
+    expect(rec.verification.passed).toBe(true);
+  });
+});

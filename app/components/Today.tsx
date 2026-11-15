@@ -17,10 +17,11 @@ import { LabelTag } from "./Chip";
 import { TakeItWithYou } from "./TakeItWithYou";
 import { Logo } from "./Logo";
 import { card, mealName } from "@/lib/lang";
+import { ateNote, ateOn, logAte, pruneHistory, type Ate } from "@/lib/history";
 import { FoodTags, PlateCard, Thumbs } from "./Taste";
 import { logMealVisit, pendingVisit, RateInline, RateMealPrompt, ScoreBadge, useScores, type Ratings } from "./Ratings";
 
-const keyNoTaste = (p: Profile) => profileKey({ ...p, taste: undefined });
+const keyNoTaste = (p: Profile) => profileKey({ ...p, taste: undefined, ate: undefined });
 const hallName = (id: string) => HALLS.find((h) => h.id === id)?.name ?? id;
 const hallShort = (id: string) => HALLS.find((h) => h.id === id)?.short ?? id;
 const shortStation = (s: string) => s.replace(/\s*\(.*\)\s*$/, "");
@@ -75,7 +76,11 @@ function HallRow({
   rateProps,
   hoursText,
   ratings,
+  ate,
+  today,
 }: {
+  ate?: Ate[];
+  today: string;
   ratings: Ratings;
   rateProps: Omit<Parameters<typeof Thumbs>[0], "dish" | "small">;
   hoursText: { text: string; open: boolean | null } | null;
@@ -141,7 +146,10 @@ function HallRow({
                             {d.name}
                             <ScoreBadge score={ratings.scoreOf(d.name)} className="ml-1.5 align-[1px]" />
                           </span>
-                          <span className="block truncate text-xs text-stone-400">{shortStation(d.station)}</span>
+                          <span className="block truncate text-xs text-stone-400">
+                            {shortStation(d.station)}
+                            {ateNote(ate, d.name, today) && <span className="text-amber-900"> · {ateNote(ate, d.name, today)}</span>}
+                          </span>
                         </span>
                         <Thumbs small dish={d} {...rateProps} />
                       </li>
@@ -213,10 +221,14 @@ export function Today({
   // a 👎 just slides that dish away, and "Refresh picks" (or the next visit) asks the AI again.
   const [frozen, setFrozen] = useState({ k: keyNoTaste(profile), taste: profile.taste });
   const viewProfile = useMemo(
-    () => ({ ...profile, taste: frozen.k === keyNoTaste(profile) ? frozen.taste : profile.taste }),
-    [profile, frozen],
+    () => {
+      // "I ate this" taps count from the next day on, so marking a dish never reloads the picks you're looking at.
+      const ate = profile.ate?.filter((h) => h.date < date);
+      return { ...profile, ate: ate?.length ? ate : undefined, taste: frozen.k === keyNoTaste(profile) ? frozen.taste : profile.taste };
+    },
+    [profile, frozen, date],
   );
-  const ratingsPending = profileKey(viewProfile) !== profileKey(profile);
+  const ratingsPending = profileKey({ ...viewProfile, ate: undefined }) !== profileKey({ ...profile, ate: undefined });
   const refreshPicks = () => setFrozen({ k: keyNoTaste(profile), taste: profile.taste });
   const scores = useMemo(() => (day && meal ? scoreHalls(day, meal, viewProfile) : []), [day, meal, viewProfile]);
 
@@ -263,6 +275,11 @@ export function Today({
   const totalHidden = scores.reduce((n, s) => n + s.hidden.length, 0);
   const dorm = findDorm(profile.dorm);
   const t = card(profile.lang);
+  // "I ate this" keeps 7 days; drop older entries when the app opens.
+  useEffect(() => {
+    const kept = pruneHistory(profile.ate, laDate(0));
+    if (profile.ate && kept.length !== profile.ate.length) onChange({ ...profile, ate: kept.length ? kept : undefined });
+  }, [profile, onChange]);
   const goal = findGoal(profile.goal);
   const byId = new Map((day?.halls ?? []).flatMap((h) => h.dishes).map((d) => [d.id, d]));
   const [leaving, setLeaving] = useState<string[]>([]);
@@ -515,6 +532,8 @@ export function Today({
                   max={maxCount}
                   rateProps={rateProps}
                   ratings={ratings}
+                  ate={profile.ate}
+                  today={laDate(0)}
                   hoursText={hoursFor(s.hall)}
                   open={openHall === s.hall}
                   onToggle={() => setOpenHall(openHall === s.hall ? null : s.hall)}
@@ -569,7 +588,19 @@ export function Today({
                       ))}
                       {others.length > 0 && <LabelTag tone="stone" text={`Contains ${others.map((a) => LABEL_NAMES[a] ?? a).join(", ")}`} />}
                     </div>
-                    <RateInline name={p.name} ratings={ratings} />
+                    <RateInline
+                      name={p.name}
+                      ratings={ratings}
+                      ate={
+                        dayOffset === 0 && byId.get(p.id)
+                          ? {
+                              eaten: ateOn(profile.ate, p.name, date),
+                              note: ateNote(profile.ate, p.name, date),
+                              onToggle: () => onChange({ ...profile, ate: logAte(profile.ate, byId.get(p.id)!, date, !ateOn(profile.ate, p.name, date)) }),
+                            }
+                          : undefined
+                      }
+                    />
                   </article>
                   </div>
                 );

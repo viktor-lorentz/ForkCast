@@ -383,14 +383,40 @@ export function RateMealPrompt({
 }
 
 /** A quiet row under a dish: today's score, and one tap to give yours. */
-export function RateInline({ name, ratings }: { name: string; ratings: Ratings }) {
+/** "I ate this" state for one dish today: shown next to the rating button. */
+export interface AteToggle {
+  eaten: boolean;
+  /** "You had this yesterday" when it was eaten in the last week (not today). */
+  note: string | null;
+  onToggle: () => void;
+}
+
+export function RateInline({ name, ratings, ate }: { name: string; ratings: Ratings; ate?: AteToggle }) {
   const [open, setOpen] = useState(false);
   const mine = ratings.mineOf(name);
   const score = ratings.scoreOf(name);
   return (
     <div className="mt-3 border-t border-stone-100 pt-2.5">
-      <div className="flex items-center justify-between gap-2">
+      {ate?.note && !ate.eaten && <p className="mb-2 text-xs font-medium text-amber-900">↺ {ate.note}</p>}
+      <div className="flex flex-wrap items-center justify-between gap-2">
         {score ? <ScoreBadge score={score} long /> : <span className="text-xs text-stone-500">No ratings yet today</span>}
+        <span className="flex shrink-0 gap-1.5">
+        {ate && (
+          <button
+            type="button"
+            aria-pressed={ate.eaten}
+            aria-label={ate.eaten ? `You ate ${name} today. Tap to undo` : `I ate ${name}`}
+            onClick={() => {
+              if (!ate.eaten && mine === null) setOpen(true);
+              ate.onToggle();
+            }}
+            className={`flex shrink-0 items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold transition active:scale-95 ${
+              ate.eaten ? "bg-emerald-50 text-emerald-800 ring-1 ring-emerald-200" : "bg-stone-100 text-stone-700"
+            }`}
+          >
+            {ate.eaten ? "✓ Ate it" : "I ate this"}
+          </button>
+        )}
         <button
           type="button"
           onClick={() => setOpen((o) => !o)}
@@ -400,8 +426,9 @@ export function RateInline({ name, ratings }: { name: string; ratings: Ratings }
           }`}
         >
           <Star />
-          {mine !== null ? `You: ${mine}` : "Ate it? Rate it"}
+          {mine !== null ? `You: ${mine}` : ate ? "Rate it" : "Ate it? Rate it"}
         </button>
+        </span>
       </div>
       {open && (
         <div className="rise mt-2.5">
@@ -410,6 +437,8 @@ export function RateInline({ name, ratings }: { name: string; ratings: Ratings }
             label={name}
             onPick={(v) => {
               ratings.submit(name, v);
+              // Rating a dish today means you ate it.
+              if (ate && !ate.eaten && v !== null) ate.onToggle();
               setTimeout(() => setOpen(false), 600);
             }}
           />
