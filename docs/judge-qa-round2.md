@@ -8,14 +8,17 @@ Anything in `[brackets]` is for the team to fill in. Never say "safe"; say "no f
 
 ## About the numbers on our slides
 
-### 1. Your survey is 42 students. Why should we believe 57%?
-We don't claim it's all of USC: it's 24 of the 42 students we could reach in one day, mostly freshmen on meal plans, who are exactly the people who eat in these halls. The point is that dietary needs are common enough to be the normal case, and Hailey's interviews say the same thing. `[Hailey: one interview result]`
+### 0. Is Omar real?
+Yes. Omar is a USC freshman from Philadelphia who lives in Cardinal Gardens, and he agreed to be in our video and deck. The result on the slide is his real ForkCast pick for dinner on Sunday, November 15.
+
+### 1. Your survey is 50 students. Why should we believe 54%?
+We don't claim it's all of USC: it's 27 of the 50 students we could reach in one day, mostly freshmen on meal plans, who are exactly the people who eat in these halls. The point is that dietary needs are common enough to be the normal case, and Hailey's interviews say the same thing. `[Hailey: one interview result]`
 
 ### 2. Who did you survey, and could it be biased?
-It was a Google Form shared with students around us on Saturday, and we left our own three answers out. It is a convenience sample, so we show the raw count on the slide and would rerun it through USG for a campus-wide number.
+It was a Google Form shared with students around us on Saturday, and our own three answers are in the count. It is a convenience sample, so we show the raw count on the slide and would rerun it through USG for a campus-wide number.
 
-### 3. Your funnel shows Village with more dishes left than EVK. Why did it pick EVK?
-The pick isn't a dish count: real mains matter most, then your taste, then the walk. EVK had as many mains as Village and was one minute from that student's dorm instead of ten.
+### 3. Your funnel shows Village with more dishes left and a shorter walk. Why did it pick Parkside for Omar?
+The pick isn't a dish count or just the walk: real mains and your taste matter most. Parkside had as many mains as Village, and they were the chicken, beef and rice Omar likes, so it was worth the twelve minutes.
 
 ### 4. "0 allergen decisions made by AI." What does the AI actually decide, then?
 It decides what kind of food a dish is (main or side, cuisine, spicy), which eligible dishes make the best plate, and how to explain that in a sentence. Whether a dish is allowed is decided only by code reading USC's labels.
@@ -23,8 +26,8 @@ It decides what kind of food a dish is (main or side, cuisine, spicy), which eli
 ### 5. Your slide says 0.2 seconds, but also 3 to 7. Which is it?
 A brand-new profile takes 3 to 7 seconds because the AI is writing a fresh pick; the same profile and meal after that is 0.2 seconds from cache. The hall comparison is code, so it shows instantly either way.
 
-### 6. You hid "Pork Vindaloo" for a halal student. Isn't that obvious? Show me a hard one.
-The obvious ones prove the rule works; the hard ones are the bagels on slide 2, labeled halal ingredients but containing sesame, and dishes USC marks "not analyzed," which we hide from anyone with an allergy. A student skimming icons misses those; code doesn't.
+### 6. You hid pepperoni pizza for a halal student. Isn't that obvious? Show me a hard one.
+The obvious ones prove the rule works; the hard ones are dishes like the ground beef soft taco, which has no pork but isn't labeled halal ingredients, and dishes USC marks "not analyzed," which we hide from anyone avoiding an allergen. A student skimming icons misses those; code doesn't.
 
 ### 7. 206 tests on what, exactly?
 They run the same sample students judges can open against saved USC menus and check that no hidden dish ever reaches a pick, that the verifier catches bad AI answers, and that walking times and labels match the data. `[Viktor: one test you're proud of.]`
@@ -99,6 +102,6 @@ Viktor (ECE) built the app and the verification pipeline; Andrew (BUAD) owned th
 
 ## Updates to round 1
 
-- **Question 10:** the survey is now 24 of 42 students (57%), not 18 of 30.
+- **Question 10:** the survey is now 27 of 50 students (54%), not 18 of 30.
 - **Question 16:** per-visitor rate limits now exist on the AI and email endpoints, so drop the "as of Saturday afternoon it does not" note.
 - **Question 23:** the test count is now 206.

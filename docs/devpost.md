@@ -16,7 +16,7 @@ Copy each section into the matching Devpost field. Anything in `[brackets]` stil
 
 Three times a day, many USC students ask the same question: where should I eat? For most of us, it's just whatever's closest. For a student who is halal, vegan, celiac, or has allergies, it's homework. USC's dining menu site shows one dining hall at a time, and every dish is followed by a row of tiny icons you have to decode by hand. Do that for three halls, before every meal, and you end up settling for whichever one is closest.
 
-We asked around. Of the 42 students we surveyed on Saturday, 24 (57%) have some form of dietary restriction or allergy. The "special" case is the normal case.
+We asked around. Of the 50 students we surveyed on Saturday, 27 (54%) have some form of dietary restriction or allergy. The raw answers, with names removed, are in our repo at `docs/survey/responses.csv`. The "special" case is the normal case.
 
 ## What it does
 

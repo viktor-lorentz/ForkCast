@@ -1,17 +1,11 @@
-# ForkCast pitch deck (web version)
+# ForkCast pitch deck
 
-`forkcast-deck-web.zip` is the built slide deck: plain HTML, CSS and JavaScript, exactly what is published on Netlify. It is kept as a zip so it never affects the app's build, tests or lint.
+Two copies of the same 12-slide deck (Omar's story, built Sun Nov 15, 2026):
 
-## View it
+- **`forkcast-deck.html`**: the whole deck in one file, with every animation, picture and font inside it. Download it and double-click to open it in a browser. It needs no server and no internet, and it carries no hosting badge. It can also be hosted anywhere as a single file.
+- **`forkcast-deck-web.zip`**: the multi-file web build, exactly what is published on Netlify. Unzip it, run `npx serve <that folder>` in Terminal, and open the address it prints. Its `index.html` does not work by double-clicking.
 
-The easiest way is the public Netlify link (ask Andrew).
-
-To run this copy on your own machine:
-
-1. Unzip `forkcast-deck-web.zip` into a folder.
-2. In Terminal, run `npx serve <that folder>` and open the address it prints.
-
-Opening `index.html` by double-clicking does not work: the deck is a small web app and needs to be served.
+Both are kept as plain files under `docs/` so they never affect the app's build, tests or lint.
 
 ## Controls
 
@@ -19,4 +13,4 @@ Opening `index.html` by double-clicking does not work: the deck is a small web a
 
 ## Source
 
-The deck's source (Slidev) lives outside this repo, in Andrew's `forkcast-deck` folder. Built Sat Nov 14, 2026.
+The deck's source (Slidev) lives outside this repo, in Andrew's `forkcast-deck` folder. `npm run onefile` there rebuilds the one-file version.
