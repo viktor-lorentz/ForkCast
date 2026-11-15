@@ -62,6 +62,10 @@ export function Onboarding({
         body: JSON.stringify({ text }),
       });
       const parsed = await res.json();
+      if (res.status === 429) {
+        setParseNote(`${parsed.error ?? "Too many requests, try again in a minute"}. You can also tap the options below.`);
+        return;
+      }
       if (!res.ok) throw new Error(parsed.error);
       setP((cur) => ({
         ...cur,

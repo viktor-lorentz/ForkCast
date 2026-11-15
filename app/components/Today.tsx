@@ -39,11 +39,14 @@ function initialDayOffset(): number {
   return hour >= 22 ? 1 : 0;
 }
 
-type Loaded<T> = { ok: true; data: T } | { ok: false };
+type Loaded<T> = { ok: true; data: T } | { ok: false; tooMany?: boolean };
+const TOO_MANY = "Too many requests, try again in a minute";
+const failed = (err: unknown) => ({ ok: false as const, tooMany: (err as Error)?.message === TOO_MANY });
 
 async function getJson<T>(url: string, init?: RequestInit): Promise<T> {
   // Give up after 45s so a stalled request turns into a "Try again" button instead of an endless spinner.
   const res = await fetch(url, { ...init, signal: AbortSignal.timeout(45_000) });
+  if (res.status === 429) throw new Error(TOO_MANY);
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 }
@@ -180,7 +183,7 @@ export function Today({
     pending.add(key);
     getJson<EnrichedDay>(`/api/menu?date=${date}`)
       .then((data) => setMenus((m) => ({ ...m, [date]: { ok: true, data } })))
-      .catch(() => setMenus((m) => ({ ...m, [date]: { ok: false } })))
+      .catch((err) => setMenus((m) => ({ ...m, [date]: failed(err) })))
       .finally(() => pending.delete(key));
   }, [date, menuEntry]);
 
@@ -218,7 +221,7 @@ export function Today({
         body: JSON.stringify({ profile: viewProfile, date, meal: m }),
       })
         .then((data) => setRecs((r) => ({ ...r, [key]: { ok: true, data } })))
-        .catch(() => setRecs((r) => ({ ...r, [key]: { ok: false } })))
+        .catch((err) => setRecs((r) => ({ ...r, [key]: failed(err) })))
         .finally(() => pending.delete(key));
     };
     load(meal);
@@ -436,7 +439,11 @@ export function Today({
                 </div>
               ) : recFailed ? (
                 <div>
-                  <p>We couldn&apos;t get your picks. The hall comparison below still works.</p>
+                  <p>
+                    {recEntry && !recEntry.ok && recEntry.tooMany
+                      ? `${TOO_MANY}. The hall comparison below still works.`
+                      : "We couldn't get your picks. The hall comparison below still works."}
+                  </p>
                   <button type="button" onClick={retry} className="mt-2 rounded-full bg-white px-4 py-1.5 text-sm font-semibold text-cardinal active:scale-95">
                     Try again
                   </button>
