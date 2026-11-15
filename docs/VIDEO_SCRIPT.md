@@ -2,7 +2,7 @@
 
 **Length:** about 2:45 (hard limit 3:00). **Narration:** about 390 words, relaxed pace.
 **Format:** **landscape 16:9, 3840×2160 (4K) at 30 fps**, exported as 1080p or 4K MP4 (H.264).
-**Camera:** Galaxy S26 Ultra. **Screen clips:** phone screen recordings (#37). **Edit and narration:** Hailey.
+**Camera:** Galaxy S26 Ultra. **Screen clips:** phone screen recordings (#37). **Edit and narration:** Hailey (CapCut desktop). **Animated graphics:** Claude, rendered with Remotion (G01–G11).
 
 Everything you need to shoot is in this file: each row of the script names its shot ID, and each shot ID has its camera settings below.
 
@@ -115,12 +115,89 @@ Rules for the words (spoken and on screen): never say "safe" or "allergen-free";
 **If it runs long:** cut 1:42–1:52 (R05) first, then shorten the 2:22 line to "It speaks seven languages and emails you the day's picks."
 **If R09 is missing:** end the 2:10 line at "...with the whole week."
 
-## Edit settings (Hailey)
-- Timeline **3840×2160 or 1920×1080, 30 fps**. Export H.264 MP4, 1080p minimum, under 3:00.
-- Phone frame: about 75% of the frame height. Screen clips are tall (about 9:19.5): scale to fit the frame, never stretch.
-- Music under narration at about −20 dB, dipping further under testimonials. Narration peaks around −6 dB.
-- Captions burned in (many judges watch muted): same words as the narration, bottom center, white on a 60% dark box.
-- Font for on-screen text: Geist or Inter, bold. Colors: cardinal #990000, gold #ffcc00 for small highlights, dark #1c1917, cream #faf7f2.
+## Editing guide: making it look produced, not recorded
+
+The goal: by 0:15, judges should feel this team ships. That comes from four things, roughly in this order of impact: **sound** (clean voice, good music, cuts on the beat), **motion** (nothing sits still for long; the phone moves, taps get zoomed), **type** (big bold words on screen, in our brand), and **pacing** (no shot over 4 s without something changing).
+
+### Who does what
+| Who | Job | Tool |
+|---|---|---|
+| **Hailey** | Main edit: timeline, cuts, music, captions, export | **CapCut desktop** (free, easiest; auto captions, keyframes, beat markers) or **DaVinci Resolve** (free, pro) if she already knows it. Premiere is fine too. |
+| **Claude (Viktor's Claude Code)** | Animated graphics as finished video files Hailey drops on the timeline (list below) | **Remotion**: animations written as code in our exact fonts and colors, rendered to MP4/MOV |
+| **Viktor** | Screen clips R01–R12 (#37), records the narration if Hailey prefers | Phone screen recorder, Voice Recorder |
+| **Andrew** | B-roll B01–B06, testimonials T1–T3 | S26 Ultra (presets above) |
+| **Anyone** | Narration cleanup | **Descript**, free tier: drop in the VO, click **Studio Sound** (makes a phone recording sound like a studio mic), delete "um"s by deleting words in the transcript. Or CapCut's **Enhance voice**. |
+
+**About AI video tools.** Use AI to *clean up and speed up*: voice enhancement, auto captions, beat detection, silence removal, background removal. **Don't** use AI to generate footage of the app, students or the dining halls. Judges will be looking at whether the product is real, and fake footage would undercut the strongest thing we have: it's live, and you can scan the QR right now. Use our real voice for narration (an AI voice sounds generic, and real is more convincing). Viktor: if you find out which tool Brendan used, tell Claude and we'll fit it in. Descript, CapCut and Opus Clip are the common ones.
+
+### The animated graphics (Claude builds these with Remotion)
+Each one is rendered at 3840×2160, 30 fps, as **MP4** (full-screen pieces) and **MOV with transparency** (overlays), into `ForkCast video / graphics` in the Drive. Hailey just drops them on the timeline.
+
+| ID | Where | What it looks like | Length |
+|---|---|---|---|
+| **G01 Cold open title** | 0:00 over B01 | "Where should I eat?" types in word by word, big and bold, then **ForkCast** with the logo springs in and holds | 4 s |
+| **G02 Problem counter** | 0:16 | Three menu cards (EVK, Parkside, Village) slide in, tiny allergen dots multiply across them, a counter runs to **~250 dishes**, "every meal" lands | 6 s |
+| **G03 Phone frame** | every R clip | A clean phone frame on cream; Hailey puts the screen clip inside. Comes with the **slide-in** (from the right, 12 frames, ease-out) and the slow **push-in** (100% → 104% over the clip) built in. Also a "tap ripple" overlay (a soft cardinal circle) to place on taps | template |
+| **G04 Pipeline** | 1:20 | The deck's slide 5, animated: USC menus → AI sorts → **CODE filters** (lock icon snaps shut) → AI picks → **CODE verifies** (checkmarks tick in, one per beat). "AI understands the food." / "Code enforces the allergens." swap in | 8 s |
+| **G05 Zero** | 1:36 | A big **0** counts down from 9 to 0, then "allergen decisions made by AI" | 3 s |
+| **G06 Two students** | 1:42 | Split screen: two phone frames, two profiles ("Halal · no sesame" / "Nut allergy"), two different halls flip in | 5 s |
+| **G07 Ratings meter** | 1:58 | A 1–10 row fills up to 8 like a meter, then a ★ 7.8 → 8.0 badge ticks up | 3 s |
+| **G08 Week strip** | 2:10 | Seven day tiles flip over one by one, each showing a hall | 4 s |
+| **G09 Language wave** | 2:22 | "Where should I eat?" in all 7 languages, cycling fast (English → Español → Français → 中文 → 한국어 → हिन्दी → Tiếng Việt) | 4 s |
+| **G10 End card** | 2:40 | Logo, **Know before you go.**, URL, QR, team names; QR gently pulses | 7 s |
+| **G11 Lower thirds** | testimonials | Name / year bar slides in from the left (MOV with transparency) | template |
+
+### Style rules (so it all feels like one product)
+- **Colors:** cream #faf7f2 backgrounds, cardinal #990000 for emphasis, gold #ffcc00 only for small highlights (★, a badge), dark #1c1917 text. Same as the app and deck.
+- **Font:** Geist (free from Google Fonts), **bold** for statements, tight letter spacing. Never more than ~7 words on screen at once.
+- **Motion:** ease-out on the way in, ease-in on the way out, 8–15 frames (0.25–0.5 s). Nothing bounces or spins. One thing moves at a time.
+- **Zoom to the tap:** whenever a screen clip shows a tap that matters (Fill in for me, How we checked, I ate this, the language menu), zoom the phone to about **160% on that spot** for 1–2 s, then back. In CapCut: select the clip → **Keyframe** at the start of the move, another 10 frames later with **Scale 160%** and **Position** on the button; copy the pair to zoom back out. Add the tap ripple (G03) on the exact frame of the tap.
+- **Speed:** screen clips can play at **120–150%** during scrolling (Speed → 1.3×); keep taps and reveals at 100%. Cut out all waiting and loading.
+- **Transitions:** mostly **hard cuts on the beat**. Between sections, use a **slide/push** (the next clip pushes the last one left, 10 frames). No star wipes, no cross-dissolves, no glitch presets.
+- **Captions:** burned in, 2 lines max, Geist bold, white on a 60% dark rounded box, lower third; highlight the keyword in gold (CapCut: Captions → Auto captions → pick a style → edit any wrong words, especially "ForkCast", "EVK", "USC").
+
+### Sound (half of what makes it feel pro)
+- **Music:** one upbeat, modern track at about **110–125 BPM** that builds. It should start minimal (0:00–0:16), drop when the product appears (0:32), stay steady under the explanation, and lift for the ending (2:22). Free sources: **YouTube Audio Library** (studio.youtube.com → Audio library, filter "Attribution not required") or **Pixabay Music**. Search "upbeat tech", "corporate inspiring", "future bass". Check the license allows YouTube use.
+- **Beat markers:** in CapCut, select the music → **Beats → Auto generate**. Snap cuts and text pops to the markers.
+- **Levels:** voice peaks around **−6 dB**; music around **−20 dB** under voice, up to −12 dB where nobody talks; dip it more under testimonials. In CapCut, select the music → **Audio → Ducking** (lowers music automatically under voice).
+- **Sound effects** (quiet, about −24 dB): a soft **whoosh** on each slide-in, a light **click/tap** on zoomed taps, a soft **pop** when checkmarks tick in, a **riser** in the 1 s before 0:32 (the product reveal). Free in CapCut's Audio → Sound effects, or Pixabay.
+- **Silence is a tool:** cut the music for half a second right before "ForkCast. Know before you go." and bring it back on the logo.
+
+### Section-by-section edit notes
+| Time | Edit |
+|---|---|
+| 0:00–0:08 | B01 with **G01** over it. Music starts quiet. Slow push-in on B01. Cut to B02 on the first strong beat. |
+| 0:08–0:16 | T1 full screen, **G11** lower third. Music down. If no testimonial: B03 + the 57% card. |
+| 0:16–0:32 | B03 (4 s) → **G02** → R01 in **G03**, zoom on the tiny icons (200%). Narration carries it. Riser in the last second. |
+| 0:32–0:55 | **Beat drop on "ForkCast."** R02 in the phone frame, sped up 1.3× while typing; zoom to "Fill in for me"; chips lighting up at 100%; taste-card swipes at 100% (they're satisfying). |
+| 0:55–1:20 | The pick appears: **hold 1.5 s, no zoom** (let it land), then push in on the red card. R03 scroll at 1.3×. Zoom on the ★ OUR PICK pill. |
+| 1:20–1:42 | **G04** full screen (slow down here: this is the "why we're different" moment), then R04 with each checkmark highlighted in time with the words "real hall, real dishes, no flagged allergens..." End on **G05**. |
+| 1:42–1:52 | **G06** split screen, or R05 if G06 isn't ready. |
+| 1:52–2:10 | B05 (3 s) → R06, zoom on 👍, then on "I ate this", **G07** meter. Quick. |
+| 2:10–2:22 | **G08** → R08 at 1.3× → R09 zoomed on "Closes in N min". |
+| 2:22–2:34 | **G09** → R10 language switch (zoom on the globe menu) → a 1 s dark-mode flash → R11 email arriving. Fastest section: cut on every beat. |
+| 2:34–2:40 | T2, music lifts. |
+| 2:40–2:47 | Half a second of silence → B06 → **G10**. Hold the end card 3 s so people can scan the QR. |
+
+### Step by step (CapCut desktop, Hailey)
+1. **Organize (10 min):** one project at **3840×2160, 30 fps** (Project → Settings). Import folders: `VO`, `R screen`, `B broll`, `T testimonials`, `G graphics`, `Music`, `SFX`.
+2. **Radio edit first (30 min):** lay down only the narration (VO-01…12) and testimonials, in order, with the gaps from the script. Trim breaths. It should run 2:40–2:50. **This sets the timing for everything else.**
+3. **Music (15 min):** add the track, auto-generate beats, line up the drop with "ForkCast" at about 0:32 (move the music, not the voice), turn on ducking.
+4. **Picture (90 min):** follow the script table row by row: put each R clip inside **G03**, B-roll and G graphics on top. Cut on beat markers.
+5. **Motion (45 min):** zooms to taps, push-ins, speed changes, tap ripples.
+6. **Captions (20 min):** auto captions, fix names, apply the style, check that nothing covers a button being tapped.
+7. **Sound effects (15 min):** whooshes, taps, pops, riser.
+8. **Rough cut review (Sat night):** export 1080p and send it to the team chat. Everyone watches it **once on a phone with the sound off** and **once on a laptop with the sound on**, and writes timestamps of what to fix.
+9. **Final pass (Sun morning, by 9:00):** fixes, color consistency (if a B-roll shot looks off: Adjust → Auto adjust, or match brightness by eye), last listen on headphones.
+10. **Export:** 3840×2160 or 1920×1080, 30 fps, H.264, high bitrate (CapCut: Export → Quality "Higher"). Check the length is **under 3:00**. Upload to YouTube as **Unlisted**, paste the link into Devpost (#12). Keep the MP4 as a backup.
+
+### Final check before uploading
+- [ ] Under 3:00, sound levels steady (no jump between VO lines), no clipping.
+- [ ] Watched muted: the story still makes sense from the captions and on-screen text alone.
+- [ ] No "safe" or "allergen-free" anywhere, spoken or written. No calorie or gram numbers.
+- [ ] Every app shot is real footage of the live app. Nothing generated.
+- [ ] The QR on the end card scans from a laptop screen.
+- [ ] Music license allows YouTube; credit it in the YouTube description if the license asks.
 
 ## Clip list
 | ID | File | What | Length | How |
@@ -145,3 +222,4 @@ Rules for the words (spoken and on screen): never say "safe" or "allergen-free";
 | B06 | `B06-team` | Team at the laptop | 10 s | A |
 | T1–T3 | `T1-problem` … | Testimonials | 15–40 s raw | C |
 | VO | `VO-01` … `VO-12` | Narration, one file per script line | — | E |
+| G01–G11 | `G01-cold-open` … | Animated graphics (Claude, Remotion) | 3–8 s | — |
