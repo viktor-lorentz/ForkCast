@@ -69,7 +69,7 @@ Everything below was run on **Sunday, Nov 15, 2026, between 6:10 and 7:00 AM PT*
 
 ## Security
 
-See [SECURITY.md](../SECURITY.md) for the full review. In short: no secrets in the history, no vulnerable shipped dependency, every hostile request in the table above was rejected, and standard security headers were added and confirmed on a local production build.
+See [SECURITY.md](../SECURITY.md) for the full review. In short: no secrets in the history, no vulnerable shipped dependency, every hostile request in the table above was rejected, and standard security headers were added and confirmed on the live site. After that change deployed, the live check was run again: 28 of 28 passed.
 
 ## Not checked
 

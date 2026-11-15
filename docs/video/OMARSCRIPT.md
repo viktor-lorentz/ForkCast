@@ -149,7 +149,7 @@ The full prompt to paste and the upload checklist are in [DESCRIPT_PROMPT.md](DE
 ## Proof (every number on screen)
 | On screen | Source |
 |---|---|
-| **27 of 50** students have a dietary restriction | Our survey, Nov 14, 2026: [survey/responses.csv](survey/responses.csv) (names removed); how we counted is in [survey/README.md](survey/README.md) |
+| **27 of 50** students have a dietary restriction | Our survey, Nov 14, 2026: [survey/responses.csv](../survey/responses.csv) (names removed); how we counted is in [survey/README.md](../survey/README.md) |
 | 264 dishes, 617 labels tonight | USC Hospitality menus for **Sun Nov 15, 2026**, via ForkCast's `/api/menu` |
 | Parkside 14 of 22 · USC Village 17 of 29 · EVK 12 of 21 (dinner) | Those menus through the app's own filter (`lib/filter.ts`) for halal + no pork |
 | Parkside pick, 12 min from Cardinal Gardens, the five plate dishes, the summary sentence | The live app's real recommendation for Omar's profile (pork, halal, bulk, chicken/rice/beef, Cardinal Gardens). It took 3.3 s and passed all 6 checks. |
