@@ -1,7 +1,9 @@
 /**
  * The ForkCast logo: icon + two-tone name, sized by the surrounding font size.
- * The numbers come from the icon (the cloud is the bottom 76% of logo-mark-tight.png) and
- * Geist Bold's cap height (0.726em): the cloud is centered on the capital letters at any size.
+ * The cloud lines up with the capital letters: its bottom sits on the text baseline and its top
+ * meets the cap height, at any font size. Numbers: the cloud is rows 61-253 of the 256px-tall
+ * logo-mark-tight.png (293px wide), and Geist Bold's cap height is 0.726em (measured in the browser).
+ * Image height = 0.726 / (193/256) = 0.963em; the 2px under the cloud is 0.0075em.
  */
 export function Logo({ className = "" }: { className?: string }) {
   return (
@@ -12,7 +14,7 @@ export function Logo({ className = "" }: { className?: string }) {
         alt=""
         aria-hidden
         className="inline-block"
-        style={{ height: "1.38em", width: "1.58em", verticalAlign: "-0.164em", marginRight: "0.2em" }}
+        style={{ height: "0.963em", width: "1.102em", verticalAlign: "-0.0075em", marginRight: "0.16em" }}
       />
       <span className="text-stone-900">Fork</span>
       <span className="text-cardinal">Cast</span>
