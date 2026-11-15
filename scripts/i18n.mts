@@ -25,12 +25,15 @@ Rules:
 - Food tags and allergen names should be the common word in the target language.
 Return JSON only: {"<english>": "<translation>", ...} with every input string as a key.`;
 
-async function translate(lang: string, name: string, keys: string[]): Promise<Record<string, string>> {
+async function translate(lang: string, name: string, keys: string[], have: Record<string, string>): Promise<Record<string, string>> {
+  // Strings that quote a button (Tap “I ate this”) must use that button's own translation.
+  const quoted = [...new Set(keys.flatMap((k) => [...k.matchAll(/“([^”]+)”/g)].map((m) => m[1])))].filter((q) => have[q]);
+  const glossary = quoted.length ? `\n\nWhen a string quotes one of these buttons, use exactly this translation inside the quotes:\n${quoted.map((q) => `${q} = ${have[q]}`).join("\n")}` : "";
   const res = await client.messages.create({
     model: "claude-sonnet-5-5",
     max_tokens: 16000,
     system: SYSTEM,
-    messages: [{ role: "user", content: `Target language: ${name}\n\n${JSON.stringify(keys, null, 1)}` }],
+    messages: [{ role: "user", content: `Target language: ${name}${glossary}\n\n${JSON.stringify(keys, null, 1)}` }],
   });
   const text = res.content.flatMap((b) => (b.type === "text" ? [b.text] : [])).join("");
   const json = JSON.parse(text.slice(text.indexOf("{"), text.lastIndexOf("}") + 1)) as Record<string, string>;
@@ -52,7 +55,7 @@ await Promise.all(
     const have = JSON.parse(readFileSync(file, "utf8")) as Record<string, string>;
     const missing = keys.filter((k) => !have[k]);
     for (let i = 0; i < missing.length; i += 120) {
-      Object.assign(have, await translate(l.id, l.english, missing.slice(i, i + 120)));
+      Object.assign(have, await translate(l.id, l.english, missing.slice(i, i + 120), have));
     }
     // Drop strings the app no longer uses, keep the file sorted for clean diffs.
     const out = Object.fromEntries(keys.filter((k) => have[k]).map((k) => [k, have[k]]));

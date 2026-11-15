@@ -24,6 +24,11 @@ describe("translations", () => {
     it('never says "safe" or "allergen-free"', () => {
       for (const k of keys) expect(overstatesSafety(dict[k] ?? ""), `${lang}: ${dict[k]}`).toBe(false);
     });
+    it("names buttons the way the button itself is translated", () => {
+      for (const k of keys)
+        for (const [, quoted] of k.matchAll(/“([^”]+)”/g))
+          if (dict[quoted]) expect(dict[k] ?? "", `${lang}: ${k}`).toContain(dict[quoted]);
+    });
     it("shows no calorie or gram numbers", () => {
       for (const k of keys) expect(dict[k] ?? "", `${lang}: ${k}`).not.toMatch(/\d+\s*(g|kcal|cal)\b/i);
     });
