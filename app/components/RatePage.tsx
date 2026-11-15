@@ -7,6 +7,7 @@ import { dishEmoji } from "@/lib/emoji";
 import type { EnrichedDay } from "@/lib/menus";
 import { currentMeal } from "@/lib/score";
 import { HALLS } from "@/lib/types";
+import { Logo } from "./Logo";
 import { ScoreBadge, ScorePicker, useScores } from "./Ratings";
 
 const todayLA = () => new Date().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
@@ -94,11 +95,8 @@ export default function RatePage() {
 
   return (
     <main className="mx-auto w-full max-w-md px-4 pb-12 pt-5">
-      <Link href="/" className="inline-flex items-center gap-1.5 text-sm font-semibold">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/logo-mark.png" alt="" width={22} height={22} className="h-[22px] w-[22px]" />
-        <span className="text-stone-900">Fork</span>
-        <span className="-ml-1.5 text-cardinal">Cast</span>
+      <Link href="/" className="text-base" aria-label="ForkCast home">
+        <Logo />
       </Link>
       <h1 className="mt-2 text-2xl font-bold tracking-tight">Rate the food</h1>
       <p className="mt-1 text-sm text-stone-500">
