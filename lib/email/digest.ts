@@ -100,7 +100,7 @@ ${group("🍛 Mains", mains)}${group("🥗 Sides & more", others)}
   const html = `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
 <body style="margin:0;background:#faf7f2;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;color:#1c1917">
 <div style="max-width:520px;margin:0 auto;padding:24px 14px">
-<div style="font-size:26px;font-weight:800;color:#990000;letter-spacing:-.02em">🍴 ForkCast</div>
+<div style="font-size:26px;font-weight:800;letter-spacing:-.02em;line-height:40px"><img src="${esc(links.origin)}/logo-mark.png" width="40" height="40" alt="" style="vertical-align:middle;border:0;margin-right:8px"><span style="vertical-align:middle;color:#1c1917">Fork</span><span style="vertical-align:middle;color:#990000">Cast</span></div>
 <div style="color:#78716c;font-size:15px;margin:2px 0 4px">Your dining forecast for ${esc(pretty)}</div>
 <div style="margin:0 0 18px">${profileChips}</div>
 ${confirmBlock}

@@ -140,7 +140,18 @@ export function Onboarding({
             ‹ Back
           </button>
         )}
-        <h1 className="select-none text-3xl font-bold tracking-tight text-cardinal">{onCancel ? "Your profile" : "ForkCast"}</h1>
+        {onCancel ? (
+          <h1 className="select-none text-3xl font-bold tracking-tight text-cardinal">Your profile</h1>
+        ) : (
+          <h1 className="flex select-none items-center gap-2 text-3xl font-bold tracking-tight">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/logo-mark.png" alt="" width={44} height={44} className="h-11 w-11" />
+            <span>
+              <span className="text-stone-900">Fork</span>
+              <span className="text-cardinal">Cast</span>
+            </span>
+          </h1>
+        )}
         <p className="mt-1 text-stone-600">{onCancel ? "Tell us what you can't eat and what you love." : "Your forecast for USC dining: tell us what you can't eat and what you love, and we check all three halls for you."}</p>
       </header>
 
