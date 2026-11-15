@@ -15,6 +15,7 @@ import { rate, ratingOf, type Rated } from "@/lib/taste";
 import { findDorm } from "@/lib/walking";
 import { LabelTag } from "./Chip";
 import { TakeItWithYou } from "./TakeItWithYou";
+import { Logo } from "./Logo";
 import { FoodTags, PlateCard, Thumbs } from "./Taste";
 import { logMealVisit, pendingVisit, RateInline, RateMealPrompt, ScoreBadge, useScores, type Ratings } from "./Ratings";
 
@@ -317,14 +318,9 @@ export function Today({
               type="button"
               onClick={goHome}
               aria-label="ForkCast: back to today's pick"
-              className="flex select-none items-center gap-1.5 text-xl font-bold tracking-tight transition active:scale-95 active:opacity-70"
+              className="select-none text-xl transition active:scale-95 active:opacity-70"
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/logo-mark.png" alt="" width={30} height={30} className="h-[30px] w-[30px]" />
-              <span>
-                <span className="text-stone-900">Fork</span>
-                <span className="text-cardinal">Cast</span>
-              </span>
+              <Logo />
             </button>
           </h1>
           {starter ? (
