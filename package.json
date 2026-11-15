@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "test": "vitest run",
+    "verify:live": "node scripts/verify-live.mjs",
     "i18n": "JITI_ALIAS={\\\"@/\\\":\\\"$PWD/\\\"} jiti scripts/i18n.mts"
   },
   "dependencies": {

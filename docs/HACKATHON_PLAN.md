@@ -104,7 +104,7 @@ Footage that needs the dining halls has to be shot before they close, so Andrew 
 
 | Time | Viktor (+ Claude) | Andrew |
 | --- | --- | --- |
-| Sat 1:45–5:00 | Turn on Vercel Analytics; pick ideas from the `idea` issues and build them one at a time | Deck with his Claude (docs/ANDREW_DECK_PROMPT.md); write the testimonial questions; Devpost draft |
+| Sat 1:45–5:00 | Turn on Vercel Analytics; pick ideas from the `idea` issues and build them one at a time | Deck with his Claude (docs/prompts/ANDREW_DECK_PROMPT.md); write the testimonial questions; Devpost draft |
 | 5:00–7:30 (dinner rush) | With Andrew at EVK/Village: real-phone user testing (3–5 students), screen recordings of the app | Testimonials (5–8 students, with consent), b-roll of the halls |
 | 7:30–9:00 | Fix what testing found; last small feature | Put real quotes and numbers into the deck; judge Q&A; video script final |
 | **9:00 PM** | **Feature freeze**: tag `demo-ready`, final check on phones | Deck v2 done; script ready |

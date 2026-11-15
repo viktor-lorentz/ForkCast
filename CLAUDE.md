@@ -24,7 +24,7 @@ Saved copies live in `data/snapshots/<date>/<hall>.json`; `DEMO_MODE=1` reads on
 - `data/test-profiles/`: sample students plus expected results (Andrew edits these)
 - `data/snapshots/`: saved USC menus for tests and demo mode
 - `data/walking.json`: walking minutes from each residence to each hall, precomputed by `scripts/walking.mjs` from OpenStreetMap foot routes
-- `docs/`: plan, PRD, pitch, Devpost copy, video notes (Andrew edits these)
+- `docs/`: architecture, verification, plan, PRD, Devpost copy; `docs/prompts/` and `docs/video/` hold working files (Andrew edits these)
 
 ## The one demo flow
 Open on phone → pick restrictions and likes (no login) → today's card names the best hall with counts per hall → "Why?" shows reasons, USC label evidence, and the dishes we hid → switch profile, pick changes.

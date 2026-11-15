@@ -10,7 +10,7 @@ Copy each section into the matching Devpost field. Anything in `[brackets]` stil
 
 **Try it:** https://forkcast-usc.vercel.app
 
-**Slide deck:** https://forkcast-usc.vercel.app/forkcast-deck.html · **Video:** `[video link]` · **Code:** https://github.com/viktor-lorentz/ForkCast
+**Slide deck:** https://forkcast-usc.vercel.app/forkcast-deck.html · **Video:** https://youtu.be/WduILRF1jaY · **Code:** https://github.com/viktor-lorentz/ForkCast
 
 ---
 
