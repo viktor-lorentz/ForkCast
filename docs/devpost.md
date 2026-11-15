@@ -4,9 +4,11 @@ Copy each section into the matching Devpost field. Anything in `[brackets]` stil
 
 **Project name:** ForkCast
 
-**Tagline (short description):** Know before you go: the USC dining hall with food you can actually eat, every meal.
+**Tagline:** Know before you go.
 
-**Try it:** https://forkcast-usc.vercel.app (sample student: https://forkcast-usc.vercel.app/?demo=halal-sesame)
+**Elevator pitch (under 200 characters):** ForkCast tells USC students which dining hall has food they can actually eat, every meal. AI picks the plate; code enforces USC's allergen labels.
+
+**Try it:** https://forkcast-usc.vercel.app
 
 **Slide deck:** https://forkcast-usc.vercel.app/forkcast-deck.html · **Video:** `[video link]` · **Code:** https://github.com/viktor-lorentz/ForkCast
 
@@ -18,9 +20,19 @@ Three times a day, many USC students ask the same question: where should I eat? 
 
 We asked around. Of the 50 students we surveyed on Saturday, 27 (54%) have some form of dietary restriction or allergy. The raw answers, with names removed, are in our repo at `docs/survey/responses.csv`. The "special" case is the normal case.
 
+## Omar's story
+
+Omar Musazai is a USC freshman from Philadelphia who lives in Cardinal Gardens, and he agreed to be in our video and deck. He is halal, doesn't eat pork, and is bulking. Back home, his mom cooked Afghan food for him every night, and he never had to ask what was in it.
+
+Here, every meal starts with three menus and a row of tiny icons after every dish. His friends text "Parkside in 10?" and by the time he figures out where he can eat, they've already sat down. So he says "go ahead, I'll catch up," and dinner ends up being rice and salad.
+
+With ForkCast, his setup is four taps: Pork, Halal, Bulk up, Cardinal Gardens. For dinner on Sunday, November 15, it picked Parkside, a 12 minute walk, over USC Village 3 minutes away, because Parkside had the chicken, beef and rice he likes. Of Parkside's 22 mains and sides, 14 fit him. It built his plate from what was actually served: Green Chile Chicken, Beef and Rice Soup, Sauteed Chipotle Butter Shrimp, Spanish Rice and Braised Black Beans. The pick took 3.3 seconds and passed all 6 checks.
+
+Now when the group chat says Parkside, he knows in about ten seconds if he can eat there. In his words: "It's not my mom's cooking. But it's dinner with my friends."
+
 ## What it does
 
-ForkCast is a phone-first web app that works like a weather forecast for your next meal. You tell it what you can't eat, what you love and where you live. No login.
+ForkCast is a phone-first web app that works like a weather forecast for your next meal. You tell it what you can't eat, how you eat, your goal and where you live, with a few taps. No login.
 
 - **One answer.** It reads USC's live menus for EVK, Parkside and USC Village and names the best hall for this meal, with a suggested plate and a one-line reason for each dish.
 - **Evidence.** It shows how many dishes fit you at each hall, the walk from your residence and each hall's hours. "Why?" lists the checks every answer passed and the dishes it hid, with USC's own label as the reason.
@@ -35,7 +47,7 @@ ForkCast is a phone-first web app that works like a weather forecast for your ne
 **AI understands the food. Code enforces the allergens.**
 
 1. **AI sorts** each dish: main or side, cuisine, spicy. It is never asked about allergens.
-2. **Code filters** using only USC's own allergen and diet labels. Dishes USC marks "not analyzed for allergens" are hidden from anyone avoiding an allergen.
+2. **Code filters** using only USC's own allergen and diet labels, before the AI sees anything. Dishes USC marks "not analyzed for allergens" are hidden from anyone avoiding an allergen.
 3. **AI picks and explains,** seeing only the dishes that passed.
 4. **Code verifies** every answer before it is shown: each dish is on today's menu, at the chosen hall, carries no allergen you avoid, and every claim matches USC's labels. A failed check gets one retry, then a rules-based pick.
 5. **Students rate.** Ratings can re-rank what's allowed. They can never bring back a dish the filter hid.
@@ -49,7 +61,7 @@ We never call food "safe." We say "no flagged allergens per USC labels" and tell
 - **Data:** USC Hospitality's public menu feed and hours; walking times for 22 residences precomputed from OpenStreetMap foot routes.
 - **Storage:** profiles live in the student's browser. Upstash Redis holds only opt-in email subscriptions and anonymous dish ratings.
 - **Quality:** 206 automated tests run the same sample students judges can open.
-- **Deck:** built in Slidev, with real screenshots and real numbers from the live app.
+- **Deck:** built in Slidev, with real numbers from the live app and USC's own menu icons.
 
 ## Challenges we ran into
 
@@ -66,6 +78,7 @@ We never call food "safe." We say "no flagged allergens per USC labels" and tell
 - Zero allergen decisions are made by AI, and every answer shows its evidence.
 - No account, no install, and it still remembers you and moves between devices.
 - A two-layer design: USC's labels decide what's allowed, students decide what's good.
+- A real student, Omar, got a real dinner pick from it, and went to dinner with his friends.
 
 ## What we learned
 
@@ -77,8 +90,7 @@ We never call food "safe." We say "no flagged allergens per USC labels" and tell
 ## What's next for ForkCast
 
 - **USC NetID login,** with student government, so ratings are one per student.
-- **A report for USC Hospitality** showing which diets each hall underserves at each meal.
-- **Real feedback on every dish** from student ratings, shared with the dining team.
+- **A report for USC Hospitality** showing which diets each hall underserves at each meal, with student ratings on every dish.
 - **Top-rated dishes this week,** and alerts when your favorites are back.
 
 ## Built with
