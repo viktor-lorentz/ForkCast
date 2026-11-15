@@ -8,6 +8,16 @@ Everything you need to shoot is in this file: each row of the script names its s
 
 ---
 
+## How it all comes together (start here)
+1. **B-roll:** rename Andrew's files by shot ID (`B01-hall-wide.mp4` …) and put them in `~/Desktop/ForkCast-video/public/footage/`.
+2. **Screen clips R01–R12:** record them with OBS on the Mac, following [`OBS_RECORDING.md`](OBS_RECORDING.md). They go in the same folder.
+3. **Narration VO-01…VO-11:** the lines are listed in OBS_RECORDING.md. Optionally clean them up with Descript's Studio Sound, then put them in `public/vo/`. Pick one music track and put it in `public/music/`.
+4. **Claude assembles the video** in the `ForkCast-video` Remotion project: every clip placed by its ID, inside the phone frame, with the animated graphics (G01–G11), zooms, captions and music ducking, timed to the narration. It also sets the trim points after looking at frames from each clip. Out comes `out/forkcast-draft.mp4`.
+5. **Review:** watch it once muted on a phone and once on a laptop with sound. Send timestamped notes ("1:23: zoom is too fast"). Claude changes the timeline and re-renders in minutes.
+6. **Hailey's pass** (when she's back): she watches the draft and either sends notes, or brings Claude's graphics (`npm run graphics` renders them separately) into CapCut for hand-finishing. Either way, the final is exported in 4K (`npm run final`) and uploaded unlisted to YouTube.
+
+Why not Descript or Opus Clip for the whole edit: Descript is great for cleaning up voice and trimming talking footage by editing the transcript, but it doesn't assemble a multi-source, phone-in-frame edit from a script. Opus Clip cuts long videos into short clips for social media. Its own docs say it can't join moments that aren't next to each other, and it's built around 9:16. It *would* be good afterwards for a 30-second vertical teaser for Instagram/TikTok.
+
 ## Why landscape
 - Judges watch on a laptop or a projector, and Devpost embeds YouTube/Vimeo, all 16:9. A portrait video plays as a narrow strip with black bars on both sides.
 - The app is portrait, and that's fine: in the edit, every screen clip sits **inside a phone frame, centered or slightly right, on the ForkCast cream background (#faf7f2)**. The empty space on the left holds the on-screen text from the script (big, bold, cardinal #990000 or dark #1c1917). This looks deliberate and polished, like Apple's product videos.
@@ -123,7 +133,7 @@ The goal: by 0:15, judges should feel this team ships. That comes from four thin
 | Who | Job | Tool |
 |---|---|---|
 | **Hailey** | Main edit: timeline, cuts, music, captions, export | **CapCut desktop** (free, easiest; auto captions, keyframes, beat markers) or **DaVinci Resolve** (free, pro) if she already knows it. Premiere is fine too. |
-| **Claude (Viktor's Claude Code)** | Animated graphics as finished video files Hailey drops on the timeline (list below) | **Remotion**: animations written as code in our exact fonts and colors, rendered to MP4/MOV |
+| **Claude (Viktor's Claude Code)** | Assembles the full draft from the footage, plus the animated graphics (list below) | **Remotion** project in `~/Desktop/ForkCast-video` |
 | **Viktor** | Screen clips R01–R12 (#37), records the narration if Hailey prefers | Phone screen recorder, Voice Recorder |
 | **Andrew** | B-roll B01–B06, testimonials T1–T3 | S26 Ultra (presets above) |
 | **Anyone** | Narration cleanup | **Descript**, free tier: drop in the VO, click **Studio Sound** (makes a phone recording sound like a studio mic), delete "um"s by deleting words in the transcript. Or CapCut's **Enhance voice**. |
@@ -221,5 +231,5 @@ Each one is rendered at 3840×2160, 30 fps, as **MP4** (full-screen pieces) and 
 | B05 | `B05-plate-rate` | Plate + tapping a score | 10 s | A |
 | B06 | `B06-team` | Team at the laptop | 10 s | A |
 | T1–T3 | `T1-problem` … | Testimonials | 15–40 s raw | C |
-| VO | `VO-01` … `VO-12` | Narration, one file per script line | — | E |
+| VO | `VO-01` … `VO-11` | Narration, one file per script line | — | E |
 | G01–G11 | `G01-cold-open` … | Animated graphics (Claude, Remotion) | 3–8 s | — |
