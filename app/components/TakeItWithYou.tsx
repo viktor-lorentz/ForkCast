@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useT } from "./I18n";
 import type { Profile } from "@/lib/profile";
 import { shareUrl } from "@/lib/share";
 
@@ -9,6 +10,7 @@ type SendState = { kind: "idle" } | { kind: "sending" } | { kind: "sent"; daily:
 
 /** Open your profile on another device (link + QR), and get your picks by email. */
 export function TakeItWithYou({ profile }: { profile: Profile }) {
+  const t = useT();
   const link = shareUrl(window.location.origin, profile);
   const [showQr, setShowQr] = useState(false);
   const [qr, setQr] = useState<{ link: string; src: string | null } | null>(null);
@@ -36,7 +38,7 @@ export function TakeItWithYou({ profile }: { profile: Profile }) {
 
   async function copy() {
     try {
-      if (navigator.share) await navigator.share({ title: "My dining profile", url: link });
+      if (navigator.share) await navigator.share({ title: t("My dining profile"), url: link });
       else {
         await navigator.clipboard.writeText(link);
         setCopied(true);
@@ -56,7 +58,7 @@ export function TakeItWithYou({ profile }: { profile: Profile }) {
         body: JSON.stringify({ email, profile, daily: daily && status?.daily }),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error ?? "Couldn't send");
+      if (!res.ok) throw new Error(res.status === 429 ? t("Too many requests, try again in a minute") : (data.error ?? t("Couldn't send")));
       setSend({ kind: "sent", daily: data.daily });
     } catch (err) {
       setSend({ kind: "error", text: (err as Error).message });
@@ -67,10 +69,10 @@ export function TakeItWithYou({ profile }: { profile: Profile }) {
 
   return (
     <section className="rounded-2xl bg-card p-4 shadow-sm ring-1 ring-stone-200">
-      <h2 className="font-semibold">Take it with you</h2>
+      <h2 className="font-semibold">{t("Take it with you")}</h2>
 
       <div className="mt-3">
-        <p className="text-sm text-stone-600">Open your profile and ratings on another device. No account needed.</p>
+        <p className="text-sm text-stone-600">{t("Open your profile and ratings on another device. No account needed.")}</p>
         <div className="mt-2 flex gap-2">
           <button
             type="button"
@@ -78,33 +80,34 @@ export function TakeItWithYou({ profile }: { profile: Profile }) {
             aria-expanded={showQr}
             className="flex-1 rounded-xl border border-stone-300 bg-card py-2.5 text-sm font-semibold transition active:scale-95"
           >
-            {showQr ? "Hide QR code" : "Show QR code"}
+            {showQr ? t("Hide QR code") : t("Show QR code")}
           </button>
           <button type="button" onClick={copy} className="flex-1 rounded-xl bg-ink py-2.5 text-sm font-semibold text-ink-fg transition active:scale-95">
-            {copied ? "Copied ✓" : "Share link"}
+            {copied ? `${t("Copied")} ✓` : t("Share link")}
           </button>
         </div>
         {showQr && (
           <div className="rise mt-3 flex flex-col items-center">
             {qr?.link === link && qr.src ? (
               // eslint-disable-next-line @next/next/no-img-element -- a generated data: URL, nothing to optimize
-              <img src={qr.src} alt="QR code. Scan it with another phone to open your ForkCast profile there." width={220} height={220} className="rounded-xl ring-1 ring-stone-200" />
+              <img src={qr.src} alt={t("QR code. Scan it with another phone to open your ForkCast profile there.")} width={220} height={220} className="rounded-xl ring-1 ring-stone-200" />
             ) : qr?.link === link ? (
-              <p className="text-sm text-stone-500">Too much to fit in a QR code. Use Share link instead.</p>
+              <p className="text-sm text-stone-500">{t("Too much to fit in a QR code. Use Share link instead.")}</p>
             ) : (
               <div className="h-[220px] w-[220px] animate-pulse rounded-xl bg-stone-100" />
             )}
-            <p className="mt-2 text-xs text-stone-400">Scan with your other phone&apos;s camera. Anyone with this link sees your profile.</p>
+            <p className="mt-2 text-xs text-stone-400">{t("Scan with your other phone's camera. Anyone with this link sees your profile.")}</p>
           </div>
         )}
       </div>
 
       {status?.enabled && (
         <div className="mt-5 border-t border-stone-100 pt-4">
-          <p className="text-sm text-stone-600">Get today&apos;s picks for every meal by email.</p>
+          <p className="text-sm text-stone-600">{t("Get today's picks for every meal by email.")}</p>
           {send.kind === "sent" ? (
             <p className="rise mt-2 rounded-xl bg-emerald-50 p-3 text-sm text-emerald-900">
-              Sent to {email.trim()}.{send.daily ? " Tap “Yes, send it daily” in the email to get it every morning." : ""}
+              {t("Sent to {email}.", { email: email.trim() })}
+              {send.daily ? ` ${t("Tap “Yes, send it daily” in the email to get it every morning.")}` : ""}
             </p>
           ) : (
             <>
@@ -117,7 +120,7 @@ export function TakeItWithYou({ profile }: { profile: Profile }) {
                   onChange={(e) => setEmail(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && validEmail && sendEmail()}
                   placeholder="you@usc.edu"
-                  aria-label="Your USC email"
+                  aria-label={t("Your USC email")}
                   className="min-w-0 flex-1 rounded-xl border border-stone-300 bg-card px-3 py-2 text-base outline-none focus:border-cardinal"
                 />
                 <button
@@ -126,17 +129,17 @@ export function TakeItWithYou({ profile }: { profile: Profile }) {
                   disabled={!validEmail || send.kind === "sending"}
                   className="rounded-xl bg-brand px-4 text-sm font-semibold text-white transition active:scale-95 disabled:opacity-40"
                 >
-                  {send.kind === "sending" ? "Sending..." : "Email me"}
+                  {send.kind === "sending" ? t("Sending...") : t("Email me")}
                 </button>
               </div>
               {status.daily && (
                 <label className="mt-2 flex items-center gap-2 text-sm text-stone-600">
                   <input type="checkbox" className="accent-cardinal" checked={daily} onChange={(e) => setDaily(e.target.checked)} />
-                  Also every morning around 7 AM
+                  {t("Also every morning around 7 AM")}
                 </label>
               )}
               {send.kind === "error" && <p className="mt-2 text-sm text-red-700">{send.text}</p>}
-              {email.trim() && !validEmail && <p className="mt-1 text-xs text-stone-400">Use your @usc.edu address.</p>}
+              {email.trim() && !validEmail && <p className="mt-1 text-xs text-stone-400">{t("Use your @usc.edu address.")}</p>}
             </>
           )}
         </div>

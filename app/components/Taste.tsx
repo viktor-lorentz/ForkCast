@@ -1,6 +1,7 @@
 "use client";
 
 import type { EnrichedDish } from "@/lib/enrich";
+import { useT } from "./I18n";
 import { foodTags, type Goal, type Macros } from "@/lib/plate";
 import { ratingOf, type Rated, type Taste } from "@/lib/taste";
 
@@ -23,6 +24,7 @@ export function Thumbs({
   onRate: (dish: Rated, value: 1 | 0 | -1) => void;
   small?: boolean;
 }) {
+  const t = useT();
   const r = ratingOf(taste, dish.name);
   const size = small ? "h-8 w-8" : "h-9 w-9";
   const icon = small ? 15 : 17;
@@ -31,7 +33,7 @@ export function Thumbs({
     return (
       <button
         type="button"
-        aria-label={`${label} ${dish.name}`}
+        aria-label={t(label, { dish: dish.name })}
         aria-pressed={active}
         onClick={() => onRate(dish, active ? 0 : value)}
         className={`inline-flex ${size} items-center justify-center rounded-full transition-colors duration-150 active:scale-90 ${
@@ -58,21 +60,22 @@ export function Thumbs({
   };
   return (
     <span className="inline-flex shrink-0 items-center">
-      {btn(1, "Thumbs up: more like", "bg-emerald-50 text-emerald-600")}
-      {btn(-1, "Thumbs down: less like", "bg-stone-100 text-stone-700")}
+      {btn(1, "Thumbs up: more like {dish}", "bg-emerald-50 text-emerald-600")}
+      {btn(-1, "Thumbs down: less like {dish}", "bg-stone-100 text-stone-700")}
     </span>
   );
 }
 
 /** "High protein", "Lighter"... from the AI estimate. No numbers: they're too rough to show. */
 export function FoodTags({ dish, className = "" }: { dish: { kind: string; macros?: Macros | null }; className?: string }) {
+  const tr = useT();
   const tags = foodTags(dish);
   if (tags.length === 0) return null;
   return (
     <span className={`flex flex-wrap gap-1 ${className}`}>
       {tags.map((t) => (
         <span key={t} className="inline-block rounded-md bg-amber-50 px-1.5 py-0.5 text-[0.6875rem] font-medium text-amber-900 ring-1 ring-amber-200">
-          {t}
+          {tr(t)}
         </span>
       ))}
     </span>
@@ -95,19 +98,20 @@ export function PlateCard({
   onRate: (dish: Rated, value: 1 | 0 | -1) => void;
   onChangeGoal: () => void;
 }) {
+  const t = useT();
   return (
     <section className="rise rounded-2xl bg-card p-4 shadow-sm ring-1 ring-stone-200">
       <div className="flex items-baseline justify-between gap-2">
         <h2 className="font-semibold">
-          {goal.plateName} at {hallLabel}
+          {t("{plate} at {hall}", { plate: t(goal.plateName), hall: hallLabel })}
         </h2>
         <button type="button" onClick={onChangeGoal} className="shrink-0 text-xs font-medium text-stone-500 underline">
-          Change goal
+          {t("Change goal")}
         </button>
       </div>
-      <p className="text-xs text-stone-500">For your goal: {goal.name.toLowerCase()}</p>
+      <p className="text-xs text-stone-500">{t("For your goal: {goal}", { goal: t(goal.name) })}</p>
       {plate.length === 0 ? (
-        <p className="mt-2 text-sm text-stone-500">We can&apos;t build a goal plate for this meal right now.</p>
+        <p className="mt-2 text-sm text-stone-500">{t("We can't build a goal plate for this meal right now.")}</p>
       ) : (
         <ul className="mt-3 flex flex-col gap-2.5">
           {plate.map((d) => (
@@ -121,7 +125,7 @@ export function PlateCard({
           ))}
         </ul>
       )}
-      <p className="mt-3 text-xs text-stone-400">Based on AI estimates from dish names. USC doesn&apos;t publish nutrition for these menus.</p>
+      <p className="mt-3 text-xs text-stone-400">{t("Based on AI estimates from dish names. USC doesn't publish nutrition for these menus.")}</p>
     </section>
   );
 }

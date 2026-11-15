@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useT } from "./I18n";
 import type { EnrichedDish } from "@/lib/enrich";
 import { hideReason } from "@/lib/filter";
 import type { EnrichedDay } from "@/lib/menus";
@@ -48,6 +49,7 @@ export function TasteQuiz({
 }) {
   const step = Boolean(onFinish);
   const total = step ? STEP_COUNT : COUNT;
+  const t = useT();
   const [open, setOpen] = useState(step);
   const finishRef = useRef(onFinish);
   const [cards, setCards] = useState<EnrichedDish[] | null>(null);
@@ -108,8 +110,8 @@ export function TasteQuiz({
         className="flex w-full items-center justify-between rounded-2xl bg-card p-4 text-left shadow-sm ring-1 ring-stone-200 transition active:scale-[0.99]"
       >
         <span>
-          <span className="block font-semibold">Quick taste check</span>
-          <span className="block text-sm text-stone-500">Swipe through {total} dishes from today&apos;s menus. Optional, about 30 seconds.</span>
+          <span className="block font-semibold">{t("Quick taste check")}</span>
+          <span className="block text-sm text-stone-500">{t("Swipe through {n} dishes from today's menus. Optional, about 30 seconds.", { n: total })}</span>
         </span>
         <span className="text-2xl" aria-hidden>
           🍽️
@@ -126,7 +128,7 @@ export function TasteQuiz({
   return (
     <section className={step ? "" : "rise rounded-2xl bg-card p-4 shadow-sm ring-1 ring-stone-200"}>
       {step ? (
-        <div className="flex gap-1.5" aria-label={cards ? `${Math.min(i + 1, cards.length)} of ${cards.length}` : undefined}>
+        <div className="flex gap-1.5" aria-label={cards ? t("{i} of {n}", { i: Math.min(i + 1, cards.length), n: cards.length }) : undefined}>
           {Array.from({ length: cards?.length || total }, (_, n) => (
             <span key={n} className="h-1 flex-1 overflow-hidden rounded-full bg-stone-200">
               <span className={`block h-full rounded-full bg-cardinal transition-all duration-300 ease-out ${n < i ? "w-full" : "w-0"}`} />
@@ -135,7 +137,7 @@ export function TasteQuiz({
         </div>
       ) : (
         <div className="flex items-baseline justify-between">
-          <h2 className="font-semibold">Quick taste check</h2>
+          <h2 className="font-semibold">{t("Quick taste check")}</h2>
           {cards && !done && (
             <span className="text-xs text-stone-400">
               {Math.min(i + 1, cards.length)} / {cards.length}
@@ -144,9 +146,9 @@ export function TasteQuiz({
         </div>
       )}
 
-      {failed && <p className="mt-4 text-sm text-stone-500">Couldn&apos;t load today&apos;s dishes. You can skip this.</p>}
+      {failed && <p className="mt-4 text-sm text-stone-500">{t("Couldn't load today's dishes. You can skip this.")}</p>}
       {!cards && !failed && <div className={`mt-4 ${cardH} animate-pulse rounded-3xl bg-stone-200/60`} />}
-      {cards && cards.length === 0 && <p className="mt-4 text-sm text-stone-500">No dishes to rate right now.</p>}
+      {cards && cards.length === 0 && <p className="mt-4 text-sm text-stone-500">{t("No dishes to rate right now.")}</p>}
 
       {done && cards.length > 0 && (
         <div className={`rise mt-4 flex ${cardH} flex-col items-center justify-center rounded-3xl bg-card p-6 text-center shadow-sm ring-1 ring-stone-200`}>
@@ -155,8 +157,8 @@ export function TasteQuiz({
               <path d="M5 12.5l4.5 4.5L19 7.5" />
             </svg>
           </span>
-          <p className="mt-4 text-lg font-bold">Got it, ForkCast knows your taste</p>
-          <p className="mt-1 text-sm text-stone-500">{step ? "Finding your dining hall..." : "Keep using the thumbs on any dish to fine-tune it."}</p>
+          <p className="mt-4 text-lg font-bold">{t("Got it, ForkCast knows your taste")}</p>
+          <p className="mt-1 text-sm text-stone-500">{step ? t("Finding your dining hall...") : t("Keep using the thumbs on any dish to fine-tune it.")}</p>
         </div>
       )}
 
@@ -204,14 +206,14 @@ export function TasteQuiz({
                   style={{ opacity: Math.max(0, lean) }}
                   aria-hidden
                 >
-                  YUM
+                  {t("YUM")}
                 </span>
                 <span
                   className="absolute right-4 top-4 rotate-12 rounded-lg border-[3px] border-stone-500 px-2 py-0.5 text-lg font-black tracking-wider text-stone-600"
                   style={{ opacity: Math.max(0, -lean) }}
                   aria-hidden
                 >
-                  NAH
+                  {t("NAH")}
                 </span>
               </div>
               <div className="px-5 pb-5 pt-3">
@@ -230,7 +232,7 @@ export function TasteQuiz({
             <button
               type="button"
               onClick={() => decide(-1)}
-              aria-label={`No to ${card.name}`}
+              aria-label={t("No to {dish}", { dish: card.name })}
               className={`flex h-16 w-16 items-center justify-center rounded-full bg-card text-stone-500 shadow-md ring-1 ring-stone-200 transition active:scale-90 ${lean < -0.3 ? "scale-110 text-stone-800" : ""}`}
             >
               <svg viewBox="0 0 24 24" className="h-7 w-7" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden>
@@ -238,12 +240,12 @@ export function TasteQuiz({
               </svg>
             </button>
             <button type="button" onClick={skip} className="rounded-full px-3 py-2 text-sm font-medium text-stone-400 active:scale-95">
-              Not sure
+              {t("Not sure")}
             </button>
             <button
               type="button"
               onClick={() => decide(1)}
-              aria-label={`Yes to ${card.name}`}
+              aria-label={t("Yes to {dish}", { dish: card.name })}
               className={`flex h-16 w-16 items-center justify-center rounded-full bg-brand text-white shadow-md shadow-cardinal/30 transition active:scale-90 ${lean > 0.3 ? "scale-110" : ""}`}
             >
               <svg viewBox="0 0 24 24" className="h-7 w-7" fill="currentColor" aria-hidden>

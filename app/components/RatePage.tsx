@@ -9,6 +9,7 @@ import { currentMeal } from "@/lib/score";
 import { HALLS } from "@/lib/types";
 import { Logo } from "./Logo";
 import { ScoreBadge, ScorePicker, useScores } from "./Ratings";
+import { LangButton, StoredLangProvider, useT } from "./I18n";
 
 const todayLA = () => new Date().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
 const shortStation = (s: string) => s.replace(/\s*\(.*\)\s*$/, "");
@@ -29,7 +30,16 @@ function initial() {
 }
 
 /** Rate anything on today's menus, 1 to 10. Every browser counts once per dish; everyone sees the average. */
-export default function RatePage() {
+export default function RatePageWithLang() {
+  return (
+    <StoredLangProvider>
+      <RatePage />
+    </StoredLangProvider>
+  );
+}
+
+function RatePage() {
+  const t = useT();
   const [start] = useState(initial);
   const [day, setDay] = useState<EnrichedDay | null>(null);
   const [failed, setFailed] = useState(false);
@@ -71,9 +81,9 @@ export default function RatePage() {
           <span className="flex shrink-0 flex-col items-end gap-1">
             <ScoreBadge score={ratings.scoreOf(d.name)} />
             {mine !== null ? (
-              <span className="text-xs font-semibold text-cardinal">You: {mine}</span>
+              <span className="text-xs font-semibold text-cardinal">{t("You: {n}", { n: mine })}</span>
             ) : (
-              <span className="text-xs font-medium text-stone-400">{isOpen ? "" : "Rate"}</span>
+              <span className="text-xs font-medium text-stone-400">{isOpen ? "" : t("Rate")}</span>
             )}
           </span>
         </button>
@@ -95,17 +105,24 @@ export default function RatePage() {
 
   return (
     <main className="mx-auto w-full max-w-md px-4 pb-12 pt-5">
-      <Link href="/" className="text-base" aria-label="ForkCast home">
-        <Logo />
-      </Link>
-      <h1 className="mt-2 text-2xl font-bold tracking-tight">Rate the food</h1>
+      <div className="flex items-center justify-between gap-3">
+        <Link href="/" className="text-base" aria-label={t("ForkCast home")}>
+          <Logo />
+        </Link>
+        <LangButton />
+      </div>
+      <h1 className="mt-2 text-2xl font-bold tracking-tight">{t("Rate the food")}</h1>
       <p className="mt-1 text-sm text-stone-500">
-        Tap anything you&apos;ve tried and give it 1 to 10. Everyone sees the average, so the next student knows what&apos;s good.
+        {t("Tap anything you've tried and give it 1 to 10. Everyone sees the average, so the next student knows what's good.")}
       </p>
-      {ratings.ratedCount > 0 && <p className="mt-1 text-sm font-medium text-cardinal">You&apos;ve rated {ratings.ratedCount} {ratings.ratedCount === 1 ? "dish" : "dishes"}. Thank you!</p>}
+      {ratings.ratedCount > 0 && (
+        <p className="mt-1 text-sm font-medium text-cardinal">
+          {ratings.ratedCount === 1 ? t("You've rated 1 dish. Thank you!") : t("You've rated {n} dishes. Thank you!", { n: ratings.ratedCount })}
+        </p>
+      )}
 
       {meals.length > 1 && (
-        <div className="mt-4 flex rounded-xl bg-stone-200/60 p-1" role="tablist">
+        <div className="mt-4 flex rounded-xl bg-stone-200/60 p-1" role="tablist" aria-label={t("Meal")}>
           {meals.map((m) => (
             <button
               key={m}
@@ -114,7 +131,7 @@ export default function RatePage() {
               onClick={() => setMeal(m)}
               className={`flex-1 rounded-lg py-1.5 text-sm font-semibold transition ${m === shownMeal ? "bg-card text-cardinal shadow-sm" : "text-stone-500"}`}
             >
-              {m}
+              {t(m)}
             </button>
           ))}
         </div>
@@ -135,7 +152,7 @@ export default function RatePage() {
         ))}
       </div>
 
-      {failed && <p className="mt-6 text-sm text-stone-500">Couldn&apos;t load the menu. Try again in a minute.</p>}
+      {failed && <p className="mt-6 text-sm text-stone-500">{t("Couldn't load the menu. Try again in a minute.")}</p>}
       {!day && !failed && (
         <div className="mt-4 flex flex-col gap-2">
           {[0, 1, 2, 3].map((i) => (
@@ -143,13 +160,13 @@ export default function RatePage() {
           ))}
         </div>
       )}
-      {day && dishes.length === 0 && <p className="mt-6 text-sm text-stone-500">Nothing listed here for {shownMeal?.toLowerCase() ?? "this meal"}.</p>}
+      {day && dishes.length === 0 && <p className="mt-6 text-sm text-stone-500">{t("Nothing listed here for {meal}.", { meal: shownMeal ? t(shownMeal) : t("this meal") })}</p>}
       {GROUPS.map((g) => {
         const list = dishes.filter((d) => d.kind === g.kind);
         return (
           list.length > 0 && (
             <section key={g.kind} className="mt-5">
-              <h2 className="mb-2 px-1 text-xs font-semibold uppercase tracking-wide text-stone-400">{g.label}</h2>
+              <h2 className="mb-2 px-1 text-xs font-semibold uppercase tracking-wide text-stone-400">{t(g.label)}</h2>
               <ul className="flex flex-col gap-2">{list.map(row)}</ul>
             </section>
           )

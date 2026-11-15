@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "vitest run"
+    "test": "vitest run",
+    "i18n": "JITI_ALIAS={\\\"@/\\\":\\\"$PWD/\\\"} jiti scripts/i18n.mts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^1.8.0",
