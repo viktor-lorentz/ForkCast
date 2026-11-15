@@ -26,8 +26,8 @@ A brand-new profile takes 3 to 7 seconds because the AI is writing a fresh pick;
 ### 6. You hid "Pork Vindaloo" for a halal student. Isn't that obvious? Show me a hard one.
 The obvious ones prove the rule works; the hard ones are the bagels on slide 2, labeled halal ingredients but containing sesame, and dishes USC marks "not analyzed," which we hide from anyone with an allergy. A student skimming icons misses those; code doesn't.
 
-### 7. 61 tests on what, exactly?
-They run the same sample students judges can open against saved USC menus and check that no hidden dish ever reaches a pick, that the verifier catches bad AI answers, and that walking times and labels match the data. `[Viktor: confirm the current count and one test you're proud of.]`
+### 7. 206 tests on what, exactly?
+They run the same sample students judges can open against saved USC menus and check that no hidden dish ever reaches a pick, that the verifier catches bad AI answers, and that walking times and labels match the data. `[Viktor: one test you're proud of.]`
 
 ---
 
@@ -59,7 +59,7 @@ The app knows each hall's hours and your walking time, so it marks a hall as clo
 No, USC publishes menus about a week ahead and we read them. The weekly view uses code scoring only, with no AI call, so it is fast and costs nothing.
 
 ### 15. It speaks other languages. How do you keep the wording careful in French?
-The AI writes the summary in the student's language, and the verifier checks the safety wording and the walking minutes in every language we support. If a translated answer fails those checks, the student gets the checked fallback instead. `[Viktor: list the languages.]`
+The AI writes the summary in the student's language, and the verifier checks the safety wording and the walking minutes in every language we support. If a translated answer fails those checks, the student gets the checked fallback instead. We support seven: English, Spanish, French, Chinese, Korean, Hindi and Vietnamese.
 
 ### 16. What about accessibility?
 It has a dark theme that follows the phone, WCAG AA contrast, focus rings, screen-reader labels, and text that scales. It's also a website, so it works on any phone without an install.
@@ -101,4 +101,4 @@ Viktor (ECE) built the app and the verification pipeline; Andrew (BUAD) owned th
 
 - **Question 10:** the survey is now 24 of 42 students (57%), not 18 of 30.
 - **Question 16:** per-visitor rate limits now exist on the AI and email endpoints, so drop the "as of Saturday afternoon it does not" note.
-- **Question 23:** the test count is now 61. `[Viktor: confirm.]`
+- **Question 23:** the test count is now 206.

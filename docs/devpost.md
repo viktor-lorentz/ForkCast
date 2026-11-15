@@ -27,7 +27,7 @@ ForkCast is a phone-first web app that works like a weather forecast for your ne
 - **It learns you.** A quick swipe through real dishes, thumbs up or down on any dish, and fitness goals (build muscle, lean out, bulk up) shape your picks.
 - **And from each other.** After a meal it asks how the food was. Students rate dishes from 1 to 10 and everyone sees the average.
 - **Planning.** It flags halls that will close before you could walk there, and shows the best hall for each meal of the coming week.
-- **For everyone.** Dark mode, screen-reader labels, text that scales, and a choice of languages. `[Viktor: list the languages.]`
+- **For everyone.** Dark mode, screen-reader labels, text that scales, and seven languages: English, Español, Français, 中文, 한국어, हिन्दी and Tiếng Việt.
 - **Take it with you.** A QR code or link moves your profile to another device without an account, and an optional daily email sends your picks to your @usc.edu address.
 
 ## How we use AI, responsibly
@@ -48,7 +48,7 @@ We never call food "safe." We say "no flagged allergens per USC labels" and tell
 - **AI:** Claude through the Anthropic SDK. A fast model classifies dishes and turns a one-sentence description into a profile; a stronger model picks the plate and writes the explanation. Every model output is validated with zod.
 - **Data:** USC Hospitality's public menu feed and hours; walking times for 23 residences precomputed from OpenStreetMap foot routes.
 - **Storage:** profiles live in the student's browser. Upstash Redis holds only opt-in email subscriptions and anonymous dish ratings.
-- **Quality:** 61 automated tests run the same sample students judges can open. `[Viktor: confirm the count.]`
+- **Quality:** 206 automated tests run the same sample students judges can open.
 - **Deck:** built in Slidev, with real screenshots and real numbers from the live app.
 
 ## Challenges we ran into
