@@ -4,6 +4,7 @@ import { GOAL_IDS, type GoalId } from "./plate";
 import { STYLE_IDS, type StyleId } from "./styles";
 import { MAX_RATINGS, type Taste } from "./taste";
 import { findDorm } from "./walking";
+import { cleanExclude } from "./exclude";
 
 export interface Profile {
   /** USC allergen codes to avoid. */
@@ -12,6 +13,8 @@ export interface Profile {
   diet: Preference[];
   likes: string[];
   dislikes: string[];
+  /** Foods they never eat that USC doesn't label (beef, mushrooms...): hidden by dish name, a best guess. */
+  exclude?: string[];
   /** Registered for Parkside's Allergen Awareness Zone (its station is otherwise off-limits). */
   aaz?: boolean;
   /** Residence id from lib/walking.ts, used for walking times. */
@@ -33,6 +36,7 @@ export const ProfileSchema = z.object({
   diet: z.array(z.enum(PREFERENCES)),
   likes: z.array(z.string().max(40)).max(12),
   dislikes: z.array(z.string().max(40)).max(12),
+  exclude: z.array(z.string().max(40)).max(12).optional(),
   aaz: z.boolean().optional(),
   dorm: z.string().max(40).optional(),
   taste: z.object({ up: z.array(RatedSchema).max(MAX_RATINGS), down: z.array(RatedSchema).max(MAX_RATINGS) }).optional(),
@@ -51,6 +55,8 @@ export function cleanProfile(input: unknown): Profile {
     aaz: Boolean(p.aaz),
     dorm: findDorm(p.dorm)?.id,
   };
+  const exclude = [...new Set((p.exclude ?? []).map(cleanExclude).filter(Boolean))];
+  if (exclude.length) out.exclude = exclude.sort();
   if (p.goal) out.goal = p.goal;
   if (p.styles?.length) out.styles = [...new Set(p.styles)].sort();
   if (p.taste && p.taste.up.length + p.taste.down.length > 0) {
@@ -72,6 +78,7 @@ export function profileKey(p: Profile): string {
     [...p.diet].sort(),
     [...p.likes].sort(),
     [...p.dislikes].sort(),
+    [...(p.exclude ?? [])].sort(),
     Boolean(p.aaz),
     p.dorm ?? "",
     p.goal ?? "",

@@ -51,6 +51,7 @@ async function getJson<T>(url: string, init?: RequestInit): Promise<T> {
 function ProfileLine({ profile }: { profile: Profile }) {
   const parts = [
     ...profile.avoid.map((a) => `No ${LABEL_NAMES[a]}`),
+    ...(profile.exclude ?? []).map((w) => `No ${w}`),
     ...profile.diet.map((d) => LABEL_NAMES[d]),
     ...(profile.styles ?? []).map((s) => STYLES.find((x) => x.id === s)!.name),
     ...(profile.goal ? [findGoal(profile.goal)!.name] : []),
