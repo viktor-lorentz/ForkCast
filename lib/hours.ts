@@ -74,7 +74,7 @@ export function hoursOn(h: HallHours, date: string): { hours: string; label: str
 }
 
 /** Minutes after midnight for "7:00AM" / "10PM"; null if unreadable. */
-function minutes(t: string): number | null {
+export function minutes(t: string): number | null {
   const m = t.trim().match(/^(\d{1,2})(?::(\d\d))?\s*([AP])M$/i);
   if (!m) return null;
   return ((Number(m[1]) % 12) + (m[3].toUpperCase() === "P" ? 12 : 0)) * 60 + Number(m[2] ?? 0);

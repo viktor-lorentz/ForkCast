@@ -45,6 +45,7 @@ type Card = {
   comparing: string;
   checked: string;
   noMatch: string;
+  closesAt: (time: string | null) => string;
   walk: (min: number, from: string) => string;
   meal: Record<string, string>;
   /** Text for the code-only fallback, so the card stays in one language. */
@@ -60,6 +61,7 @@ export const CARD: Record<LangId, Card> = {
     comparing: "Comparing halls...",
     checked: "Checked against USC labels",
     noMatch: "No hall has a match",
+    closesAt: (t) => `Closes at ${t}`,
     walk: (n, from) => `${n} min walk from ${from}`,
     meal: {},
     rulesSummary: (h, w, m, s) => `${h} is your best match${w === null ? "" : `, a ${w} min walk`}: ${m} mains and ${s} sides fit your profile.`,
@@ -72,6 +74,7 @@ export const CARD: Record<LangId, Card> = {
     comparing: "Comparando comedores...",
     checked: "Revisado con las etiquetas de USC",
     noMatch: "Ningún comedor coincide",
+    closesAt: (t) => `Cierra a las ${t}`,
     walk: (n, from) => `${n} min a pie desde ${from}`,
     meal: { Breakfast: "Desayuno", Brunch: "Brunch", Lunch: "Almuerzo", Dinner: "Cena" },
     rulesSummary: (h, w, m, s) =>
@@ -85,6 +88,7 @@ export const CARD: Record<LangId, Card> = {
     comparing: "正在比较餐厅...",
     checked: "已对照 USC 标签核查",
     noMatch: "没有餐厅符合",
+    closesAt: (t) => `${t} 关门`,
     walk: (n, from) => `从 ${from} 步行 ${n} 分钟`,
     meal: { Breakfast: "早餐", Brunch: "早午餐", Lunch: "午餐", Dinner: "晚餐" },
     rulesSummary: (h, w, m, s) => `${h} 最适合你${w === null ? "" : `，步行 ${w} 分钟`}：有 ${m} 道主菜和 ${s} 道配菜符合你的要求。`,
@@ -97,6 +101,7 @@ export const CARD: Record<LangId, Card> = {
     comparing: "식당 비교 중...",
     checked: "USC 라벨로 확인함",
     noMatch: "맞는 식당이 없어요",
+    closesAt: (t) => `${t}에 문 닫아요`,
     walk: (n, from) => `${from}에서 걸어서 ${n}분`,
     meal: { Breakfast: "아침", Brunch: "브런치", Lunch: "점심", Dinner: "저녁" },
     rulesSummary: (h, w, m, s) => `${h}이(가) 가장 잘 맞아요${w === null ? "" : ` (걸어서 ${w}분)`}: 메인 ${m}개, 사이드 ${s}개가 프로필에 맞아요.`,
@@ -109,6 +114,7 @@ export const CARD: Record<LangId, Card> = {
     comparing: "डाइनिंग हॉल की तुलना हो रही है...",
     checked: "USC लेबल से जाँचा गया",
     noMatch: "कोई हॉल मेल नहीं खाता",
+    closesAt: (t) => `${t} बजे बंद होता है`,
     walk: (n, from) => `${from} से ${n} मिनट पैदल`,
     meal: { Breakfast: "नाश्ता", Brunch: "ब्रंच", Lunch: "दोपहर का खाना", Dinner: "रात का खाना" },
     rulesSummary: (h, w, m, s) =>
@@ -122,6 +128,7 @@ export const CARD: Record<LangId, Card> = {
     comparing: "Đang so sánh nhà ăn...",
     checked: "Đã đối chiếu với nhãn của USC",
     noMatch: "Không có nhà ăn nào phù hợp",
+    closesAt: (t) => `Đóng cửa lúc ${t}`,
     walk: (n, from) => `${n} phút đi bộ từ ${from}`,
     meal: { Breakfast: "Bữa sáng", Brunch: "Bữa nửa buổi", Lunch: "Bữa trưa", Dinner: "Bữa tối" },
     rulesSummary: (h, w, m, s) => `${h} hợp với bạn nhất${w === null ? "" : ` (${w} phút đi bộ)`}: ${m} món chính và ${s} món phụ phù hợp với bạn.`,

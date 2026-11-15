@@ -7,6 +7,23 @@ import { lookupScores } from "./ratings-store";
 import { recommend, type RatingMap, type Recommendation } from "./recommend";
 import { scoreHalls } from "./score";
 import { getSwitches } from "./switches";
+import { closingKey, closingMap, laMinutes, type ClosingMap } from "./closing";
+import { getHours } from "./hours-server";
+import { currentMeal } from "./score";
+import { todayLA } from "./usc";
+import { findDorm } from "./walking";
+
+/** Closing-soon state, only for today's meal that's on right now. Empty if hours can't be read. */
+async function closingNow(day: EnrichedDay, profile: Profile, meal: string): Promise<ClosingMap> {
+  const meals = [...new Set(day.halls.flatMap((h) => h.meals))];
+  if (day.date !== todayLA() || meal !== currentMeal(meals)) return {};
+  try {
+    const hours = await getHours();
+    return closingMap(hours.halls, day.date, laMinutes(), findDorm(profile.dorm)?.minutes ?? {});
+  } catch {
+    return {};
+  }
+}
 
 /** Student ratings for the dishes this profile could get at this meal; empty if the store is down. */
 async function relevantRatings(day: EnrichedDay, profile: Profile, meal: string): Promise<RatingMap> {
@@ -32,22 +49,22 @@ function ratingsKey(r: RatingMap): string {
  * skipped the menu cache and re-ran AI tagging on every cold server instance.
  */
 export async function getRecommendation(day: EnrichedDay, profile: Profile, meal: string): Promise<Recommendation> {
-  const [ratings, switches] = await Promise.all([relevantRatings(day, profile, meal), getSwitches()]);
+  const [ratings, switches, closing] = await Promise.all([relevantRatings(day, profile, meal), getSwitches(), closingNow(day, profile, meal)]);
   // Emergency switch: code-only picks, no AI call and no cached AI answer.
-  if (switches.rulesOnly) return recommend(day, meal, profile, ratings, { rulesOnly: true });
+  if (switches.rulesOnly) return recommend(day, meal, profile, ratings, { rulesOnly: true, closing });
   const cached = unstable_cache(
     async () => {
-      const rec = await recommend(day, meal, profile, ratings);
+      const rec = await recommend(day, meal, profile, ratings, { closing });
       // Only verified AI answers are cached, so a fallback gets a fresh AI attempt next time.
       if (rec.source !== "ai") throw Object.assign(new Error("rules fallback"), { rec });
       return rec;
     },
-    ["recommend-v7", day.date, meal, profileKey(profile), ratingsKey(ratings)],
+    ["recommend-v8", day.date, meal, profileKey(profile), ratingsKey(ratings), closingKey(closing)],
     { revalidate: 3 * 3600 },
   );
   try {
     return await cached();
   } catch (err) {
-    return (err as { rec?: Recommendation }).rec ?? recommend(day, meal, profile, ratings);
+    return (err as { rec?: Recommendation }).rec ?? recommend(day, meal, profile, ratings, { closing });
   }
 }
