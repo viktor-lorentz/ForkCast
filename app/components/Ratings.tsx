@@ -138,7 +138,7 @@ export function ScoreBadge({
   const n = `${score.n} student${score.n === 1 ? "" : "s"}${when}`;
   return (
     <span
-      className={`inline-flex shrink-0 items-center gap-1 rounded-full bg-stone-900 px-2 py-0.5 text-xs font-semibold text-white ${className}`}
+      className={`inline-flex shrink-0 items-center gap-1 rounded-full bg-[#1c1917] px-2 py-0.5 text-xs font-semibold text-white ring-1 ring-white/10 ${className}`}
       title={`Students rate it ${formatAvg(score.avg)} out of 10 (${n})`}
       aria-label={`Students rate it ${formatAvg(score.avg)} out of 10, ${n}`}
     >
@@ -184,7 +184,7 @@ export function ScorePicker({
               onClick={() => onPick(v)}
               className={`h-8 min-w-0 flex-1 rounded-lg text-sm font-semibold tabular-nums transition-colors active:scale-90 ${
                 on
-                  ? "pop bg-cardinal text-white"
+                  ? "pop bg-brand text-white"
                   : value !== null && v < value
                     ? "bg-cardinal/10 text-cardinal"
                     : "bg-stone-100 text-stone-500"
@@ -196,7 +196,7 @@ export function ScorePicker({
         })}
       </div>
       {(hint || value !== null) && (
-        <p className="mt-1 flex justify-between text-[11px] text-stone-400">
+        <p className="mt-1 flex justify-between text-[0.6875rem] text-stone-400">
           {value !== null ? (
             <span className="font-medium text-cardinal">
               You gave it {value}: {scoreWord(value).toLowerCase()}
@@ -306,7 +306,7 @@ export function RateMealPrompt({
   }
 
   return (
-    <section className="rise rounded-2xl bg-white p-4 shadow-sm ring-1 ring-amber-200">
+    <section className="rise rounded-2xl bg-card p-4 shadow-sm ring-1 ring-amber-200">
       <div className="flex items-start justify-between gap-3">
         <div>
           <h2 className="font-semibold">
@@ -372,7 +372,7 @@ export function RateMealPrompt({
             type="button"
             onClick={finish}
             disabled={rated === 0}
-            className="rounded-full bg-stone-900 px-4 py-1.5 text-sm font-semibold text-white transition active:scale-95 disabled:opacity-30"
+            className="rounded-full bg-ink px-4 py-1.5 text-sm font-semibold text-ink-fg transition active:scale-95 disabled:opacity-30"
           >
             Done
           </button>

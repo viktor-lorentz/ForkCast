@@ -11,14 +11,14 @@ export function Chip({
   onClick: () => void;
   tone?: "cardinal" | "green";
 }) {
-  const on = tone === "green" ? "bg-emerald-700 border-emerald-700 text-white" : "bg-cardinal border-cardinal text-white";
+  const on = tone === "green" ? "bg-[#047857] border-[#047857] text-white" : "bg-brand border-cardinal text-white";
   return (
     <button
       type="button"
       onClick={onClick}
       aria-pressed={selected}
       className={`rounded-full border px-3.5 py-2 text-sm font-medium transition active:scale-95 ${
-        selected ? on : "border-stone-300 bg-white text-stone-700"
+        selected ? on : "border-stone-300 bg-card text-stone-700"
       }`}
     >
       {label}
@@ -32,7 +32,7 @@ export function LabelTag({ text, tone }: { text: string; tone: "green" | "stone"
     stone: "bg-stone-100 text-stone-600 ring-stone-200",
     red: "bg-red-50 text-red-800 ring-red-200",
   }[tone];
-  return <span className={`inline-block rounded-md px-1.5 py-0.5 text-[11px] font-medium ring-1 ${cls}`}>{text}</span>;
+  return <span className={`inline-block rounded-md px-1.5 py-0.5 text-[0.6875rem] font-medium ring-1 ${cls}`}>{text}</span>;
 }
 
 /** An even, full-width option tile with a check: for allergies, diets and goals. */
@@ -54,14 +54,14 @@ export function Tile({
 }) {
   const on =
     tone === "green" ? "border-emerald-600 bg-emerald-50 text-emerald-900 ring-1 ring-emerald-600" : "border-cardinal bg-cardinal/5 text-cardinal ring-1 ring-cardinal";
-  const dot = tone === "green" ? "border-emerald-600 bg-emerald-600" : "border-cardinal bg-cardinal";
+  const dot = tone === "green" ? "border-[#047857] bg-[#047857]" : "border-brand bg-brand";
   return (
     <button
       type="button"
       onClick={onClick}
       aria-pressed={selected}
-      className={`flex h-12 w-full min-w-0 items-center gap-2.5 rounded-xl border px-3 text-left text-[15px] font-medium transition active:scale-[0.98] ${
-        selected ? on : "border-stone-200 bg-white text-stone-700"
+      className={`flex h-12 w-full min-w-0 items-center gap-2.5 rounded-xl border px-3 text-left text-[0.9375rem] font-medium transition active:scale-[0.98] ${
+        selected ? on : "border-stone-200 bg-card text-stone-700"
       }`}
     >
       {icon && (

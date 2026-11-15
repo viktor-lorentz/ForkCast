@@ -171,7 +171,7 @@ export function Onboarding({
                 key={s.id}
                 type="button"
                 onClick={() => onStarter(s)}
-                className="flex min-h-14 items-center gap-2.5 rounded-2xl bg-white px-3 py-2 text-left text-[15px] font-semibold leading-tight shadow-sm ring-1 ring-stone-200 transition active:scale-[0.98] active:bg-stone-50"
+                className="flex min-h-14 items-center gap-2.5 rounded-2xl bg-card px-3 py-2 text-left text-[0.9375rem] font-semibold leading-tight shadow-sm ring-1 ring-stone-200 transition active:scale-[0.98] active:bg-stone-50"
               >
                 <span className="w-6 shrink-0 text-center text-xl" aria-hidden>
                   {s.icon}
@@ -188,7 +188,7 @@ export function Onboarding({
         </section>
       )}
 
-      <section className="rounded-2xl bg-white p-4 shadow-sm ring-1 ring-stone-200">
+      <section className="rounded-2xl bg-card p-4 shadow-sm ring-1 ring-stone-200">
         <label htmlFor="about" className="text-sm font-semibold">Describe how you eat</label>
         <textarea
           id="about"
@@ -203,7 +203,7 @@ export function Onboarding({
           type="button"
           onClick={readText}
           disabled={parsing || !text.trim()}
-          className="mt-2 w-full rounded-xl bg-stone-900 py-2.5 text-sm font-semibold text-white disabled:opacity-40"
+          className="mt-2 w-full rounded-xl bg-ink py-2.5 text-sm font-semibold text-ink-fg disabled:opacity-40"
         >
           {parsing ? "Reading..." : "Fill in for me"}
         </button>
@@ -250,9 +250,9 @@ export function Onboarding({
             maxLength={30}
             placeholder="Add another, e.g. turkey"
             aria-label="Add a food you never eat"
-            className="h-12 min-w-0 flex-1 rounded-xl border border-stone-200 bg-white px-3 text-base outline-none focus:border-cardinal"
+            className="h-12 min-w-0 flex-1 rounded-xl border border-stone-200 bg-card px-3 text-base outline-none focus:border-cardinal"
           />
-          <button type="button" onClick={addNever} disabled={!never.trim()} className="h-12 rounded-xl bg-stone-900 px-5 text-sm font-semibold text-white transition active:scale-95 disabled:opacity-30">
+          <button type="button" onClick={addNever} disabled={!never.trim()} className="h-12 rounded-xl bg-ink px-5 text-sm font-semibold text-ink-fg transition active:scale-95 disabled:opacity-30">
             Add
           </button>
         </div>
@@ -311,9 +311,9 @@ export function Onboarding({
             maxLength={40}
             placeholder="Add your own, e.g. curry"
             aria-label="Add a food you love"
-            className="min-w-0 flex-1 rounded-xl border border-stone-300 bg-white px-3 py-2 text-base outline-none focus:border-cardinal"
+            className="min-w-0 flex-1 rounded-xl border border-stone-300 bg-card px-3 py-2 text-base outline-none focus:border-cardinal"
           />
-          <button type="button" onClick={addLike} className="rounded-xl border border-stone-300 bg-white px-4 text-sm font-medium active:scale-95">
+          <button type="button" onClick={addLike} className="rounded-xl border border-stone-300 bg-card px-4 text-sm font-medium active:scale-95">
             Add
           </button>
         </div>
@@ -329,9 +329,9 @@ export function Onboarding({
             maxLength={40}
             placeholder="e.g. mushrooms"
             aria-label="Add a food you don't like"
-            className="min-w-0 flex-1 rounded-xl border border-stone-300 bg-white px-3 py-2 text-base outline-none focus:border-cardinal"
+            className="min-w-0 flex-1 rounded-xl border border-stone-300 bg-card px-3 py-2 text-base outline-none focus:border-cardinal"
           />
-          <button type="button" onClick={addDislike} className="rounded-xl border border-stone-300 bg-white px-4 text-sm font-medium">
+          <button type="button" onClick={addDislike} className="rounded-xl border border-stone-300 bg-card px-4 text-sm font-medium">
             Add
           </button>
         </div>
@@ -347,7 +347,7 @@ export function Onboarding({
       {onCancel && <TasteQuiz profile={p} onRate={(dish, v) => setP((cur) => ({ ...cur, taste: rate(cur.taste, dish, v) }))} />}
 
       {taste.count > 0 && (
-        <section className="rounded-2xl bg-white p-4 shadow-sm ring-1 ring-stone-200">
+        <section className="rounded-2xl bg-card p-4 shadow-sm ring-1 ring-stone-200">
           <h2 className="font-semibold">Your ratings</h2>
           <p className="mt-1 text-sm text-stone-600">
             You&apos;ve rated {taste.count} dish{taste.count === 1 ? "" : "es"}
@@ -367,7 +367,7 @@ export function Onboarding({
           id="dorm"
           value={p.dorm ?? ""}
           onChange={(e) => setP({ ...p, dorm: e.target.value || undefined })}
-          className="w-full rounded-xl border border-stone-300 bg-white px-3 py-2.5 text-base outline-none focus:border-cardinal"
+          className="w-full rounded-xl border border-stone-300 bg-card px-3 py-2.5 text-base outline-none focus:border-cardinal"
         >
           <option value="">Off campus or rather not say</option>
           {DORMS.map((d) => (
@@ -386,7 +386,7 @@ export function Onboarding({
             setStep("taste");
             window.scrollTo(0, 0);
           }}
-          className="mx-auto block w-full max-w-md rounded-2xl bg-cardinal py-4 text-lg font-semibold text-white shadow-lg active:bg-cardinal-dark"
+          className="mx-auto block w-full max-w-md rounded-2xl bg-brand py-4 text-lg font-semibold text-white shadow-lg active:brightness-90"
         >
           {onCancel ? "Find my dining hall" : "Continue"}
         </button>

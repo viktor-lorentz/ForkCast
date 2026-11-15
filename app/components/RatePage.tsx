@@ -59,7 +59,7 @@ export default function RatePage() {
     const mine = ratings.mineOf(d.name);
     const isOpen = open === d.id;
     return (
-      <li key={d.id} className="rounded-2xl bg-white shadow-sm ring-1 ring-stone-200">
+      <li key={d.id} className="rounded-2xl bg-card shadow-sm ring-1 ring-stone-200">
         <button type="button" onClick={() => setOpen(isOpen ? null : d.id)} aria-expanded={isOpen} className="flex w-full items-center gap-3 p-3 text-left">
           <span className="text-2xl" aria-hidden>
             {dishEmoji(d.name)}
@@ -112,7 +112,7 @@ export default function RatePage() {
               role="tab"
               aria-selected={m === shownMeal}
               onClick={() => setMeal(m)}
-              className={`flex-1 rounded-lg py-1.5 text-sm font-semibold transition ${m === shownMeal ? "bg-white text-cardinal shadow-sm" : "text-stone-500"}`}
+              className={`flex-1 rounded-lg py-1.5 text-sm font-semibold transition ${m === shownMeal ? "bg-card text-cardinal shadow-sm" : "text-stone-500"}`}
             >
               {m}
             </button>
@@ -127,7 +127,7 @@ export default function RatePage() {
             aria-pressed={hall === h.id}
             onClick={() => setHall(h.id)}
             className={`rounded-full px-4 py-1.5 text-sm font-semibold transition active:scale-95 ${
-              hall === h.id ? "bg-stone-900 text-white" : "bg-white text-stone-600 ring-1 ring-stone-300"
+              hall === h.id ? "bg-ink text-ink-fg" : "bg-card text-stone-600 ring-1 ring-stone-300"
             }`}
           >
             {h.short}
@@ -139,7 +139,7 @@ export default function RatePage() {
       {!day && !failed && (
         <div className="mt-4 flex flex-col gap-2">
           {[0, 1, 2, 3].map((i) => (
-            <div key={i} className="h-16 animate-pulse rounded-2xl bg-white ring-1 ring-stone-200" />
+            <div key={i} className="h-16 animate-pulse rounded-2xl bg-card ring-1 ring-stone-200" />
           ))}
         </div>
       )}

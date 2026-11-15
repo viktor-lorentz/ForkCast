@@ -88,7 +88,21 @@ function HallRow({
   const n = s.mains.length + s.sides.length;
   return (
     <li>
-      <button type="button" onClick={onToggle} aria-expanded={open} className="block w-full text-left">
+      <button
+        type="button"
+        onClick={onToggle}
+        aria-expanded={open}
+        aria-label={[
+          hallShort(s.hall),
+          isPick ? "our pick" : null,
+          s.walk !== null ? `${s.walk} minute walk` : null,
+          s.open ? `${s.mains.length} mains and ${s.sides.length} sides you can eat` : `not serving ${meal.toLowerCase()}`,
+          hoursText?.text ?? null,
+        ]
+          .filter(Boolean)
+          .join(", ")}
+        className="block w-full rounded-lg text-left"
+      >
         <div className="flex items-baseline justify-between gap-2 text-sm">
           <span className={`font-semibold transition-colors ${isPick ? "text-cardinal" : ""}`}>
             {hallShort(s.hall)}
@@ -103,7 +117,7 @@ function HallRow({
         {hoursText && (
           <p className={`text-xs ${hoursText.open === true ? "text-emerald-700" : hoursText.open === false ? "text-stone-400" : "text-stone-500"}`}>{hoursText.text}</p>
         )}
-        <div className="mt-1.5 h-2.5 overflow-hidden rounded-full bg-stone-100">
+        <div aria-hidden className="mt-1.5 h-2.5 overflow-hidden rounded-full bg-stone-100">
           <div
             className={`h-full rounded-full transition-all duration-500 ease-out ${isPick ? "bg-cardinal" : "bg-stone-400"}`}
             style={{ width: `${(n / max) * 100}%` }}
@@ -311,7 +325,7 @@ export function Today({
 
   return (
     <div className="flex flex-col gap-4 pb-10">
-      <header className="flex items-start justify-between gap-3 pt-1">
+      <header className="flex flex-wrap items-start justify-between gap-x-3 gap-y-2 pt-1">
         <div className="min-w-0">
           <h1>
             <button
@@ -337,7 +351,7 @@ export function Today({
         <div className="flex shrink-0 gap-2">
           <a
             href={`/rate?date=${date}${meal ? `&meal=${encodeURIComponent(meal)}` : ""}${pickHall ? `&hall=${pickHall}` : ""}`}
-            className="flex items-center gap-1 rounded-full bg-stone-900 px-3.5 py-1.5 text-sm font-semibold text-white transition active:scale-95"
+            className="flex items-center gap-1 rounded-full bg-[#1c1917] px-3.5 py-1.5 text-sm font-semibold text-white ring-1 ring-white/15 transition active:scale-95"
           >
             <svg viewBox="0 0 20 20" className="h-3.5 w-3.5 fill-gold" aria-hidden>
               <path d="M10 1.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.5 7.7l5.9-.9z" />
@@ -347,7 +361,7 @@ export function Today({
           <button
             type="button"
             onClick={onEdit}
-            className="rounded-full border border-stone-300 bg-white px-3.5 py-1.5 text-sm font-medium transition active:scale-95"
+            className="rounded-full border border-stone-300 bg-card px-3.5 py-1.5 text-sm font-medium transition active:scale-95"
           >
             Edit
           </button>
@@ -366,7 +380,7 @@ export function Today({
               setOpenHall(null);
             }}
             className={`rounded-full px-4 py-1.5 text-sm font-semibold transition active:scale-95 ${
-              dayOffset === i ? "bg-stone-900 text-white" : "bg-white text-stone-600 ring-1 ring-stone-300"
+              dayOffset === i ? "bg-ink text-ink-fg" : "bg-card text-stone-600 ring-1 ring-stone-300"
             }`}
           >
             {label}
@@ -395,7 +409,7 @@ export function Today({
                 setChosenMeal(m);
                 setOpenHall(null);
               }}
-              className={`flex-1 rounded-lg py-2 text-sm font-semibold transition ${m === meal ? "bg-white text-cardinal shadow-sm" : "text-stone-600"}`}
+              className={`flex-1 rounded-lg py-2 text-sm font-semibold transition ${m === meal ? "bg-card text-cardinal shadow-sm" : "text-stone-600"}`}
             >
               {m}
             </button>
@@ -404,25 +418,25 @@ export function Today({
       )}
 
       {menuEntry?.ok === false && (
-        <div className="rise rounded-2xl bg-white p-5 text-center shadow-sm ring-1 ring-stone-200">
+        <div className="rise rounded-2xl bg-card p-5 text-center shadow-sm ring-1 ring-stone-200">
           <p className="font-semibold">Couldn&apos;t load USC&apos;s menus</p>
           <p className="mt-1 text-sm text-stone-500">Check your connection and try again.</p>
-          <button type="button" onClick={retry} className="mt-3 rounded-full bg-cardinal px-5 py-2 text-sm font-semibold text-white active:bg-cardinal-dark">
+          <button type="button" onClick={retry} className="mt-3 rounded-full bg-brand px-5 py-2 text-sm font-semibold text-white active:brightness-90">
             Try again
           </button>
         </div>
       )}
 
       {!menuEntry && (
-        <div className="rounded-3xl bg-cardinal p-5 text-white shadow-lg">
+        <div className="rounded-3xl bg-brand p-5 text-white shadow-lg">
           <p className="text-sm font-medium uppercase tracking-wide text-gold">Just a moment</p>
           <p className="mt-1 animate-pulse text-3xl font-bold leading-tight text-white/70">Reading menus...</p>
-          <p className="mt-2 min-h-[4.5rem] text-[15px] leading-snug text-white/90">Getting the dishes from all three dining halls.</p>
+          <p className="mt-2 min-h-[4.5rem] text-[0.9375rem] leading-snug text-white/90">Getting the dishes from all three dining halls.</p>
         </div>
       )}
 
       {day && !meal && (
-        <div className="rise rounded-2xl bg-white p-5 text-center shadow-sm ring-1 ring-stone-200">
+        <div className="rise rounded-2xl bg-card p-5 text-center shadow-sm ring-1 ring-stone-200">
           <p className="font-semibold">No menus posted yet</p>
           <p className="mt-1 text-sm text-stone-500">USC hasn&apos;t published menus for this day.</p>
         </div>
@@ -430,7 +444,7 @@ export function Today({
 
       {day && meal && (
         <>
-          <section className="rounded-3xl bg-cardinal p-5 text-white shadow-lg" aria-live="polite">
+          <section className="rounded-3xl bg-brand p-5 text-white shadow-lg" aria-live="polite">
             <p className="text-sm font-medium uppercase tracking-wide text-gold">
               {meal} · {nothing ? "heads up" : "go to"}
             </p>
@@ -446,7 +460,7 @@ export function Today({
               <p className="mt-1 animate-pulse text-3xl font-bold leading-tight text-white/70">Comparing halls...</p>
             )}
 
-            <div className="mt-2 min-h-[4.5rem] text-[15px] leading-snug text-white/90">
+            <div className="mt-2 min-h-[4.5rem] text-[0.9375rem] leading-snug text-white/90">
               {rec ? (
                 <div key={rec.summary} className="rise">
                   {pickScore && pickScore.walk !== null && dorm && !nothing && (
@@ -463,7 +477,7 @@ export function Today({
                       ? `${TOO_MANY}. The hall comparison below still works.`
                       : "We couldn't get your picks. The hall comparison below still works."}
                   </p>
-                  <button type="button" onClick={retry} className="mt-2 rounded-full bg-white px-4 py-1.5 text-sm font-semibold text-cardinal active:scale-95">
+                  <button type="button" onClick={retry} className="mt-2 rounded-full bg-card px-4 py-1.5 text-sm font-semibold text-cardinal active:scale-95">
                     Try again
                   </button>
                 </div>
@@ -487,7 +501,7 @@ export function Today({
             )}
           </section>
 
-          <section className="rounded-2xl bg-white p-4 shadow-sm ring-1 ring-stone-200">
+          <section className="rounded-2xl bg-card p-4 shadow-sm ring-1 ring-stone-200">
             <h2 className="mb-3 text-sm font-semibold text-stone-500">Dishes that fit you, by hall</h2>
             <ul className="flex flex-col gap-3.5">
               {scores.map((s) => (
@@ -518,14 +532,14 @@ export function Today({
               <h2 className="flex justify-between px-1 text-sm font-semibold text-stone-500">
                 <span>Your plate{pickHall ? ` at ${hallShort(pickHall)}` : ""}</span>
                 {ratingsPending && rec && (
-                  <button type="button" onClick={refreshPicks} className="rise rounded-full bg-stone-900 px-3 py-1 text-xs font-semibold text-white transition active:scale-95">
+                  <button type="button" onClick={refreshPicks} className="rise rounded-full bg-ink px-3 py-1 text-xs font-semibold text-ink-fg transition active:scale-95">
                     ↻ Refresh picks
                   </button>
                 )}
               </h2>
-              {!rec && [0, 1, 2].map((i) => <div key={i} className="h-[5.5rem] animate-pulse rounded-2xl bg-white ring-1 ring-stone-200" />)}
+              {!rec && [0, 1, 2].map((i) => <div key={i} className="h-[5.5rem] animate-pulse rounded-2xl bg-card ring-1 ring-stone-200" />)}
               {rec && shownPicks.length === 0 && (
-                <p className="rise rounded-2xl bg-white p-4 text-sm text-stone-500 ring-1 ring-stone-200">You passed on all of these. Tap Refresh picks for new ones.</p>
+                <p className="rise rounded-2xl bg-card p-4 text-sm text-stone-500 ring-1 ring-stone-200">You passed on all of these. Tap Refresh picks for new ones.</p>
               )}
               {shownPicks.map((p, i) => {
                 const others = p.allergens.filter((a) => a !== NOT_ANALYZED && !(profile.avoid as string[]).includes(a));
@@ -533,7 +547,7 @@ export function Today({
                 return (
                   <div key={`${recKey}|${p.id}`} className={`grid transition-all duration-300 ease-out ${out ? "grid-rows-[0fr] -translate-x-6 opacity-0" : "grid-rows-[1fr]"}`}>
                   <article
-                    className="rise min-h-0 overflow-hidden rounded-2xl bg-white p-4 shadow-sm ring-1 ring-stone-200"
+                    className="rise min-h-0 overflow-hidden rounded-2xl bg-card p-4 shadow-sm ring-1 ring-stone-200"
                     style={{ animationDelay: `${i * 60}ms` }}
                   >
                     <div className="flex items-start justify-between gap-2">
@@ -571,7 +585,7 @@ export function Today({
           )}
 
           {rec && rec.picks.length > 0 && (
-            <section className="rise rounded-2xl bg-white shadow-sm ring-1 ring-stone-200">
+            <section className="rise rounded-2xl bg-card shadow-sm ring-1 ring-stone-200">
               <button
                 type="button"
                 aria-expanded={showWhy}
@@ -627,7 +641,7 @@ export function Today({
       <TakeItWithYou profile={profile} />
 
       {hours && (
-        <section className="rounded-2xl bg-white shadow-sm ring-1 ring-stone-200">
+        <section className="rounded-2xl bg-card shadow-sm ring-1 ring-stone-200">
           <button
             type="button"
             aria-expanded={showWeek}
@@ -673,7 +687,7 @@ export function Today({
 
       {toast && (
         <div className="fixed inset-x-0 bottom-0 z-20 flex justify-center px-4 pb-[max(1rem,env(safe-area-inset-bottom))]" role="status">
-          <div key={toast.at} className="rise flex w-full max-w-md items-center justify-between gap-3 rounded-2xl bg-stone-900 px-4 py-3 text-sm text-white shadow-xl">
+          <div key={toast.at} className="rise flex w-full max-w-md items-center justify-between gap-3 rounded-2xl bg-ink px-4 py-3 text-sm text-ink-fg shadow-xl">
             <span className="min-w-0 truncate">We&apos;ll skip {toast.dish.name} from now on</span>
             <button
               type="button"
@@ -692,7 +706,7 @@ export function Today({
       <label className="flex items-center gap-2 px-1 text-xs text-stone-500">
         <span className="shrink-0">Try a sample student:</span>
         <select
-          className="min-w-0 flex-1 rounded-lg border border-stone-300 bg-white px-2 py-1.5 text-stone-700"
+          className="min-w-0 flex-1 rounded-lg border border-stone-300 bg-card px-2 py-1.5 text-stone-700"
           value=""
           onChange={(e) => {
             const demo = DEMO_PROFILES.find((d) => d.id === e.target.value);

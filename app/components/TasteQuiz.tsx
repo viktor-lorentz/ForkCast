@@ -105,7 +105,7 @@ export function TasteQuiz({
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="flex w-full items-center justify-between rounded-2xl bg-white p-4 text-left shadow-sm ring-1 ring-stone-200 transition active:scale-[0.99]"
+        className="flex w-full items-center justify-between rounded-2xl bg-card p-4 text-left shadow-sm ring-1 ring-stone-200 transition active:scale-[0.99]"
       >
         <span>
           <span className="block font-semibold">Quick taste check</span>
@@ -124,7 +124,7 @@ export function TasteQuiz({
   const cardH = step ? "h-[21rem]" : "h-72";
 
   return (
-    <section className={step ? "" : "rise rounded-2xl bg-white p-4 shadow-sm ring-1 ring-stone-200"}>
+    <section className={step ? "" : "rise rounded-2xl bg-card p-4 shadow-sm ring-1 ring-stone-200"}>
       {step ? (
         <div className="flex gap-1.5" aria-label={cards ? `${Math.min(i + 1, cards.length)} of ${cards.length}` : undefined}>
           {Array.from({ length: cards?.length || total }, (_, n) => (
@@ -149,7 +149,7 @@ export function TasteQuiz({
       {cards && cards.length === 0 && <p className="mt-4 text-sm text-stone-500">No dishes to rate right now.</p>}
 
       {done && cards.length > 0 && (
-        <div className={`rise mt-4 flex ${cardH} flex-col items-center justify-center rounded-3xl bg-white p-6 text-center shadow-sm ring-1 ring-stone-200`}>
+        <div className={`rise mt-4 flex ${cardH} flex-col items-center justify-center rounded-3xl bg-card p-6 text-center shadow-sm ring-1 ring-stone-200`}>
           <span className="flex h-16 w-16 items-center justify-center rounded-full bg-emerald-50 text-emerald-600 ring-1 ring-emerald-200">
             <svg viewBox="0 0 24 24" className="h-8 w-8" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
               <path d="M5 12.5l4.5 4.5L19 7.5" />
@@ -166,14 +166,14 @@ export function TasteQuiz({
             {cards!.slice(i + 1, i + 3).map((c, n) => (
               <div
                 key={c.id}
-                className="absolute inset-0 rounded-3xl bg-white shadow-sm ring-1 ring-stone-200 transition-transform duration-300"
+                className="absolute inset-0 rounded-3xl bg-card shadow-sm ring-1 ring-stone-200 transition-transform duration-300"
                 style={{ transform: `translateY(${(n + 1) * 16}px) scale(${1 - (n + 1) * 0.04})`, zIndex: 1 - n }}
                 aria-hidden
               />
             ))}
             <div
               key={card.id}
-              className={`rise absolute inset-0 z-10 flex touch-pan-y cursor-grab flex-col overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-stone-200 active:cursor-grabbing ${
+              className={`rise absolute inset-0 z-10 flex touch-pan-y cursor-grab flex-col overflow-hidden rounded-3xl bg-card shadow-lg ring-1 ring-stone-200 active:cursor-grabbing ${
                 dragging ? "" : "transition-transform duration-200 ease-out"
               }`}
               style={{ transform: `translateX(${offset}px) rotate(${offset / 20}deg)` }}
@@ -231,7 +231,7 @@ export function TasteQuiz({
               type="button"
               onClick={() => decide(-1)}
               aria-label={`No to ${card.name}`}
-              className={`flex h-16 w-16 items-center justify-center rounded-full bg-white text-stone-500 shadow-md ring-1 ring-stone-200 transition active:scale-90 ${lean < -0.3 ? "scale-110 text-stone-800" : ""}`}
+              className={`flex h-16 w-16 items-center justify-center rounded-full bg-card text-stone-500 shadow-md ring-1 ring-stone-200 transition active:scale-90 ${lean < -0.3 ? "scale-110 text-stone-800" : ""}`}
             >
               <svg viewBox="0 0 24 24" className="h-7 w-7" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden>
                 <path d="M6 6l12 12M18 6L6 18" />
@@ -244,7 +244,7 @@ export function TasteQuiz({
               type="button"
               onClick={() => decide(1)}
               aria-label={`Yes to ${card.name}`}
-              className={`flex h-16 w-16 items-center justify-center rounded-full bg-cardinal text-white shadow-md shadow-cardinal/30 transition active:scale-90 ${lean > 0.3 ? "scale-110" : ""}`}
+              className={`flex h-16 w-16 items-center justify-center rounded-full bg-brand text-white shadow-md shadow-cardinal/30 transition active:scale-90 ${lean > 0.3 ? "scale-110" : ""}`}
             >
               <svg viewBox="0 0 24 24" className="h-7 w-7" fill="currentColor" aria-hidden>
                 <path d="M12 20.5s-7.5-4.6-9.3-9.2C1.5 8.2 3.4 4.5 7 4.5c2 0 3.6 1.1 5 2.9 1.4-1.8 3-2.9 5-2.9 3.6 0 5.5 3.7 4.3 6.8-1.8 4.6-9.3 9.2-9.3 9.2z" />

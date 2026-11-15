@@ -58,8 +58,8 @@ export function Thumbs({
   };
   return (
     <span className="inline-flex shrink-0 items-center">
-      {btn(1, "More like", "bg-emerald-50 text-emerald-600")}
-      {btn(-1, "Less like", "bg-stone-100 text-stone-700")}
+      {btn(1, "Thumbs up: more like", "bg-emerald-50 text-emerald-600")}
+      {btn(-1, "Thumbs down: less like", "bg-stone-100 text-stone-700")}
     </span>
   );
 }
@@ -71,7 +71,7 @@ export function FoodTags({ dish, className = "" }: { dish: { kind: string; macro
   return (
     <span className={`flex flex-wrap gap-1 ${className}`}>
       {tags.map((t) => (
-        <span key={t} className="inline-block rounded-md bg-amber-50 px-1.5 py-0.5 text-[11px] font-medium text-amber-900 ring-1 ring-amber-200">
+        <span key={t} className="inline-block rounded-md bg-amber-50 px-1.5 py-0.5 text-[0.6875rem] font-medium text-amber-900 ring-1 ring-amber-200">
           {t}
         </span>
       ))}
@@ -96,7 +96,7 @@ export function PlateCard({
   onChangeGoal: () => void;
 }) {
   return (
-    <section className="rise rounded-2xl bg-white p-4 shadow-sm ring-1 ring-stone-200">
+    <section className="rise rounded-2xl bg-card p-4 shadow-sm ring-1 ring-stone-200">
       <div className="flex items-baseline justify-between gap-2">
         <h2 className="font-semibold">
           {goal.plateName} at {hallLabel}
