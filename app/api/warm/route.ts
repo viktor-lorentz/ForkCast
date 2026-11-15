@@ -1,16 +1,19 @@
 import { getRecommendation } from "@/lib/cached-recommend";
 import { DEMO_PROFILES } from "@/lib/demo-profiles";
 import { getEnrichedDay } from "@/lib/menus";
+import { cronAuthorized } from "@/lib/cron-auth";
 import { cleanProfile } from "@/lib/profile";
 import { addDays, todayLA } from "@/lib/usc";
 
 export const maxDuration = 300;
 
 /**
- * Called by a daily Vercel cron (vercel.json), and by hand before a demo. Tags today's and tomorrow's
+ * Called by a daily Vercel cron (vercel.json), and by hand before a demo
+ * (`curl -H "Authorization: Bearer $CRON_SECRET" …/api/warm` once the secret is set). Tags today's and tomorrow's
  * menus, then precomputes today's picks for the sample students so their links open instantly.
  */
-export async function GET() {
+export async function GET(request: Request) {
+  if (!cronAuthorized(request, { strict: false })) return new Response("Unauthorized", { status: 401 });
   const today = todayLA();
   const days = await Promise.allSettled([today, addDays(today, 1)].map(getEnrichedDay));
   const menus = days.map((d) => (d.status === "fulfilled" ? { date: d.value.date, aiTagged: d.value.aiTagged } : { error: String(d.reason) }));

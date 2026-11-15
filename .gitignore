@@ -47,3 +47,6 @@ next-env.d.ts
 # Copies made by iCloud Desktop sync (e.g. "page 2.tsx")
 * 2
 * 2.*
+
+# Local browser profiles from screenshot scripts
+chrome-prof-*/

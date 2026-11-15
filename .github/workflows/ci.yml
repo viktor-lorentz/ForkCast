@@ -38,7 +38,7 @@ jobs:
       - name: Lint
         run: npm run lint
 
-      - name: Test (206 tests, incl. "never recommends a flagged dish")
+      - name: Test (incl. "never recommends a flagged dish")
         run: npm test
 
       - name: Build

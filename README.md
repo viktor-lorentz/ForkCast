@@ -1,5 +1,7 @@
 # ForkCast
 
+[![CI](https://github.com/viktor-lorentz/ForkCast/actions/workflows/ci.yml/badge.svg)](https://github.com/viktor-lorentz/ForkCast/actions/workflows/ci.yml)
+
 **Know before you go.** ForkCast tells each USC student which dining hall has food they can actually eat, every meal. AI picks the plate; code enforces USC's allergen labels.
 
 By team **Overcooked** · AI@USC Hackathon, Nov 14–15, 2026
@@ -65,7 +67,7 @@ We never call food "safe." The app says "no flagged allergens per USC labels" an
 | Data | USC Hospitality's public menu feed and hours; walking times for 22 residences precomputed from OpenStreetMap foot routes |
 | Storage | Profiles stay in the student's browser. Upstash Redis holds only opt-in email subscriptions, anonymous dish ratings and rate-limit counters. |
 | Reliability | Menu and pick caching, a rules-only fallback, saved menu snapshots, and emergency switches that need no redeploy |
-| Quality | 206 automated tests (Vitest), ESLint, TypeScript strict build, an end-to-end live check |
+| Quality | 209 automated tests (Vitest), ESLint, TypeScript strict build, an end-to-end live check; GitHub Actions runs lint, tests and the build on every pull request |
 | Hosting | Vercel, with daily cron jobs to warm the cache and send the opt-in email |
 
 ## Repo map
@@ -100,7 +102,7 @@ npm run dev                  # http://localhost:3000
 ## Check it yourself
 
 ```bash
-npm test             # 206 tests on saved USC menus, no network or API key needed
+npm test             # 209 tests on saved USC menus, no network or API key needed
 npm run lint
 npm run build
 npm run verify:live  # 28 end-to-end checks against the live site

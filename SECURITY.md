@@ -30,8 +30,7 @@ ForkCast is a hackathon project, built in a weekend and reviewed before submissi
 
 ## Known limits
 
-- `/api/email/daily` checks the secret only when `CRON_SECRET` is set in the host. It must stay set in production.
-- `/api/warm` is open so we can warm the cache by hand before a demo. Its results are cached, so repeat calls cost nothing new, but it should move behind the same secret.
+- Both cron routes go through `lib/cron-auth.ts`. When `CRON_SECRET` is set, `/api/email/daily` and `/api/warm` require it. If it is ever missing in production, `/api/email/daily` refuses every request instead of falling open; `/api/warm` stays callable because it only fills the cache.
 - Rate limits allow requests through if Redis is unreachable, so an outage never blocks a student from seeing a pick. The Vercel Firewall rule is the backstop.
 - Ratings are one per browser, not one per student. USC NetID login is the planned fix.
 - There is no Content-Security-Policy header yet.

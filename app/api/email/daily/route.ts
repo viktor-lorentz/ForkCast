@@ -1,14 +1,14 @@
 import { buildDigest } from "@/lib/email/digest";
 import { emailEnabled, sendEmail } from "@/lib/email/send";
 import { confirmedSubscribers } from "@/lib/email/store";
+import { cronAuthorized } from "@/lib/cron-auth";
 import { todayLA } from "@/lib/usc";
 
 export const maxDuration = 300;
 
 /** Daily Vercel cron (vercel.json): sends each confirmed subscriber today's picks. */
 export async function GET(request: Request) {
-  const secret = process.env.CRON_SECRET;
-  if (secret && request.headers.get("authorization") !== `Bearer ${secret}`) return new Response("Unauthorized", { status: 401 });
+  if (!cronAuthorized(request, { strict: true })) return new Response("Unauthorized", { status: 401 });
   if (!emailEnabled()) return Response.json({ sent: 0, note: "email not set up" });
   // Vercel provides the production domain; APP_URL overrides it.
   const prod = process.env.VERCEL_PROJECT_PRODUCTION_URL;
