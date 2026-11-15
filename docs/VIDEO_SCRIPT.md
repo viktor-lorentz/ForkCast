@@ -1,48 +1,147 @@
-# ForkCast demo video: script and shot list
+# ForkCast demo video: script, shot list and camera settings
 
-**Length:** about 2:45 (hard limit 3:00). **Narration:** about 390 words at a relaxed pace.
-**Who:** Hailey edits and narrates; Viktor records the screen clips (issue #37); Andrew films b-roll and testimonials (#34, #36).
+**Length:** about 2:45 (hard limit 3:00). **Narration:** about 390 words, relaxed pace.
+**Format:** **landscape 16:9, 3840×2160 (4K) at 30 fps**, exported as 1080p or 4K MP4 (H.264).
+**Camera:** Galaxy S26 Ultra. **Screen clips:** phone screen recordings (#37). **Edit and narration:** Hailey.
+
+Everything you need to shoot is in this file: each row of the script names its shot ID, and each shot ID has its camera settings below.
+
+---
+
+## Why landscape
+- Judges watch on a laptop or a projector, and Devpost embeds YouTube/Vimeo, all 16:9. A portrait video plays as a narrow strip with black bars on both sides.
+- The app is portrait, and that's fine: in the edit, every screen clip sits **inside a phone frame, centered or slightly right, on the ForkCast cream background (#faf7f2)**. The empty space on the left holds the on-screen text from the script (big, bold, cardinal #990000 or dark #1c1917). This looks deliberate and polished, like Apple's product videos.
+- B-roll and the face to camera in the "Option B" testimonials are filmed landscape, so they fill the frame.
+
+## Pro Video or normal Video?
+**Pro Video for everything filmed standing still** (B01, B03, B05, T1–T3). Auto mode keeps changing brightness and color under dining hall lights, so cuts don't match and the lights can flicker on screen. Pro Video locks exposure, white balance and focus, so every clip looks the same.
+**Normal Video mode for the shots that move** (B02, B04): Pro Video has no Super Steady, and walking shots shake.
+
+Menu names below are from recent Galaxy phones; on the S26 Ultra they may be worded a little differently.
+
+### One-time camera setup (Camera → ⚙ Settings)
+- **Advanced video options:**
+  - **High efficiency video:** OFF (H.264 opens in every editor).
+  - **HDR10+ video:** OFF (looks washed out in most editors).
+  - **Log:** OFF (needs color grading; no time tonight).
+- **Video stabilization:** ON.
+- **Auto FPS:** OFF.
+- **Grid lines:** ON (to keep horizons straight and the subject on a third).
+- **Storage:** check 15+ GB free. 4K is about 400 MB a minute.
+
+### Presets
+| Preset | Mode | Settings |
+|---|---|---|
+| **A · Locked B-roll** | Pro Video | **UHD 4K, 30 fps**, 1× lens. **Shutter 1/60** (avoids flicker under US lights and gives natural motion blur). **ISO:** as low as still looks bright, about 100–400 indoors, 50 outdoors in daylight. **WB:** fixed, **4300K** indoors under LEDs (5500K outdoors in daylight, 3200K under warm bulbs); nudge until white napkins look white. **Focus:** manual (MF), tap the focus peaking on, set on the subject. Prop the phone on something or use a tripod. |
+| **B · Moving B-roll** | Video (normal) | **UHD 4K, 30 fps**, 1× lens, **Super Steady OFF** (it crops and drops to lower resolution), stabilization ON. Walk slowly, elbows in, phone with both hands. Tap and hold on the subject to lock focus and exposure (AE/AF lock) before you move. |
+| **C · Interview** | Pro Video | Like A, but: **3× lens** if there's space (2–3 m back, flattering, blurs the background), or 1× close. **Audio:** Mic → **Omni** or the external mic if you have one; **Wind filter ON** outside. Phone on a stand at eye height. |
+| **D · Screen clips** | Screen recorder | See #37. iPhone: Control Center → Screen Recording, microphone off. S26: Quick panel → **Screen recorder** → Sound: **No sound**, Video quality: **highest**, "Show taps and touches" **OFF**. Do Not Disturb on. |
+| **E · Narration** | Voice Recorder app | Mode **Standard** (or **Interview**), high quality. Quiet small room with soft stuff around (a closet or under a blanket works). Phone 15–20 cm from the mouth, slightly to the side so breath doesn't pop. Record each script line as its own take, leaving 2 s of silence. |
+
+**Framing rules for every camera shot:** landscape, horizon level, subject on a third (grid line), hold each shot **8–10 seconds without moving** (Hailey needs room to cut), no faces of students who didn't agree to be filmed, no allergen claims written on screen beyond USC's own labels.
+
+---
+
+## Shot list: camera (B-roll and testimonials)
+
+| ID | Shot | Preset | Notes |
+|---|---|---|---|
+| **B01** | Wide of a dining hall line or the food stations | A | Tripod or prop at chest height. Students blurred or from behind is fine. 10 s. |
+| **B02** | Walking toward a dining hall entrance (EVK or Village) | B | Slow walk, 10 s, starting about 10 m away. Golden hour or evening lights. |
+| **B03** | Close-up of a student's hand scrolling USC's menu site on a phone, squinting at icons | A | Over-the-shoulder, phone screen in focus (MF on the screen). Pairs with R01. |
+| **B04** | Over-the-shoulder: student opens ForkCast, looks up, walks toward a hall | B | Phone in focus first, then rack focus to the hall (or just follow). The "aha" shot. |
+| **B05** | Close-up of a plate of food at the table, then a hand tapping a score on the phone next to it | A | Top-down or 45°. Pairs with R06 (rating). Warm WB (about 3800K) makes food look good. |
+| **B06** | Team shot: Viktor, Andrew and Hailey at the hackathon laptop, then turning to camera | A | For the end card. 10 s. |
+| **T1–T3** | Testimonials (see below) | C | Each 15–40 s raw; we use 5–8 s. |
+
+---
+
+## Testimonials: keep them or drop them?
+**Our take: keep one or two short real ones if you can get them tonight; drop them if you can't.**
+- **What they add:** judges score *impact*, and a real student saying "I actually check three menus every night" is the most convincing 7 seconds in the video. It also matches our survey slide (57% of students we asked have a dietary restriction or allergy).
+- **What dropping them costs:** not much, if the replacement is strong. Use the survey number on screen instead (see "No-testimonial version" below). The video still holds up; it just feels a little less human.
+- **What to avoid:** a stiff, read-aloud quote. Judges can tell, it looks worse than no testimonial, and handing students lines to recite as their own opinion would be presenting staged words as real reactions. So below are **questions** that reliably get the kind of answer we want, in their own words, not a script for them to read.
+
+### Option A: real students (best)
+Film with preset C. Ask permission first ("Can we use this in our hackathon video?") and get a yes **on camera**. Ask one question at a time, let them talk, and don't finish their sentences. Ask them to **restate the question in the answer** ("Finding food I can eat is..." rather than "Yeah, it's hard"), so the clip makes sense without your voice.
+
+**T1, the problem** (plays at 0:08):
+- "How do you figure out where to eat on a normal day?"
+- "What's the hardest part about eating at the dining halls with your diet?"
+- Follow-up if they're short: "Walk me through last night: how did you pick?"
+- *What we're hoping for* (don't say it to them): a specific moment, like checking several menus, getting to a hall and finding nothing, or asking staff about every dish.
+
+**T2, the reaction** (plays at 2:34). Let them use ForkCast on their own phone for a minute first (QR from the deck's last slide or https://forkcast-usc.vercel.app):
+- "What did it just tell you?"
+- "Would that have changed what you did tonight?"
+- "What would you tell a friend about it?"
+- *Hoping for:* a reaction to the pick being right for them, or how quick it was.
+
+**T3, spare:** "Is there anything you wish it did?" Useful for the judges' Q&A even if it's not in the video.
+
+### Option B: a teammate, honestly framed (fallback)
+If a teammate has a real dietary restriction, they can speak as themselves, named on screen ("Andrew, Team Overcooked"), in their own words, about their own experience. That's honest and still human. Prompt them with the T1 questions; don't read a script.
+
+### No-testimonial version
+- **0:08–0:16:** replace T1 with B03 (squinting at USC's menu) plus big on-screen text: **"57% of USC students we surveyed have a dietary restriction or allergy."** Small text under it: *Our survey, Nov 14, 2026 · 24 of 42 students*.
+- **2:34–2:40:** replace T2 with B04 (the walk to the hall) plus on-screen text: **"Live now. Try it tonight."**
+
+---
 
 ## How the script and the recordings line up
-Every screen clip has an ID, **R01 to R12**, and the iPhone recording is saved under that name (e.g. `R04-why-panel.mov`). The script below says which clip, and which moment in it, plays under each line. Each clip in #37 is recorded as one slow take, pausing about 2 seconds before and after each tap, so there's room to cut. **TESTIMONIAL** and **B-ROLL** rows are Andrew's footage.
+Screen clips are **R01–R12** (#37), camera shots are **B01–B06** and **T1–T3**. Every recording is saved under its ID (e.g. `R04-why-panel.mov`, `B03-usc-menu-hand.mp4`). Each row below says which clip, and which moment in it, plays under each line. **App clips (R) always go inside the phone frame on the cream background, with that row's on-screen text on the left.**
 
-Rules for the words (also on screen): never say "safe" or "allergen-free". Say "no flagged allergens per USC labels". No calorie or gram numbers. Don't claim students already use it; ratings are seeded by our team so far.
+Rules for the words (spoken and on screen): never say "safe" or "allergen-free"; say "no flagged allergens per USC labels". No calorie or gram numbers. Don't claim students already use it; ratings come from our team so far.
 
 ## Script
 
-| Time | Narration (voice-over) | On screen |
-|---|---|---|
-| 0:00–0:08 | *(no narration, music in)* | **B-ROLL:** line at a dining hall, a student staring at their phone. |
-| 0:08–0:16 | *(student speaks)* | **TESTIMONIAL 1:** a student on checking menus for their diet (best clip from #34, 6–8 s). |
-| 0:16–0:32 | "Three times a day, every USC student asks the same question: where should I eat? If you're halal with a sesame allergy, that means opening three menus and decoding tiny icons on every dish." | **R01** USC's menu site: scroll, zoom on the icons, switch hall tabs. Text on screen: *3 halls · ~250 dishes · every meal*. |
-| 0:32–0:40 | "We built ForkCast. Tell it once how you eat..." | **R02, start:** welcome screen, typing in "Describe how you eat". |
-| 0:40–0:55 | "...in your own words. AI fills in your profile from USC's own labels: allergies, diet, what you love, where you live. Then swipe through a few real dishes from today's menus so it learns your taste." | **R02, middle:** tap *Fill in for me* → chips light up (Sesame, Halal, spicy, rice) → pick a dorm → Continue → swipe through the taste cards. |
-| 0:55–1:10 | "And in seconds: your dining hall for this meal, how far you walk, and the dishes to get." | **R02, end** (the pick appears), then **R03**: hold on the red pick card, slow scroll through *Your plate*. |
-| 1:10–1:20 | "It compares all three halls, and shows how much of each menu actually fits you." | **R03, end:** *Dishes that fit you, by hall*, the **★ Our pick** pill, tap a hall to open its list. |
-| 1:20–1:42 | "Here's the important part. AI understands the food, but it never makes an allergen decision. Code removes anything USC labels with your allergens before the AI sees the menu, then checks every answer: real hall, real dishes, no flagged allergens, every label claim true. And it shows you what it hid, and why." | **R04:** open *Why EVK? How we checked*, hold on the green checks, then the hidden list (*Contains Sesame (USC label)*). Text on screen: *0 allergen decisions made by AI*. |
-| 1:42–1:52 | "A different student gets a different answer." | **R05:** switch the sample student to *Nut allergy* → the pick changes hall. |
-| 1:52–2:10 | "It learns as you go. Thumbs up or down on any dish. Ate it? Tap *I ate this*, rate it from one to ten, and the next student sees today's scores. It even avoids serving you the same thing all week." | **R06:** 👍 one dish, 👎 another (it slides away), *I ate this* → *How was it?* → tap 8 → *Saved. Thanks!* Optional cutaway: **R07** /rate page. |
-| 2:10–2:22 | "Plan ahead with the whole week, and it won't send you to a hall that's about to close." | **R08:** *This week* → scroll the days → tap a day → its full pick. Then **R09:** *Closes in 20 min* on a hall row, or *Closes at 10:00PM* on the pick card. |
-| 2:22–2:34 | "It speaks seven languages, has a dark mode, and can email you the day's picks every morning." | **R10:** globe → Español (the whole app and the AI's text switch) → 中文 → dark mode switch. **R11:** envelope → email sent → the email arriving in the inbox. |
-| 2:34–2:40 | *(student speaks)* | **TESTIMONIAL 2:** a student reacting after trying ForkCast (from #16 / #35), 5–6 s. |
-| 2:40–2:47 | "ForkCast. Know before you go." | End card: logo, **forkcast-usc.vercel.app**, QR code (from the deck's last slide), *Team Overcooked · AI@USC Hackathon 2026*. |
-
-**If it runs long:** cut R05 (1:42–1:52) first, then shorten the R10/R11 line to "It speaks seven languages and emails you the day's picks."
-**If a clip is missing:** R09 depends on the time of day (see #37); without it, end the 2:10 line at "...the whole week."
-
-## Clip list (details in issue #37)
-
-| ID | File name | What | Length |
+| Time | Narration (voice-over) | Picture | On-screen text |
 |---|---|---|---|
-| R01 | `R01-usc-menus.mov` | USC's own menu site, the problem | 15 s |
-| R02 | `R02-first-run.mov` | First run: describe → Fill in for me → dorm → taste cards → pick | 60–75 s |
-| R03 | `R03-the-pick.mov` | Pick card, Your plate, hall bars, open a hall | 30 s |
-| R04 | `R04-why-panel.mov` | How we checked: checks and hidden dishes | 15 s |
-| R05 | `R05-switch-student.mov` | Sample student switch → different hall | 15 s |
-| R06 | `R06-thumbs-ate-rate.mov` | 👍/👎, I ate this, rate 1–10 | 20 s |
-| R07 | `R07-rate-card-and-page.mov` | "How was dinner at EVK?" card, /rate page | 25 s |
-| R08 | `R08-this-week.mov` | This week → open a day | 20 s |
-| R09 | `R09-closing-soon.mov` | Closing soon (time window!) | 10 s |
-| R10 | `R10-languages-dark.mov` | Español, 中文, dark mode | 25 s |
-| R11 | `R11-email-share.mov` | Email & share sheet, email in inbox | 30 s |
-| R12 | `R12-fitness-plate.mov` | Fitness goal plate (spare B-roll) | 10 s |
+| 0:00–0:08 | *(no narration, music in)* | **B01** (5 s) → **B02** (3 s) | — |
+| 0:08–0:16 | *(student speaks)* | **T1** (or the no-testimonial version) | Name, year (if they agree) |
+| 0:16–0:32 | "Three times a day, every USC student asks the same question: where should I eat? If you're halal with a sesame allergy, that means opening three menus and decoding tiny icons on every dish." | **B03** (4 s) → **R01** in phone frame: scroll, zoom on icons, switch hall tabs | **3 halls · ~250 dishes · every meal** |
+| 0:32–0:40 | "We built ForkCast. Tell it once how you eat..." | **R02, start:** welcome screen, typing in "Describe how you eat" | **ForkCast** (logo) |
+| 0:40–0:55 | "...in your own words. AI fills in your profile from USC's own labels: allergies, diet, what you love, where you live. Then swipe through a few real dishes from today's menus so it learns your taste." | **R02, middle:** *Fill in for me* → chips light up → dorm → Continue → taste cards | **Set up in 30 seconds** |
+| 0:55–1:10 | "And in seconds: your dining hall for this meal, how far you walk, and the dishes to get." | **R02, end** (the pick appears) → **R03:** hold on the red card, scroll *Your plate* | **Your hall. Your plate.** |
+| 1:10–1:20 | "It compares all three halls, and shows how much of each menu actually fits you." | **R03, end:** hall bars, **★ Our pick**, tap a hall open | **All 3 halls compared** |
+| 1:20–1:42 | "Here's the important part. AI understands the food, but it never makes an allergen decision. Code removes anything USC labels with your allergens before the AI sees the menu, then checks every answer: real hall, real dishes, no flagged allergens, every label claim true. And it shows you what it hid, and why." | **R04:** *How we checked* → green checks → hidden list | **AI understands the food. Code enforces the allergens.** then **0 allergen decisions made by AI** |
+| 1:42–1:52 | "A different student gets a different answer." | **R05:** switch the sample student → the hall changes | **Every student, their own pick** |
+| 1:52–2:10 | "It learns as you go. Thumbs up or down on any dish. Ate it? Tap *I ate this*, rate it from one to ten, and the next student sees today's scores. It even avoids serving you the same thing all week." | **B05** (3 s) → **R06:** 👍, 👎 slides away, *I ate this* → 8 → *Saved* (optional cutaway **R07**) | **Students rate. Everyone benefits.** |
+| 2:10–2:22 | "Plan ahead with the whole week, and it won't send you to a hall that's about to close." | **R08:** This week → open a day → **R09:** *Closes in N min* or *Closes at 10:00PM* | **7 days ahead · closing-time aware** |
+| 2:22–2:34 | "It speaks seven languages, has a dark mode, and can email you the day's picks every morning." | **R10:** Español → 中文 → dark mode → **R11:** envelope → email arrives | **English · Español · Français · 中文 · 한국어 · हिन्दी · Tiếng Việt** |
+| 2:34–2:40 | *(student speaks)* | **T2** (or **B04** + text) | — |
+| 2:40–2:47 | "ForkCast. Know before you go." | **B06** (2 s) → end card: logo, URL, QR code | **forkcast-usc.vercel.app** · *Team Overcooked · AI@USC Hackathon 2026* |
+
+**If it runs long:** cut 1:42–1:52 (R05) first, then shorten the 2:22 line to "It speaks seven languages and emails you the day's picks."
+**If R09 is missing:** end the 2:10 line at "...with the whole week."
+
+## Edit settings (Hailey)
+- Timeline **3840×2160 or 1920×1080, 30 fps**. Export H.264 MP4, 1080p minimum, under 3:00.
+- Phone frame: about 75% of the frame height. Screen clips are tall (about 9:19.5): scale to fit the frame, never stretch.
+- Music under narration at about −20 dB, dipping further under testimonials. Narration peaks around −6 dB.
+- Captions burned in (many judges watch muted): same words as the narration, bottom center, white on a 60% dark box.
+- Font for on-screen text: Geist or Inter, bold. Colors: cardinal #990000, gold #ffcc00 for small highlights, dark #1c1917, cream #faf7f2.
+
+## Clip list
+| ID | File | What | Length | How |
+|---|---|---|---|---|
+| R01 | `R01-usc-menus` | USC's own menu site | 15 s | D |
+| R02 | `R02-first-run` | Describe → Fill in for me → dorm → taste cards → pick | 60–75 s | D |
+| R03 | `R03-the-pick` | Pick card, plate, hall bars | 30 s | D |
+| R04 | `R04-why-panel` | How we checked, hidden dishes | 15 s | D |
+| R05 | `R05-switch-student` | Sample student switch | 15 s | D |
+| R06 | `R06-thumbs-ate-rate` | 👍/👎, I ate this, rate | 20 s | D |
+| R07 | `R07-rate-card-and-page` | Rating card, /rate page | 25 s | D |
+| R08 | `R08-this-week` | This week → a day | 20 s | D |
+| R09 | `R09-closing-soon` | Closing soon (7:35–7:55 or 9:20–9:55 PM) | 10 s | D |
+| R10 | `R10-languages-dark` | Español, 中文, dark mode | 25 s | D |
+| R11 | `R11-email-share` | Email & share, email arrives | 30 s | D |
+| R12 | `R12-fitness-plate` | Fitness goal plate (spare) | 10 s | D |
+| B01 | `B01-hall-wide` | Dining hall line, wide | 10 s | A |
+| B02 | `B02-walk-in` | Walking to a hall | 10 s | B |
+| B03 | `B03-usc-menu-hand` | Hand on USC's menu site | 10 s | A |
+| B04 | `B04-forkcast-walk` | Opens ForkCast, walks to the hall | 10 s | B |
+| B05 | `B05-plate-rate` | Plate + tapping a score | 10 s | A |
+| B06 | `B06-team` | Team at the laptop | 10 s | A |
+| T1–T3 | `T1-problem` … | Testimonials | 15–40 s raw | C |
+| VO | `VO-01` … `VO-12` | Narration, one file per script line | — | E |
